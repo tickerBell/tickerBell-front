@@ -1,24 +1,21 @@
 import classNames from 'classnames';
-import React, { HTMLProps } from 'react'
+import React from 'react';
+import { twMerge } from 'tailwind-merge';
 
-type buttonSizeType = {
+type buttonType = {
   [key: string]: string;
 }
 
-type buttonColorType = {
-  [key: string]: string;
-}
-
-const buttonSize: buttonSizeType = {
-  small: 'w-20 h-8 text-xs',
-  medium: 'w-24 h-10 text-base',
-  large: 'w-32 h-12 text-lg',
+const buttonSize: buttonType = {
+  small: 'text-xs',
+  medium: 'text-base',
+  large: 'text-lg',
 };
 
-const buttonTheme: buttonColorType = {
-  primary: 'bg-blue text-white',
+const buttonTheme: buttonType = {
+  primary: 'bg-primary text-white',
   secondary: 'hover:bg-gray-400 text-black',
-  border: ''
+  border: 'border border-transparent hover:border-primary'
 };
 
 type ButtonProps = {
@@ -32,8 +29,8 @@ type ButtonProps = {
 const Button = ({ children, size = "medium", theme = "primary", className, onClick, ...attr }: ButtonProps) => {
   return (
     <button
-      className={classNames(`${buttonTheme[theme]} ${buttonSize[size]} w-full h-full px-[6px] py-[8px] rounded border-0 outline-0 box-border cursor-pointer ease-in duration-300
-      `, className)}
+      className={classNames(twMerge(`${buttonTheme[theme]} ${buttonSize[size]} w-full px-10 py-4 box-border cursor-pointer whitespace-pre rounded-4
+      `, className))}
       onClick={onClick}
       {...attr}
     >

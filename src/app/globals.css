@@ -22,10 +22,8 @@
   }
 }
 
-input {
-  outline:none;
-  border: 1px solid black;
-  padding: 2px 8px;
-  box-sizing: border-box;
-  border-radius: 6px;
+@layer components {
+  .flex-vertical-center {
+    @apply flex;
+  }
 }

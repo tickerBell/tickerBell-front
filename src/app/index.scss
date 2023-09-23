@@ -1,0 +1,11 @@
+input {
+  height: 26px;
+  padding: 2px 8px;
+  border: 1px solid black;
+  box-sizing: border-box;
+  border-radius: 6px;
+  outline:none;
+  &::placeholder {
+    font-size: 14px;
+  }
+}
