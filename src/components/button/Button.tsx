@@ -15,7 +15,7 @@ const buttonSize: buttonType = {
 const buttonTheme: buttonType = {
   primary: 'bg-primary text-white',
   secondary: 'hover:bg-gray-400 text-black',
-  border: 'border border-transparent hover:border-primary'
+  border: 'border border-transparent hover:saturate-10'
 };
 
 type ButtonProps = {

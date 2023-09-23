@@ -4,7 +4,7 @@ import ModalFrame from '../ModalFrame'
 type BasicModalType = {
   setOnModal: React.Dispatch<React.SetStateAction<boolean>>,
   children: React.ReactNode,
-  dimClick?: () => {},
+  dimClick?: boolean,
   isDim?: boolean,
   onClose?: boolean,
   className?: string
