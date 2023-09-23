@@ -11,7 +11,7 @@ type modalFrameType = {
   onClose?: boolean;
   isDim?: boolean;
   zindex?: number;
-  dimClick?: () => {};
+  dimClick?: boolean;
   onClick?: () => {};
   className?: string
 }
@@ -39,7 +39,7 @@ const ModalFrame = ({
             )}
           </div>
         </div>
-        {isDim && <div className="w-full h-full bg-dim" onClick={() => (!dimClick ? setOnModal(false) : dimClick())}></div>}
+        {isDim && <div className="w-full h-full bg-dim" onClick={() => (dimClick && setOnModal(false))}></div>}
       </div>
     </ModalPortal>
   );

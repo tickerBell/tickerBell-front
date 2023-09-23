@@ -396,5 +396,6 @@ export interface Iamport {
 declare global {
   interface Window {
     IMP?: Iamport;
+    Kakao?: any; // Kakao가 전역에 있을 때의 타입을 여기에 지정
   }
 }

@@ -29,6 +29,24 @@ module.exports = {
       fontFamily: {
         noto: ["Noto Sans KR", "sans-serif"],
       },
+      fontSize: {
+        xs: "12px",
+        sm: "14px",
+        base: "16px",
+        lg: "18px",
+        xl: "20px",
+        "2xl": "22px",
+        "3xl": "24px",
+      },
+      colors: {
+        primary: "#6366f1",
+      },
+      saturate: {
+        10: ".1",
+        30: ".3",
+        50: ".5",
+        70: ".7",
+      },
     },
   },
   plugins: [],
