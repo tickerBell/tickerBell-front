@@ -14,9 +14,6 @@ interface SideBarItemProps {
 }
 
 export const SideBarItem: React.FC<SideBarItemProps> = ({ route }) => {
-  const isDetailPage = route.key.includes("/detail");
-  const isUsersPage = route.key.includes("/users");
-
   if (route.type === "title") {
     return <li>{route.title}</li>;
   }

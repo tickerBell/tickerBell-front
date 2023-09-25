@@ -1,10 +1,20 @@
-interface IHeaderData {
-  id: 0;
+interface IEventColumnsData {
   name: string;
   speaker: string;
   date: string;
   place: string;
-  total: string수;
+  totaluser: string;
+  maxseats: string;
+  cancel: string;
+}
+
+interface IEventRowsData {
+  id: number;
+  startTime: string;
+  place: string;
+  title: string;
+  speaker: string;
+  maxuser: string;
   maxseats: string;
 }
 
