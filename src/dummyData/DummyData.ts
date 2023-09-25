@@ -1,5 +1,3 @@
-
-
 export const ticketDummyData = [
   {
     id: 0,
@@ -36,5 +34,13 @@ export const ticketDummyData = [
       A석: 90,
       B석: 70,
     },
+  },
+];
+
+export const UserDummyData: IUserData[] = [
+  {
+    id: 0,
+    name: "홍길동",
+    age: "20",
   },
 ];
