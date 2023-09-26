@@ -1,11 +1,13 @@
-import { EventColumns, EventRows } from "@/dummyData/DummyData";
-import { useMemo } from "react";
 import { DataTableBody } from "./DataTableBody";
 import { DataTableHeader } from "./DataTableHeader";
 
-export const DataTable = () => {
-  const columns = useMemo(() => EventColumns, []);
-  const rows = useMemo(() => EventRows, []);
+export const DataTable = ({
+  columns,
+  rows,
+}: {
+  columns: any[];
+  rows: any[];
+}) => {
   return (
     <div className="flex flex-col w-3/4 justify-center items-center">
       <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
