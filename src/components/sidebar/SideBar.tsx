@@ -2,16 +2,14 @@ import React from "react";
 import { SideBarItem } from "./SideBarItem";
 
 const sideData = [
-  { type: "title", title: "이벤트", key: "title-tickerBell" },
+  { type: "title", title: "이벤트", key: "title-tickerBell", route: "" },
   {
-    name: "홍길동",
     type: "이벤트 내역",
     key: `/detail`,
     route: `/detail`,
   },
-  { type: "title", title: "내정보", key: "title-tickerBell" },
+  { type: "title", title: "내정보", key: "title-tickerBell", route: "" },
   {
-    name: "권혁수",
     type: "정보 수정",
     key: `/users`,
     route: `/users`,
