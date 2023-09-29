@@ -1,4 +1,6 @@
+import { kakaologinState } from "@/recoil/user";
 import { kakaoInit } from "@/util/kakaoinit";
+import { useRecoilState } from "recoil";
 
 export const kakaoLogin = async () => {
     // 카카오 초기화
@@ -13,6 +15,7 @@ export const kakaoLogin = async () => {
             // 로그인 성공할 경우 정보 확인 후 /kakao 페이지로 push
             console.log(res);
             // Router.push('/kakao');
+            localStorage.setItem('kakaoid', res.id);
           },
           fail: (error: any) => {
             console.log(error);

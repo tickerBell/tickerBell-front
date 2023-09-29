@@ -3,6 +3,7 @@ import './index.scss';
 import Script from "next/script";
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import RecoilRootProvider from '@/util/recoilRootProvider';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,7 +27,10 @@ export default function RootLayout({
         {/* <Script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossOrigin="anonymous"></Script> */}
         <Script src="https://developers.kakao.com/sdk/js/kakao.js"></Script>
       </head>
-      <body className={inter.className}>{children}
+      <body className={inter.className}>
+        <RecoilRootProvider>
+          {children}
+        </RecoilRootProvider>
         <div id='modal' />
       </body>
     </html>

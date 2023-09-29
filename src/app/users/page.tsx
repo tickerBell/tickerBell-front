@@ -9,7 +9,7 @@ const index = () => {
       <Header />
       <NavTab />
       <SideBar />
-      <div></div>
+      <div>컨텐츠 </div>
     </div>
   );
 };
