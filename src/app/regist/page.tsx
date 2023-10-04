@@ -1,22 +1,19 @@
 'use client';
 
 import Button from '@/components/button/Button';
-import { Radio, Text } from '@/components/input/Input';
-import { kakaoLogin } from '@/hooks/Kakao';
-import { kakaologinState } from '@/recoil/user';
-import { kakaoInit } from '@/util/kakaoinit';
+import KakaoLogin from '@/components/button/KakaoLogin';
+import { Radio } from '@/components/input/Input';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from "react-hook-form";
-import { useRecoilState } from 'recoil';
 
 const Index = () => {
   const [tab, setTab] = useState(-1);
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedDay, setSelectedDay] = useState("");
-  
+
 
   const today = dayjs();
   const startYear = today.get('year') - 70;
@@ -71,8 +68,10 @@ const Index = () => {
           <Radio name="userType" id="등록자" label='등록자' />
         </nav>
         <nav className='flex gap-10 mt-10'>
-          <Button onClick={kakaoLogin} className={classNames('bg-[#fae100] text-white', {})}>카카오 회원가입</Button>
-          <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=8fd7a1f394d9bbd09fdfdd3827146d73&redirect_uri=http://3.37.206.141:8080/login/oauth2/code/kakao">Kakao 로그인</a>
+          <Button onClick={() => { }} className={classNames('bg-[#fae100] text-white', {})}>카카오 회원가입</Button>
+
+<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=8fd7a1f394d9bbd09fdfdd3827146d73&redirect_uri=http://localhost:3000/login/oauth2/code/kakao">Kakao 로그인</a>
+
           <Button theme='border' onClick={() => setTab(1)} className={classNames('border-primary', {
             'bg-primary text-white': tab === 1
           })}>일반 회원가입</Button>
@@ -167,3 +166,5 @@ const Index = () => {
 }
 
 export default Index;
+
+
