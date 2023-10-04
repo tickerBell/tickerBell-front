@@ -40,6 +40,8 @@ module.exports = {
       },
       colors: {
         primary: "#6366f1",
+        secondary: "#29303d",
+        red: "#ff0000",
       },
       saturate: {
         10: ".1",
