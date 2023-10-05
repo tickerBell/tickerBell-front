@@ -4,7 +4,7 @@ import axios from "axios";
 
 // NOTE: api 별도 처리를 위한 임시 파일
 const apiInstance = axios.create({
-  baseURL: "https://dtalks-api.site",
+  baseURL: "http://3.37.206.141:8080/",
   timeout: 5000,
 });
 
