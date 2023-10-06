@@ -3,6 +3,7 @@ import Slider, { Settings } from 'react-slick';
 import { useMemo } from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import Link from 'next/link';
 
 type sliderProps = {
   data?: any;
@@ -16,23 +17,16 @@ type sliderProps = {
   loop?: boolean;
 }
 
-// interface itemsProps {
-//   item: string,
-//   name: string
-// }
-
-
-
-
 const Slide = ({ data, className, autoplay = false, speed = 300, loop = true }: sliderProps) => {
   const settings = useMemo<Settings>(
     () => ({
-      dots: true,
+      // dots: true,
       infinite: loop,
       speed: speed,
-      slidesToShow: 3,
+      slidesToShow: 5,
       autoplay: Boolean(autoplay),
       autoplaySpeed: typeof autoplay === 'boolean' ? 3000 : autoplay,
+      // gap: 
     }),
     [autoplay, loop, speed],
   );
@@ -42,11 +36,11 @@ const Slide = ({ data, className, autoplay = false, speed = 300, loop = true }: 
       <div className={className}>
         <Slider {...settings}>
           {data?.map((item: any, index: any) => (
-            <div key={index}>
+            <Link href={`/reserve/${item.id}`} key={index}>
               <picture>
                 <img src={item.item} alt={item.name} />
               </picture>
-            </div>
+            </Link>
           ))}
         </Slider>
       </div>

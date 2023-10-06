@@ -41,9 +41,6 @@ http://localhost:3000/oauth/kakao`);
           <Button theme='border' onClick={() => setTab(1)} className={classNames('border-primary', {
             'bg-primary text-white': tab === 1
           })}>일반 회원가입</Button>
-          <Button theme='border' onClick={() => setTab(2)} className={classNames('border-primary', {
-            'bg-primary text-white': tab === 2
-          })}>비회원</Button>
         </nav>
         <RegistForm tab={tab} />
       </div>
