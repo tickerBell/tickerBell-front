@@ -1,31 +1,31 @@
 import React from "react";
 import Link from "next/link";
 
-interface TitleRoute {
-  type: string;
+type SubmenuItem = {
   title: string;
-  key: string;
-}
-
-interface LinkRoute {
-  type: string;
-  key: string;
   route: string;
-}
+};
 
-type Route = TitleRoute | LinkRoute;
+type MenuItem = {
+  title: string;
+  route: string;
+  submenu: SubmenuItem[];
+};
 
-interface SideBarItemProps {
-  route: Route;
-}
+type SideBarItemProps = {
+  route: MenuItem;
+};
 
 export const SideBarItem = ({ route }: SideBarItemProps) => {
-  if ("title" in route) {
-    return <li>{route.title}</li>;
-  }
+  console.log("cc", route);
+  // if ("title" in route) {
+  //   return <li>{route.title}</li>;
+  // }
   return (
-    <li>
-      <Link href={route.route}>{route.type}</Link>
-    </li>
+    <>
+      {
+        // route.submenu.map()
+      }
+    </>
   );
 };
