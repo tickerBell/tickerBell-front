@@ -18,12 +18,6 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
 
-  const handleKakaoInit = () => {
-    if (!window.Kakao) return;
-    const { Kakao } = window;
-    Kakao.init('a2b1480a8a6d2dc1acfcca2770e9675d'); // declare를 이용해서 Kakao : any로 설정해주셔야합니다
-  };
-
   return (
     <html lang="en">
       <head>
