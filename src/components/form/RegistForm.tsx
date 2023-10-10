@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Button from '../button/Button';
 import { useForm } from "react-hook-form";
 import dayjs from 'dayjs';
+import { Radio } from './Input';
 
 type formPropsType = {
   tab: number;
@@ -71,9 +72,10 @@ const RegistForm = ({ tab, registType = 'regist' }: formPropsType) => {
 
             <div className='flex gap-6 mb-10'>
               성인 여부
-              <div className="flex gap-4">
-                미성년 / 성인
-              </div>
+              <nav className='flex gap-8'>
+              <Radio name="adultchk" id="미성년" label='미성년' />
+              <Radio name="adultchk" id="성년" label='성년' />
+              </nav>
             </div>
             <div className='mb-10'>
               <div className='flex items-center gap-6 whitespace-pre'>

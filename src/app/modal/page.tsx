@@ -1,9 +1,12 @@
 'use client';
+
 import Button from '@/components/button/Button';
 import EventDetailModal from '@/components/portalModal/eventDetailModal/EventDetailModal';
 import MapModal from '@/components/portalModal/mapModal/MapModal';
 import SearchMapModal from '@/components/portalModal/mapModal/SearchMapModal';
 import React, { useState } from 'react'
+import { userState } from '@/recoil/user';
+import { useRecoilState } from 'recoil';
 
 const ModalPage = () => {
   const [modal, setModal] = useState(false);
@@ -13,10 +16,13 @@ const ModalPage = () => {
     address: '',
   });
 
+  // const [user] = useRecoilState(userState);
+  // console.log('user 스토어', user);
+
   return (
     <div>
       {modal && <EventDetailModal className='w-400' dimClick={false} setOnModal={() => setModal(false)} />}
-      {modal1 && <MapModal className='w-400' dimClick={false} setOnModal={() => setModal1(false)} />}
+      {modal1 && <MapModal className='w-600' dimClick={false} setOnModal={() => setModal1(false)} />}
       {modal2 && <SearchMapModal
         className='w-500 px-30 py-50'
         setOnModal={() => setModal2(false)}
