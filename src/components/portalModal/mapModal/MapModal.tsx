@@ -1,4 +1,5 @@
 'use client';
+export const dynamic = 'force-dynamic';
 
 import { locationSelector } from '@/recoil/user';
 import axios from 'axios';
