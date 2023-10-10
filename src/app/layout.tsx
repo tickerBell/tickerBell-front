@@ -28,6 +28,12 @@ export default function RootLayout({
         <Script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossOrigin="anonymous"
         />
         <Script src="https://developers.kakao.com/sdk/js/kakao.js" />
+        {/* 네이버 지도 */}
+        <Script
+          type="text/javascript"
+          src="http://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ugm16gkcw2"
+        />
+        <Script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ugm16gkcw2&submodules=geocoder"></Script>
       </head>
       <body className={inter.className}>
         <RecoilRootProvider>
