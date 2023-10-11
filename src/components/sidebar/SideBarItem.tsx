@@ -8,7 +8,6 @@ type SubmenuItem = {
 
 type MenuItem = {
   title: string;
-  route: string;
   submenu: SubmenuItem[];
 };
 
@@ -22,10 +21,17 @@ export const SideBarItem = ({ route }: SideBarItemProps) => {
   //   return <li>{route.title}</li>;
   // }
   return (
-    <>
-      {
-        // route.submenu.map()
-      }
-    </>
+    <div>
+      <h3>{route.title}</h3>
+      <ul>
+        {route.submenu.map((item, index) => (
+          <li key={index}>
+            <Link href={item.route}>
+              <span>{item.title}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };

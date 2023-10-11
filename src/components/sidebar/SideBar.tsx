@@ -5,15 +5,19 @@ const sideData = {
   to: [
     {
       title: "이벤트",
-      route: "",
       submenu: [
         {
           title: "이벤트 내역",
           route: "./detail",
         },
+      ],
+    },
+    {
+      title: "내정보",
+      submenu: [
         {
-          title: "이벤트 내역",
-          route: "./detail",
+          title: "정보수정",
+          route: "./users",
         },
       ],
     },
@@ -21,15 +25,19 @@ const sideData = {
   show: [
     {
       title: "이벤트",
-      route: "",
       submenu: [
         {
           title: "이벤트 내역",
           route: "./detail",
         },
+      ],
+    },
+    {
+      title: "내정보",
+      submenu: [
         {
-          title: "이벤트 내역",
-          route: "./detail",
+          title: "정보수정",
+          route: "./users",
         },
       ],
     },
