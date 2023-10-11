@@ -1,6 +1,7 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { forwardRef, Ref } from 'react';
 import { twMerge } from 'tailwind-merge';
+import s from './button.module.scss';
 
 type buttonType = {
   [key: string]: string;
@@ -24,19 +25,30 @@ type ButtonProps = {
   theme?: 'primary' | 'secondary' | 'border';
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   className?: string
+  full?: boolean;
 }
 
-const Button = ({ children, size = "medium", theme = "primary", className, onClick, ...attr }: ButtonProps) => {
+const Button = forwardRef(({
+  children, size = "medium", theme = "primary", className, full, onClick, ...attr
+}: ButtonProps,
+  ref: Ref<HTMLButtonElement>) => {
   return (
     <button
-      className={classNames(twMerge(`${buttonTheme[theme]} ${buttonSize[size]} w-full px-10 py-4 box-border cursor-pointer whitespace-pre rounded-4
-      `, className))}
+      ref={ref}
+      className={classNames(twMerge(`${buttonTheme[theme]} ${buttonSize[size]} px-10 py-4 box-border cursor-pointer whitespace-pre rounded-4
+      `, className), {
+        [s.is_full]: full
+      })}
       onClick={onClick}
       {...attr}
     >
       {children}
     </button>
   );
-};
+});
+// forwardRef 의 react/display-name 에러 해제
+// https://stackoverflow.com/questions/67992894/component-definition-is-missing-display-name-for-forwardref
+Button.displayName = "Button";
+
 
 export default Button
