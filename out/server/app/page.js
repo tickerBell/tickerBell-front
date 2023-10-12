@@ -301,12 +301,12 @@ const routeModule = new AppPageRouteModule({
 
 /***/ }),
 
-/***/ 8494:
+/***/ 3796:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 954, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 235));
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 5869))
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 5869));
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 235))
 
 /***/ }),
 
@@ -668,7 +668,7 @@ function Home() {
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [587,625,367,4,791,39,438,70], () => (__webpack_exec__(6927)));
+var __webpack_exports__ = __webpack_require__.X(0, [587,625,367,4,791,992,438,70], () => (__webpack_exec__(6927)));
 module.exports = __webpack_exports__;
 
 })();

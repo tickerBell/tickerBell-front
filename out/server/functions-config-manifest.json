@@ -2,6 +2,7 @@
   "version": 1,
   "functions": {
     "/api/navermap": {},
+    "/api/path": {},
     "/reserve/[id]": {}
   }
 }

@@ -89,7 +89,7 @@ module.exports = require("zlib");
 
 /***/ }),
 
-/***/ 9276:
+/***/ 9384:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 // ESM COMPAT FLAG
@@ -106,11 +106,12 @@ __webpack_require__.d(__webpack_exports__, {
   staticGenerationBailout: () => (/* binding */ staticGenerationBailout)
 });
 
-// NAMESPACE OBJECT: ./src/app/api/path/route.ts
+// NAMESPACE OBJECT: ./src/app/api/path/route.tsx
 var route_namespaceObject = {};
 __webpack_require__.r(route_namespaceObject);
 __webpack_require__.d(route_namespaceObject, {
-  GET: () => (GET)
+  GET: () => (GET),
+  dynamic: () => (dynamic)
 });
 
 // EXTERNAL MODULE: ./node_modules/next/dist/server/node-polyfill-headers.js
@@ -123,8 +124,9 @@ var route_kind = __webpack_require__(9513);
 var axios = __webpack_require__(3078);
 // EXTERNAL MODULE: ./node_modules/next/dist/server/web/exports/next-response.js
 var next_response = __webpack_require__(9335);
-;// CONCATENATED MODULE: ./src/app/api/path/route.ts
+;// CONCATENATED MODULE: ./src/app/api/path/route.tsx
 // 'use client'
+const dynamic = "force-dynamic";
 
 
 async function GET(req, res) {
@@ -153,7 +155,7 @@ async function GET(req, res) {
  //   return new Response(`Hello, Next.js! ${query}`);
  // }
 
-;// CONCATENATED MODULE: ./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?page=%2Fapi%2Fpath%2Froute&name=app%2Fapi%2Fpath%2Froute&pagePath=private-next-app-dir%2Fapi%2Fpath%2Froute.ts&appDir=D%3A%5Ccode%5CtickerBell-front%5Csrc%5Capp&appPaths=%2Fapi%2Fpath%2Froute&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!
+;// CONCATENATED MODULE: ./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?page=%2Fapi%2Fpath%2Froute&name=app%2Fapi%2Fpath%2Froute&pagePath=private-next-app-dir%2Fapi%2Fpath%2Froute.tsx&appDir=D%3A%5Ccode%5CtickerBell-front%5Csrc%5Capp&appPaths=%2Fapi%2Fpath%2Froute&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!
 
 // @ts-ignore this need to be imported from next/dist to be external
 
@@ -172,7 +174,7 @@ const routeModule = new AppRouteRouteModule({
         filename: "route",
         bundlePath: "app/api/path/route"
     },
-    resolvedPagePath: "D:\\code\\tickerBell-front\\src\\app\\api\\path\\route.ts",
+    resolvedPagePath: "D:\\code\\tickerBell-front\\src\\app\\api\\path\\route.tsx",
     nextConfigOutput,
     userland: route_namespaceObject
 });
@@ -194,7 +196,7 @@ const originalPathname = "/api/path/route";
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [587,501,760], () => (__webpack_exec__(9276)));
+var __webpack_exports__ = __webpack_require__.X(0, [587,501,760], () => (__webpack_exec__(9384)));
 module.exports = __webpack_exports__;
 
 })();
