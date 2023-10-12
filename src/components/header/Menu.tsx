@@ -6,6 +6,7 @@ const Menu = () => {
   return (
     <div className='flex gap-6 text-[14px]'>
       {/* {isDev && */}
+      {/* 테스트 */}
       <Link href="/modal">모달 임시</Link>
       {/* } */}
       <Link href="/login">로그인</Link>
