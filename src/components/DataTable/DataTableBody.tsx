@@ -1,5 +1,6 @@
 interface DataTableHeaderProps {
   row: IEventRowsData;
+  openModal: () => void;
 }
 
 export const DataTableBody: React.FC<DataTableHeaderProps> = ({ row }) => {

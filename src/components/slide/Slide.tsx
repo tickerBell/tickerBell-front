@@ -40,7 +40,7 @@ const Slide = ({
     <div>
       슬라이드 컴포넌트
       <div className={className}>
-        <Slider {...settings}>
+        {/* <Slider {...settings}>
           {data?.map((item: any, index: any) => (
             <Link href={`/reserve/${item.id}`} key={index}>
               <picture>
@@ -48,7 +48,7 @@ const Slide = ({
               </picture>
             </Link>
           ))}
-        </Slider>
+        </Slider> */}
       </div>
     </div>
   );

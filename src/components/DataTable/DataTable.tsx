@@ -14,6 +14,8 @@ export const DataTable = ({
   rows: any[];
 }) => {
   const [currentPage, setCurrentPage] = useState(0);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [onModal, setOnModal] = useState(false);
   const itemsPerPage = 10;
 
   const handlePageChange = (selectedPage: any) => {
@@ -24,6 +26,13 @@ export const DataTable = ({
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
+  const openModal = (row: any) => {
+    setSelectedRow(row);
+  };
+
+  const closeModal = () => {
+    setSelectedRow(null);
+  };
 
   return (
     <div className="flex flex-col w-3/4 justify-center items-center">
@@ -34,7 +43,13 @@ export const DataTable = ({
               <DataTableHeader key={key} column={column} />
             ))}
             {displayedRows.map((row, key) => (
-              <DataTableBody key={key} row={row} />
+              <DataTableBody
+                key={key}
+                row={row}
+                openModal={() => {
+                  openModal(row);
+                }}
+              />
             ))}
           </table>
         </div>
