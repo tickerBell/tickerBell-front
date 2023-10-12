@@ -10,7 +10,7 @@ import { userRegistApi, vertifySMSApi } from '@/api/users';
 type formPropsType = {
   tab: number;
   registType?: 'login' | 'regist';
-  isRegistration: boolean;
+  isRegistration?: boolean;
 }
 
 const RegistForm = ({ tab, registType = 'regist', isRegistration }: formPropsType) => {
