@@ -8,7 +8,7 @@ const sideData = {
       submenu: [
         {
           title: "이벤트 내역",
-          route: "./detail",
+          route: "./reserve",
         },
       ],
     },
@@ -28,7 +28,7 @@ const sideData = {
       submenu: [
         {
           title: "이벤트 내역",
-          route: "./detail",
+          route: "./reserve",
         },
       ],
     },
