@@ -145,7 +145,7 @@ const RegistForm = ({ tab, registType = 'regist', isRegistration }: formPropsTyp
             <Button className='absolute bottom-0' full
               type="submit"
               disabled={!isSubmitting}
-              // disabled={true}
+            // disabled={true}
             >{registType === 'login' ? '로그인' : '회원 가입'}</Button>
           </>
         }

@@ -2,10 +2,10 @@ import './globals.css'
 import './index.scss';
 import Script from "next/script";
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+// import { Inter } from 'next/font/google'
 import RecoilRootProvider from '@/util/recoilRootProvider';
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'ticket',
@@ -35,7 +35,7 @@ export default function RootLayout({
         />
         <Script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ugm16gkcw2&submodules=geocoder"></Script>
       </head>
-      <body className={inter.className}>
+      <body>
         <RecoilRootProvider>
           {children}
         </RecoilRootProvider>

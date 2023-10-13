@@ -1,5 +1,6 @@
 // 'use client'
-export const dynamic = 'force-dynamic'
+// export const dynamic = 'force-dynamic'
+
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import { type NextRequest, NextResponse } from "next/server";
