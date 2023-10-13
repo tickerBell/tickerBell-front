@@ -33,12 +33,6 @@ const Index = () => {
             <Radio name="ageType" id="청소년" label="청소년" />
             <Radio name="ageType" id="어린이" label="어린이" />
           </nav>
-          <nav className="flex gap-8">
-            <Radio name="eventType" id="뮤지컬" label="뮤지컬" />
-            <Radio name="eventType" id="콘서트" label="콘서트" />
-            <Radio name="eventType" id="연극" label="연극" />
-            <Radio name="eventType" id="클래식/무용" label="클래식/무용" />
-          </nav>
           <nav className="flex gap-10 mt-10"></nav>
           <EventForm registType="event" />
         </div>
