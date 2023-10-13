@@ -9,6 +9,9 @@ const Menu = () => {
       {/* 테스트 */}
       <Link href="/modal">모달 임시</Link>
       {/* } */}
+      ㅁㄴㅇㄹㄴㅇㅁㄹ
+      ㅁㄴㅇㄹ
+      ㅁㄴㅇㄹ
       <Link href="/login">로그인</Link>
       <Link href="/regist">회원가입</Link>
       <Link href="/mypage">마이페이지</Link>

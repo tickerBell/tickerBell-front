@@ -1,0 +1,15 @@
+{
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/",
+  "/detail/page": "/detail",
+  "/login/page": "/login",
+  "/modal/page": "/modal",
+  "/mypage/page": "/mypage",
+  "/regist/page": "/regist",
+  "/reserve/page": "/reserve",
+  "/users/page": "/users",
+  "/oauth/kakao/page": "/oauth/kakao",
+  "/api/path/route": "/api/path",
+  "/api/navermap/route": "/api/navermap",
+  "/reserve/[id]/page": "/reserve/[id]"
+}
