@@ -107,11 +107,13 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
                       >
                         Remove
                       </button>
-                      <img
-                        src={previewUrl}
-                        alt=""
-                        className="w-full h-full object-cover"
-                      />
+                      <picture>
+                        <img
+                          src={previewUrl}
+                          alt=""
+                          className="w-full h-full object-cover"
+                        />
+                      </picture>
                     </>
                   ) : (
                     <p>
