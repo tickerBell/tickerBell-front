@@ -26,7 +26,7 @@ type ButtonProps = {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   className?: string
   full?: boolean;
-}
+} & Omit<React.ComponentProps<'button'>, 'children'>
 
 const Button = forwardRef(({
   children, size = "medium", theme = "primary", className, full, onClick, ...attr
