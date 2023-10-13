@@ -22,7 +22,7 @@ const Index = () => {
       <Header />
       <NavTab />
       <div className="flex h-screen max-w-900 m-auto flex-row justify-center items-center">
-        <div className="h-320 flex items-center flex-col relative">
+        <div className="flex items-center flex-col relative">
           <nav className="flex gap-8">
             <Radio name="seatType" id="일반석" label="일반석" />
             <Radio name="seatType" id="특수석" label="특수석" />
