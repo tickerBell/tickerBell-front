@@ -23,6 +23,7 @@ const MapModal = ({ setOnModal, dimClick, isDim = true, className }: MapModalTyp
   console.log('user 스토어', getLocation);
 
   // NOTE: 임시조치 - next.config.js의 배포와 충돌
+  // api 폴더의 dynamic 옵션끄기
   // useEffect(() => {
   //   // 주소로 위도 경도 찾기 - 목적지
   //   axios
