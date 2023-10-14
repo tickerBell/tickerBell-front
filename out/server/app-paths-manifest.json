@@ -1,0 +1,15 @@
+{
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/page": "app/page.js",
+  "/detail/page": "app/detail/page.js",
+  "/login/page": "app/login/page.js",
+  "/modal/page": "app/modal/page.js",
+  "/mypage/page": "app/mypage/page.js",
+  "/regist/page": "app/regist/page.js",
+  "/reserve/page": "app/reserve/page.js",
+  "/users/page": "app/users/page.js",
+  "/oauth/kakao/page": "app/oauth/kakao/page.js",
+  "/api/path/route": "app/api/path/route.js",
+  "/reserve/[id]/page": "app/reserve/[id]/page.js",
+  "/api/navermap/route": "app/api/navermap/route.js"
+}
