@@ -28,7 +28,7 @@ const MapModal = ({ setOnModal, dimClick, isDim = true, className }: MapModalTyp
     axios
       .get("http://localhost:3000/api/navermap", {
       // .get("https://tickerbell-front-local.pages.dev/api/navermap", {
-      // .get("/map-geocode/v2/geocode", {
+      // .get("https://tickerbell-front-local.pages.dev/api/navermap", {
         params: {
           query: "서울 관악구 관악로 1",
         },
@@ -39,7 +39,7 @@ const MapModal = ({ setOnModal, dimClick, isDim = true, className }: MapModalTyp
         console.log('컨버터1: ', response.data.data.addresses[0].x)
         console.log('컨버터2: ', response.data.data.addresses[0].y)
         axios
-          .get("http://localhost:3000/api/path/route", {
+          .get("http://localhost:3000/api/path", {
             params: {
               start: `${getLocation.longitude},${getLocation.latitude}`,
               goal: `${response.data.data.addresses[0].x}, ${response.data.data.addresses[0].y}`,
