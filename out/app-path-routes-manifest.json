@@ -9,7 +9,7 @@
   "/reserve/page": "/reserve",
   "/users/page": "/users",
   "/oauth/kakao/page": "/oauth/kakao",
-  "/api/path/route": "/api/path",
+  "/api/navermap/route": "/api/navermap",
   "/reserve/[id]/page": "/reserve/[id]",
-  "/api/navermap/route": "/api/navermap"
+  "/api/path/route": "/api/path"
 }

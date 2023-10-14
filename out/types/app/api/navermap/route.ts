@@ -1,4 +1,4 @@
-// File: D:\code\tickerBell-front\src\app\api\navermap\route.ts
+// File: D:\code\tickerBell-front\src\app\api\navermap\route.tsx
 import * as entry from '../../../../../src/app/api/navermap/route.js'
 import type { NextRequest } from 'next/server.js'
 

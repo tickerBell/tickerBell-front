@@ -1,4 +1,4 @@
-// File: D:\code\tickerBell-front\src\app\api\path\route.ts
+// File: D:\code\tickerBell-front\src\app\api\path\route.tsx
 import * as entry from '../../../../../src/app/api/path/route.js'
 import type { NextRequest } from 'next/server.js'
 
