@@ -33,8 +33,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "out/types/**/*.ts"
-, "src/app/api/navermap/route.tsx"  ],
+    "out/types/**/*.ts",
+    "src/app/api/navermap/index.tsx",
+    "src/app/api/path/index.tsx"
+  ],
   "exclude": [
     "node_modules"
   ]

@@ -26,8 +26,8 @@ const MapModal = ({ setOnModal, dimClick, isDim = true, className }: MapModalTyp
   useEffect(() => {
     // 주소로 위도 경도 찾기 - 목적지
     axios
-      // .get("http://localhost:3000/api/navermap", {
-      .get("https://tickerbell-front-local.pages.dev/api/navermap", {
+      .get("http://localhost:3000/api/navermap/route", {
+      // .get("https://tickerbell-front-local.pages.dev/api/navermap", {
         params: {
           query: "서울 관악구 관악로 1",
         },
@@ -38,7 +38,7 @@ const MapModal = ({ setOnModal, dimClick, isDim = true, className }: MapModalTyp
         console.log('컨버터1: ', response.data.data.addresses[0].x)
         console.log('컨버터2: ', response.data.data.addresses[0].y)
         axios
-          .get("https://tickerbell-front-local.pages.dev/api/path", {
+          .get("http://localhost:3000/api/path/route", {
             params: {
               start: `${getLocation.longitude},${getLocation.latitude}`,
               goal: `${response.data.data.addresses[0].x}, ${response.data.data.addresses[0].y}`,
