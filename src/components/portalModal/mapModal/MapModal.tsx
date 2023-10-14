@@ -23,37 +23,36 @@ const MapModal = ({ setOnModal, dimClick, isDim = true, className }: MapModalTyp
   console.log('user 스토어', getLocation);
 
   // NOTE: 임시조치 - next.config.js의 배포와 충돌
-  useEffect(() => {
-    // 주소로 위도 경도 찾기 - 목적지
-    axios
-      .get("http://localhost:3000/api/navermap", {
-      // .get("https://tickerbell-front-local.pages.dev/api/navermap", {
-      // .get("https://tickerbell-front-local.pages.dev/api/navermap", {
-        params: {
-          query: "서울 관악구 관악로 1",
-        },
-      })
-      // 경로 탐색
-      .then((response) => {
-        console.log('변환 : ', response);
-        console.log('컨버터1: ', response.data.data.addresses[0].x)
-        console.log('컨버터2: ', response.data.data.addresses[0].y)
-        axios
-          .get("http://localhost:3000/api/path", {
-            params: {
-              start: `${getLocation.longitude},${getLocation.latitude}`,
-              goal: `${response.data.data.addresses[0].x}, ${response.data.data.addresses[0].y}`,
-              option: "trafast"
-            },
-          })
-          .then((response) => {
-            console.log('경로탐색 : ', response.data.data.route.trafast[0].path);
-            // 경로 정보 설정
-            setRoute(response.data.data.route.trafast[0].path);
-          })
-      })
+  // useEffect(() => {
+  //   // 주소로 위도 경도 찾기 - 목적지
+  //   axios
+  //     .get("http://localhost:3000/api/navermap", {
+  //     // .get("https://tickerbell-front-local.pages.dev/api/navermap", {
+  //       params: {
+  //         query: "서울 관악구 관악로 1",
+  //       },
+  //     })
+  //     // 경로 탐색
+  //     .then((response) => {
+  //       console.log('변환 : ', response);
+  //       console.log('컨버터1: ', response.data.data.addresses[0].x)
+  //       console.log('컨버터2: ', response.data.data.addresses[0].y)
+  //       axios
+  //         .get("http://localhost:3000/api/path", {
+  //           params: {
+  //             start: `${getLocation.longitude},${getLocation.latitude}`,
+  //             goal: `${response.data.data.addresses[0].x}, ${response.data.data.addresses[0].y}`,
+  //             option: "trafast"
+  //           },
+  //         })
+  //         .then((response) => {
+  //           console.log('경로탐색 : ', response.data.data.route.trafast[0].path);
+  //           // 경로 정보 설정
+  //           setRoute(response.data.data.route.trafast[0].path);
+  //         })
+  //     })
 
-  }, [getLocation])
+  // }, [getLocation])
 
   useEffect(() => {
     if (route.length > 0) {
