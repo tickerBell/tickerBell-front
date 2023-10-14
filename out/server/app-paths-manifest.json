@@ -1,6 +1,0 @@
-{
-  "/page": "app/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/modal/page": "app/modal/page.js",
-  "/api/navermap/route": "app/api/navermap/route.js"
-}
