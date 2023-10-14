@@ -28,7 +28,7 @@ import { useSearchParams } from 'next/navigation';
 // }
 
 export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams
-  const query = searchParams.get('query')
-  return new Response(`Hello, Next.js! ${query}`);
+  const response = await axios.get("https://pokeapi.co/api/v2/pokemon/1", {})
+  const data = await response.data;
+  return NextResponse.json({ data })
 }
