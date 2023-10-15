@@ -1,24 +1,32 @@
 import React, { useState } from 'react'
 import Button from '../button/Button';
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import dayjs from 'dayjs';
 import { Radio } from './Input';
 import axios from 'axios';
 import apiInstance from '@/util/useInterceptor';
-import { userRegistApi, vertifySMSApi } from '@/api/users';
+import { userLoginApi, userRegistApi, vertifySMSApi } from '@/api/users';
+import { useRouter } from 'next/router';
+import { useSetRecoilState } from 'recoil';
+import { userState } from '@/recoil/user';
+import { setCookie } from '@/util/authCookie';
 
 type formPropsType = {
   tab: number;
   registType?: 'login' | 'regist';
-  isRegistration?: boolean;
+  isRegistration: string;
 }
 
 const RegistForm = ({ tab, registType = 'regist', isRegistration }: formPropsType) => {
   // const [sms, setSms] = useState(0);
+  const setUserAtk = useSetRecoilState(userState);
+  const router = useRouter();
+  const [selectedAdult, setSelectedAdult] = useState('');
   const [sms, setSms] = useState({
     inputnumber: 0, // 문자 입력
     sendsms: 0, // api로 받은문자 인증번호
     vertifysms: 0, // 인증번호 입력
+    success: false // 인증번호 입력 확인
   })
 
   const {
@@ -26,25 +34,42 @@ const RegistForm = ({ tab, registType = 'regist', isRegistration }: formPropsTyp
     handleSubmit,
     reset,
     watch,
+    control,
+    setError,
     formState: { isSubmitting, isDirty, errors },
   } = useForm<formType>({ mode: "onChange" });
 
   // 인증번호 발송
   const vertifySms = () => {
-    console.log('dd', sms)
-    vertifySMSApi(sms.inputnumber).then((res) => {
-      console.log('res', res);
-      setSms((prevState) => ({
-        ...prevState,
-        sendsms: res.data
-      }));
-    });
+    // console.log('dd', watch().phone)
+    const a = watch().phone?.toString();
+    if (a?.length == 11 && a.includes('010')) {
+      console.log('문자발송', sms)
+      vertifySMSApi(sms.inputnumber).then((res) => {
+        console.log('res', res);
+        setSms((prevState) => ({
+          ...prevState,
+          sendsms: res.data.randomCode
+        }));
+      });
+    } else {
+      alert('010을 포함한 11자리를 입력해주세요')
+    }
   }
 
   // 인증번호 확인
   const okSms = () => {
-    if (sms.sendsms === sms.vertifysms) {
-
+    // e.preventDefault();
+    console.log(sms.sendsms, watch().chkVertifysms)
+    // let inputsms = watch().chkVertifysms
+    if (sms.sendsms == watch().chkVertifysms) {
+      console.log('맞음');
+      setSms((sms) => ({
+        ...sms,
+        success: true
+      }));
+    } else {
+      alert('다시 한번 확인해주세요')
     }
   }
 
@@ -56,20 +81,37 @@ const RegistForm = ({ tab, registType = 'regist', isRegistration }: formPropsTyp
     }));
   }
 
-  const chkonChange = (e: any) => {
-    const key = e.target.value;
-    setSms((prevState) => ({
-      ...prevState,
-      vertifysms: key
-    }));
-  }
+  const handleGenderChange = (e: any) => {
+    // console.log('ee', e);
+    setSelectedAdult(e.target.value);
+  };
 
   // console.log('회원가입 폼 : ', watch(), isRegistration)
-  console.log('isSubmitting', isSubmitting);
 
   const onSubmit = (data: any) => {
+    console.log('form : ', data.username, data.password, data.phone, selectedAdult === 'adult' ? true : false, isRegistration === 'isRegistrationTrue' ? true : false, false);
+    if (sms.success) {
+      userRegistApi(
+        data.username,
+        data.password,
+        data.phone,
+        selectedAdult === 'adult' ? true : false,
+        isRegistration === 'isRegistrationTrue' ? true : false,
+        false).then((res) => {
+          userLoginApi(data.username, data.password).then((res) => {
+            console.log('res', res.data);
+            setUserAtk(res.data.accessToken);
+            setCookie("rtk", res.data.refreshToken, {
+              path: "/",
+              secure: "/",
+            });
+            router.push('/');
+          })
+        });
+    } else {
+      alert('인증을 완료해주세요')
+    }
     // userRegistApi()
-    console.log('form : ', data);
   }
 
   return (
@@ -83,7 +125,7 @@ const RegistForm = ({ tab, registType = 'regist', isRegistration }: formPropsTyp
                 <input type="text"
                   id="username"
                   placeholder={tab === 1 ? '아이디를 입력해주세요' : '이름을 입력해주세요'}
-                  maxLength={5}
+                  maxLength={10}
                   {...register('username', {
                     required: "이름은 필수 입력입니다.",
                     minLength: {
@@ -110,8 +152,8 @@ const RegistForm = ({ tab, registType = 'regist', isRegistration }: formPropsTyp
                       message: "6자리 이상 입력해주세요.",
                     },
                     pattern: {
-                      value: /^[A-Za-z0-9]*$/,
-                      message: "영어 또는 숫자만 입력해주세요",
+                      value: /^(?=.*[A-Za-z])(?=.*\d).+$/,
+                      message: "영어와 숫자를 포함해주세요",
                     },
                   })}
                 />
@@ -119,38 +161,82 @@ const RegistForm = ({ tab, registType = 'regist', isRegistration }: formPropsTyp
               {errors.password && <small role="alert">{errors.password.message}</small>}
             </div>
 
-            <div className='flex gap-6 mb-10'>
-              성인 여부
-              <nav className='flex gap-8'>
-                <Radio name="adultchk" id="미성년" label='미성년' />
-                <Radio name="adultchk" id="성년" label='성년' />
-              </nav>
+            <div className='mb-10'>
+              <div className='flex gap-6'>
+                성인 여부
+                <Radio name="adultchk" id="미성년" label='미성년' value="unadult"
+                  checked={selectedAdult === 'unadult'}
+                  onChange={handleGenderChange} />
+                <Radio name="adultchk" id="성년" label='성년' value="adult"
+                  checked={selectedAdult === 'adult'}
+                  onChange={handleGenderChange} />
+              </div>
+              {selectedAdult === 'false' && (
+                <small role="alert">
+                  성인여부를 체크해주세요
+                </small>
+              )}
             </div>
             <div className='mb-10'>
               <div className='flex items-center gap-6 whitespace-pre'>
                 전화번호
-                <input type="text" name="" id="" placeholder='- 을 제외한 11자리입력' onChange={onChange} maxLength={11} />
-                <Button size='small' onClick={vertifySms}>문자인증</Button>
+                <input type="text" id="" placeholder='- 을 제외한 11자리입력' maxLength={11}
+                  disabled={sms.sendsms != 0 ? true : false}
+                  {...register('phone', {
+                    required: "- 을 제외한 11자리입력",
+                    minLength: {
+                      value: 11,
+                      message: "11자리 입력해주세요.",
+                    },
+                  })}
+                />
+                <Button size='small' onClick={(e: any) => {
+                  // e.stopPropagation();
+                  e.preventDefault();
+                  vertifySms();
+                }}>문자인증</Button>
               </div>
+              {errors.phone && <small role="alert">{errors.phone.message}</small>}
             </div>
-            {sms.sendsms !== 0 &&
+            {(sms.sendsms !== 0 && sms.success == false) &&
               <div className='mb-10'>
                 <div className='flex items-center gap-6 whitespace-pre'>
                   인증번호
-                  <input type="text" name="" id="" placeholder='문자로 수신된 인증버호 입력' onChange={onChange} maxLength={4} />
-                  <Button size='small' onClick={vertifySms}>확인</Button>
+                  <input type="text"
+                    id="chkVertifysms"
+                    placeholder='문자로 수신된 인증번호 입력'
+                    // onChange={chkonChange} 
+                    maxLength={4}
+                    {...register('chkVertifysms', {
+                      required: "인증문자를 입력해주세요",
+                      minLength: {
+                        value: 4,
+                        message: "4자리 입력해주세요.",
+                      },
+                    })}
+                  />
+                  <Button size='small' onClick={(e: any) => {
+                    e.preventDefault();
+                    okSms();
+                  }}
+                  > 확인</Button>
                 </div>
               </div>
             }
-            <Button className='absolute bottom-0' full
+            <Button className='bottom-0' full
               type="submit"
-              disabled={!isSubmitting}
-            // disabled={true}
+              // disabled={!isSubmitting}
+              // disabled={true}
+              onClick={() => {
+                if (selectedAdult === '') {
+                  setSelectedAdult('false');
+                }
+              }}
             >{registType === 'login' ? '로그인' : '회원 가입'}</Button>
           </>
         }
       </form>
-    </div>
+    </div >
   )
 }
 

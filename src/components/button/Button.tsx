@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import React, { forwardRef, Ref } from 'react';
 import { twMerge } from 'tailwind-merge';
-import s from './button.module.scss';
 
 type buttonType = {
   [key: string]: string;
@@ -37,7 +36,7 @@ const Button = forwardRef(({
       ref={ref}
       className={classNames(twMerge(`${buttonTheme[theme]} ${buttonSize[size]} px-10 py-4 box-border cursor-pointer whitespace-pre rounded-4
       `, className), {
-        [s.is_full]: full
+        'w-full': full
       })}
       onClick={onClick}
       {...attr}

@@ -15,7 +15,7 @@ import { useRecoilState } from 'recoil';
 
 const Index = () => {
   const [tab, setTab] = useState(-1);
-  const [radio, setRadio] = useState('');
+  const [radio, setRadio] = useState('isRegistrationTrue');
   const router = useRouter();
 
   const {
@@ -33,7 +33,11 @@ http://localhost:3000/oauth/kakao`);
   }
 
   const onChangeRadio = (e: any) => {
-    setRadio(e.target.value);
+    if (e.target.value === 'isRegistrationTrue') {
+      setRadio('true');
+    } else {
+      setRadio('false');
+    }
   }
 
   return (
@@ -51,11 +55,11 @@ http://localhost:3000/oauth/kakao`);
         </nav>
         <nav className='flex gap-10 mt-10'>
           <Button onClick={click} className={classNames('bg-[#fae100] text-white', {})}>카카오 회원가입</Button>
-          <Button theme='border' onClick={() => setTab(1)} className={classNames('border-primary', {
+          <Button theme='border' onClick={() => setTab(1)} className={classNames('border-primary hover:bg-primary hover:saturate-100 hover:text-white', {
             'bg-primary text-white': tab === 1
           })}>일반 회원가입</Button>
         </nav>
-        <RegistForm tab={tab} isRegistration={radio === 'isRegistrationTrue' ? true : false} />
+        <RegistForm tab={tab} isRegistration={radio} />
       </div>
     </div>
   )
