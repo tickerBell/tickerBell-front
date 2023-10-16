@@ -1,11 +1,17 @@
-import React from 'react'
+import Header from "@/components/header/Header";
+import NavTab from "@/components/NavTab/NavTab";
+import { SideBar } from "@/components/sidebar/SideBar";
+import React from "react";
 
-const Index = () => {
+const index = () => {
   return (
     <div>
-      마이페이지 테스트
+      <Header />
+      <NavTab />
+      <SideBar />
+      <div>컨텐츠 </div>
     </div>
-  )
-}
+  );
+};
 
-export default Index
+export default index;
