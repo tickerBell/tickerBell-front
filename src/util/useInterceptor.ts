@@ -4,7 +4,7 @@ import axios from "axios";
 
 // NOTE: api 별도 처리를 위한 임시 파일
 const apiInstance = axios.create({
-  baseURL: "http://3.37.206.141:8080/",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: 5000,
 });
 
