@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Button from "../button/Button";
 import { Controller, useForm } from "react-hook-form";
 import DaumPostcode from "react-daum-postcode";
@@ -15,12 +15,17 @@ type FormProps = {
   registType?: "event" | "regist";
 };
 
+type IFormInput = {
+  input: string;
+};
+
 const EventForm = ({ registType = "regist" }: FormProps) => {
   const {
     register,
     handleSubmit,
     control,
     watch,
+    reset,
     formState: { isSubmitting, isDirty, errors },
   } = useForm();
 
@@ -31,12 +36,15 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
 
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewUrl, setPreviewUrl] = useState("");
+  const [values, setValues] = useState<string[]>([]);
+  const [fileUrl, setFileUrl] = useState<string | null>(null);
 
   const onDrop = useCallback((acceptedFiles: any) => {
     const file = acceptedFiles[0];
     const url = URL.createObjectURL(file);
     setPreviewUrl(url);
     setPreviewVisible(true);
+    setFileUrl(url);
     console.log(url);
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -45,8 +53,32 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
     setPreviewUrl("");
   };
 
-  const onValid = (data: any) => console.log(data, "onvalid");
+  const onValid = (data: any) => {
+    data.casting = values;
+    data.fileUrl = fileUrl;
+    console.log(data);
+    setValues([]);
+  };
+
   const onInvalid = (data: any) => console.log(data, "onInvalid");
+
+  //   const addToList = (data: any) => {
+  //     const list = data.casting.split(",");
+  //     setValues((prevValues) => [...prevValues, ...list]);
+  //     console.log(values.join(","));
+  //     reset();
+  //   };
+  const addToList = () => {
+    const castingValue = watch("casting");
+    if (castingValue) {
+      setValues((prevValues) => [...prevValues, castingValue]);
+      reset({ casting: "" });
+    }
+  };
+
+  useEffect(() => {
+    console.log(values.join(", "));
+  }, [values]);
 
   return (
     <>
@@ -162,7 +194,6 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
                   className="border border-gray-600 focus:border-green-500"
                 />
               </div>
-              <Button>입력</Button>
             </div>
             {/* 캐스팅 */}
 
@@ -190,14 +221,13 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
                 )}
               />
             </nav>
-            <form>
-              <div className="mb-10 flex flex-row">
-                <div className="flex items-center gap-6 whitespace-pre">
-                  <label>배우명</label>
+            <div className="mb-10 flex flex-row">
+              <div className="flex items-center gap-6 whitespace-pre">
+                <label>배우명</label>
+                {values.length === 0 ? (
                   <textarea
                     id="casting"
                     placeholder="입력해주세요"
-                    maxLength={4}
                     {...register("casting", {
                       required: "배우명은 필수 입력입니다.",
                       minLength: {
@@ -207,11 +237,20 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
                     })}
                     className="border border-gray-600 focus:border-green-500"
                   />
-                  <button type="button">그냥입력</button>
-                  <Button type="submit">입력</Button>
-                </div>
+                ) : (
+                  <textarea
+                    id="casting"
+                    placeholder="입력해주세요"
+                    {...register("casting")}
+                    className="border border-gray-600 focus:border-green-500"
+                  />
+                )}
+                <Button type="button" onClick={addToList}>
+                  입력
+                </Button>
               </div>
-            </form>
+              {values}
+            </div>
 
             <Button className="absolute bottom-0 mt-20" onClick={() => {}}>
               {registType === "event" ? "이벤트 생성" : "회원 가입"}

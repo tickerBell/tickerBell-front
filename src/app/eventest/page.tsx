@@ -11,10 +11,15 @@ function Form() {
   const { register, handleSubmit, reset } = useForm<IFormInput>();
   const [values, setValues] = useState<string[]>([]);
 
-  const onSubmit = (data: IFormInput) => {
+  const addToList = (data: IFormInput) => {
     const list = data.input.split(",");
     setValues((prevValues) => [...prevValues, ...list]);
     reset();
+  };
+
+  const onSubmit = () => {
+    console.log(values.join(", "));
+    setValues([]); // 제출 후 배열을 비웁니다.
   };
 
   const removeValue = (indexToRemove: number) => {
@@ -34,6 +39,13 @@ function Form() {
         placeholder="값을 쉼표로 구분해서 입력하세요"
         className="border p-2"
       />
+      <button
+        type="button"
+        onClick={handleSubmit(addToList)}
+        className="bg-blue-500 text-white p-2 rounded"
+      >
+        배열에 추가
+      </button>
       <button type="submit" className="bg-blue-500 text-white p-2 rounded">
         제출
       </button>
