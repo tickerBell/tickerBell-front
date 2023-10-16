@@ -3,5 +3,4 @@ interface formType {
   password?: number;
   phone?: number;
   chkVertifysms?: number;
-  adultchk?: string;
 };
