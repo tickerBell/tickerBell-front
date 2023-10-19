@@ -1,9 +1,9 @@
-import React from 'react';
-import Slider, { Settings } from 'react-slick';
-import { useMemo } from 'react';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import Link from 'next/link';
+import React from "react";
+import Slider, { Settings } from "react-slick";
+import { useMemo } from "react";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Link from "next/link";
 
 type sliderProps = {
   data?: any;
@@ -15,9 +15,15 @@ type sliderProps = {
   speed?: number;
   /** 반복 여부 */
   loop?: boolean;
-}
+};
 
-const Slide = ({ data, className, autoplay = false, speed = 300, loop = true }: sliderProps) => {
+const Slide = ({
+  data,
+  className,
+  autoplay = false,
+  speed = 300,
+  loop = true,
+}: sliderProps) => {
   const settings = useMemo<Settings>(
     () => ({
       // dots: true,
@@ -25,10 +31,10 @@ const Slide = ({ data, className, autoplay = false, speed = 300, loop = true }: 
       speed: speed,
       slidesToShow: 5,
       autoplay: Boolean(autoplay),
-      autoplaySpeed: typeof autoplay === 'boolean' ? 3000 : autoplay,
-      // gap: 
+      autoplaySpeed: typeof autoplay === "boolean" ? 3000 : autoplay,
+      // gap:
     }),
-    [autoplay, loop, speed],
+    [autoplay, loop, speed]
   );
   return (
     <div>
@@ -45,7 +51,7 @@ const Slide = ({ data, className, autoplay = false, speed = 300, loop = true }: 
         </Slider>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Slide
+export default Slide;

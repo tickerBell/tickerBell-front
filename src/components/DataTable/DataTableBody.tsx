@@ -1,5 +1,6 @@
 interface DataTableHeaderProps {
   row: IEventRowsData;
+  openModal: () => void;
 }
 
 export const DataTableBody: React.FC<DataTableHeaderProps> = ({ row }) => {
@@ -7,7 +8,10 @@ export const DataTableBody: React.FC<DataTableHeaderProps> = ({ row }) => {
 
   return (
     <tbody>
-      <tr className="border-b text-sm text-gray-900 text-center">
+      <tr
+        onClick={() => console.log("모달클릭")}
+        className="border-b text-sm text-gray-900 text-center"
+      >
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
           {title}
         </td>
