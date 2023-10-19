@@ -27,38 +27,21 @@ const MapModal = ({
   console.log("user 스토어", getLocation);
 
   // NOTE: 임시조치 - next.config.js의 배포와 충돌
+  // api 폴더의 dynamic 옵션끄기
   useEffect(() => {
     // 주소로 위도 경도 찾기 - 목적지
     axios
-      .get("http://localhost:3000/api/navermap", {
-        params: {
+      .post("http://3.37.206.141:8080/naver-api/path", {
           query: "서울 관악구 관악로 1",
-        },
+        start: `${getLocation.longitude},${getLocation.latitude}`
       })
       // 경로 탐색
       .then((response) => {
-        console.log("변환 : ", response);
-        console.log("컨버터1: ", response.data.data.addresses[0].x);
-        console.log("컨버터2: ", response.data.data.addresses[0].y);
-        axios
-          .get("http://localhost:3000/api/path", {
-            params: {
-              start: `${getLocation.longitude},${getLocation.latitude}`,
-              goal: `${response.data.data.addresses[0].x}, ${response.data.data.addresses[0].y}`,
-              option: "trafast",
-            },
-          })
-          .then((response) => {
-            console.log(
-              "경로탐색 : ",
-              response.data.data.route.trafast[0].path
-            );
-            console.log("경로탐색 : ", response.data);
-            // 경로 정보 설정
-            setRoute(response.data.data.route.trafast[0].path);
-          });
-      });
-  }, [getLocation]);
+        // console.log('res', response.data.data.route.tracomfort[0].path)
+        setRoute(response.data.data.route.tracomfort[0].path);
+      })
+
+  }, [getLocation])
 
   useEffect(() => {
     if (route.length > 0) {

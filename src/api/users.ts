@@ -8,21 +8,34 @@ export async function vertifySMSApi(number: number) {
   return res;
 }
 
-type userRegistType = {
-  username: string;
-  password: string;
-  phone: string;
-  isRegistration: boolean;
-  isKakaoJoin: boolean
-};
 // 회원가입
-export async function userRegistApi({ username, password, phone, isRegistration, isKakaoJoin }: userRegistType) {
+export async function userRegistApi(
+  username: string,
+  password: string,
+  phone: number,
+  isAdult: boolean,
+  isRegistration: boolean,
+  isKakaoJoin: boolean
+) {
   const res = await apiInstance.post("/api/members", {
     username: username,
     password: password,
     phone: phone,
+    isAdult: isAdult,
     isRegistration: isRegistration,
-    isKakaoJoin: isKakaoJoin
+    isKakaoJoin: isKakaoJoin,
+  });
+  return res;
+}
+
+// 로그인
+export async function userLoginApi(
+  username: string,
+  password: string,
+) {
+  const res = await apiInstance.post("/api/login", {
+    username: username,
+    password: password,
   });
   return res;
 }
