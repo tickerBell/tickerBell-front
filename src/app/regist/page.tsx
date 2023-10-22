@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import { useRef, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/router';
 import { Radio } from '@/components/form/Input';
 import RegistForm from '@/components/form/RegistForm';
 

@@ -212,7 +212,7 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
                           id={option}
                           value={option}
                           label={option}
-                          onChange={(e) => field.onChange(e.target.value)}
+                          onChange={(e:any) => field.onChange(e.target.value)}
                           checked={field.value === option}
                         />
                       )
