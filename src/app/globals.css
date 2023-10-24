@@ -26,4 +26,7 @@
   .flex-vertical-center {
     @apply flex;
   }
+  .button-hover {
+    @apply hover:bg-primary hover:saturate-100 hover:text-white
+  }
 }

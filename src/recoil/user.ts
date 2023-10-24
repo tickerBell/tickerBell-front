@@ -1,4 +1,4 @@
-import { atom, selector } from "recoil";
+import { atom, selector, selectorFamily } from "recoil";
 
 // UserState 타입 정의
 type UserState = {
@@ -23,12 +23,11 @@ export const userState = atom<UserState>({
   },
 });
 
-// selector를 사용하여 locationState.latitude를 변경
 export const locationSelector = selector<any>({
   key: "locationSelector",
   get: ({ get }) => {
     const user = get(userState);
-    return user && user.locationState.latitude;
+    return user && user.locationState;
   },
   set: ({ set }, newValue) => {
     // userState를 가져와서 변경

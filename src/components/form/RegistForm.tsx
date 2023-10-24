@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '../button/Button';
 import { useForm, Controller } from "react-hook-form";
 import dayjs from 'dayjs';
@@ -15,9 +15,10 @@ type formPropsType = {
   tab: number;
   registType?: 'login' | 'regist';
   isRegistration: string;
+  setTab: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const RegistForm = ({ tab, registType = 'regist', isRegistration }: formPropsType) => {
+const RegistForm = ({ tab, setTab, registType = 'regist', isRegistration }: formPropsType) => {
   // const [sms, setSms] = useState(0);
   const setUserInfo = useSetRecoilState(roleSelector);
   const setUserAtk = useSetRecoilState(userState);
@@ -87,7 +88,7 @@ const RegistForm = ({ tab, registType = 'regist', isRegistration }: formPropsTyp
     setSelectedAdult(e.target.value);
   };
 
-  // console.log('회원가입 폼 : ', watch(), isRegistration)
+  console.log('회원가입 폼 : ', watch(), isRegistration)
 
   const onSubmit = (data: any) => {
     console.log('form : ', data.username, data.password, data.phone, selectedAdult === 'adult' ? true : false, isRegistration === 'isRegistrationTrue' ? true : false, false);
@@ -116,132 +117,139 @@ const RegistForm = ({ tab, registType = 'regist', isRegistration }: formPropsTyp
     // userRegistApi()
   }
 
+  // useEffect(() => {
+  //   setTab(-1);
+  // }, [isRegistration])
+
   return (
     <div>
-      <form className='mt-40 w-full' onSubmit={handleSubmit(onSubmit)}>
-        {tab === 1 &&
-          <>
-            <div className='mb-10'>
-              <div className='flex gap-6'>
-                <label>{tab === 1 ? '아이디' : '이름'}</label>
-                <input type="text"
-                  id="username"
-                  placeholder={tab === 1 ? '아이디를 입력해주세요' : '이름을 입력해주세요'}
-                  maxLength={10}
-                  {...register('username', {
-                    required: "이름은 필수 입력입니다.",
-                    minLength: {
-                      value: 2,
-                      message: "2자리 이상 입력해주세요.",
-                    },
-                  })}
-                />
-              </div>
-              {errors.username && <small role="alert">{errors.username.message}</small>}
-            </div>
-
-            <div className='mb-10'>
-              <div className='flex gap-6'>
-                <label>비밀번호</label>
-                <input type="password"
-                  id="password"
-                  placeholder='비밀번호를 입력해주세요'
-                  minLength={6}
-                  {...register('password', {
-                    required: "비밀번호는 필수 입력입니다.",
-                    minLength: {
-                      value: 6,
-                      message: "6자리 이상 입력해주세요.",
-                    },
-                    pattern: {
-                      value: /^(?=.*[A-Za-z])(?=.*\d).+$/,
-                      message: "영어와 숫자를 포함해주세요",
-                    },
-                  })}
-                />
-              </div>
-              {errors.password && <small role="alert">{errors.password.message}</small>}
-            </div>
-
-            {registType === 'regist' && <>
+      {
+        isRegistration !== '' &&
+        <form className='mt-40 w-full' onSubmit={handleSubmit(onSubmit)}>
+          {tab === 1 &&
+            <>
               <div className='mb-10'>
                 <div className='flex gap-6'>
-                  성인 여부
-                  <Radio name="adultchk" id="미성년" label='미성년' value="unadult"
-                    checked={selectedAdult === 'unadult'}
-                    onChange={handleGenderChange} />
-                  <Radio name="adultchk" id="성년" label='성년' value="adult"
-                    checked={selectedAdult === 'adult'}
-                    onChange={handleGenderChange} />
-                </div>
-                {selectedAdult === 'false' && (
-                  <small role="alert">
-                    성인여부를 체크해주세요
-                  </small>
-                )}
-              </div>
-              <div className='mb-10'>
-                <div className='flex items-center gap-6 whitespace-pre'>
-                  전화번호
-                  <input type="text" id="" placeholder='- 을 제외한 11자리입력' maxLength={11}
-                    disabled={sms.sendsms != 0 ? true : false}
-                    {...register('phone', {
-                      required: "- 을 제외한 11자리입력",
+                  <label>{tab === 1 ? '아이디' : '이름'}</label>
+                  <input type="text"
+                    id="username"
+                    placeholder={tab === 1 ? '아이디를 입력해주세요' : '이름을 입력해주세요'}
+                    maxLength={10}
+                    {...register('username', {
+                      required: "이름은 필수 입력입니다.",
                       minLength: {
-                        value: 11,
-                        message: "11자리 입력해주세요.",
+                        value: 2,
+                        message: "2자리 이상 입력해주세요.",
                       },
                     })}
                   />
-                  <Button size='small' onClick={(e: any) => {
-                    // e.stopPropagation();
-                    e.preventDefault();
-                    vertifySms();
-                  }}>문자인증</Button>
                 </div>
-                {errors.phone && <small role="alert">{errors.phone.message}</small>}
+                {errors.username && <small role="alert">{errors.username.message}</small>}
               </div>
-              {(sms.sendsms !== 0 && sms.success == false) &&
+
+              <div className='mb-10'>
+                <div className='flex gap-6'>
+                  <label>비밀번호</label>
+                  <input type="password"
+                    id="password"
+                    placeholder='비밀번호를 입력해주세요'
+                    minLength={6}
+                    {...register('password', {
+                      required: "비밀번호는 필수 입력입니다.",
+                      minLength: {
+                        value: 6,
+                        message: "6자리 이상 입력해주세요.",
+                      },
+                      pattern: {
+                        value: /^(?=.*[A-Za-z])(?=.*\d).+$/,
+                        message: "영어와 숫자를 포함해주세요",
+                      },
+                    })}
+                  />
+                </div>
+                {errors.password && <small role="alert">{errors.password.message}</small>}
+              </div>
+
+              {registType === 'regist' && <>
+                <div className='mb-10'>
+                  <div className='flex gap-6'>
+                    성인 여부
+                    <Radio name="adultchk" id="미성년" label='미성년' value="unadult"
+                      checked={selectedAdult === 'unadult'}
+                      onChange={handleGenderChange} />
+                    <Radio name="adultchk" id="성년" label='성년' value="adult"
+                      checked={selectedAdult === 'adult'}
+                      onChange={handleGenderChange} />
+                  </div>
+                  {selectedAdult === 'false' && (
+                    <small role="alert">
+                      성인여부를 체크해주세요
+                    </small>
+                  )}
+                </div>
                 <div className='mb-10'>
                   <div className='flex items-center gap-6 whitespace-pre'>
-                    인증번호
-                    <input type="text"
-                      id="chkVertifysms"
-                      placeholder='문자로 수신된 인증번호 입력'
-                      // onChange={chkonChange} 
-                      maxLength={4}
-                      {...register('chkVertifysms', {
-                        required: "인증문자를 입력해주세요",
+                    전화번호
+                    <input type="text" id="" placeholder='- 을 제외한 11자리입력' maxLength={11}
+                      disabled={sms.sendsms != 0 ? true : false}
+                      {...register('phone', {
+                        required: "- 을 제외한 11자리입력",
                         minLength: {
-                          value: 4,
-                          message: "4자리 입력해주세요.",
+                          value: 11,
+                          message: "11자리 입력해주세요.",
                         },
                       })}
                     />
                     <Button size='small' onClick={(e: any) => {
+                      // e.stopPropagation();
                       e.preventDefault();
-                      okSms();
-                    }}
-                    > 확인</Button>
+                      vertifySms();
+                    }}>문자인증</Button>
                   </div>
+                  {errors.phone && <small role="alert">{errors.phone.message}</small>}
                 </div>
-              }
-            </>
-            }
-            <Button className='bottom-0' full
-              type="submit"
-              // disabled={!isSubmitting}
-              // disabled={true}
-              onClick={() => {
-                if (selectedAdult === '') {
-                  setSelectedAdult('false');
+                {(sms.sendsms !== 0 && sms.success == false) &&
+                  <div className='mb-10'>
+                    <div className='flex items-center gap-6 whitespace-pre'>
+                      인증번호
+                      <input type="text"
+                        id="chkVertifysms"
+                        placeholder='문자로 수신된 인증번호 입력'
+                        // onChange={chkonChange} 
+                        maxLength={4}
+                        {...register('chkVertifysms', {
+                          required: "인증문자를 입력해주세요",
+                          minLength: {
+                            value: 4,
+                            message: "4자리 입력해주세요.",
+                          },
+                        })}
+                      />
+                      <Button size='small' onClick={(e: any) => {
+                        e.preventDefault();
+                        okSms();
+                      }}
+                      > 확인</Button>
+                    </div>
+                  </div>
                 }
-              }}
-            >{registType === 'login' ? '로그인' : '회원 가입'}</Button>
-          </>
-        }
-      </form>
-    </div >
+              </>
+              }
+              <Button className='bottom-0' full
+                type="submit"
+                // disabled={!isSubmitting}
+                // disabled={true}
+                onClick={() => {
+                  if (selectedAdult === '') {
+                    setSelectedAdult('false');
+                  }
+                }}
+              >{registType === 'login' ? '로그인' : '회원 가입'}</Button>
+            </>
+          }
+        </form>
+      }
+    </div>
   )
 }
 

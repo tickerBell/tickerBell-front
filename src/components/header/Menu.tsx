@@ -9,8 +9,6 @@ import { roleSelector } from '@/recoil/user';
 const Menu = () => {
   const getUserInfo = useRecoilValue(roleSelector);
 
-  console.log('getUserInfo', getUserInfo);
-
   return (
     <div className='flex gap-6 text-[14px]'>
       {isDev &&
