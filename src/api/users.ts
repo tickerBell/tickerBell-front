@@ -1,7 +1,7 @@
 import apiInstance from "@/util/useInterceptor";
 
 // 회원가입시 문자 인증
-export async function vertifySMSApi(number: number) {
+export async function vertifySMSApi(number: string) {
   const res = await apiInstance.post("/api/join/sms-validation", {
     phone: number,
   });
@@ -37,5 +37,11 @@ export async function userLoginApi(
     username: username,
     password: password,
   });
+  return res;
+}
+
+// 회원 정보 조회
+export async function userInfoApi() {
+  const res = await apiInstance.post("/api/member", { });
   return res;
 }

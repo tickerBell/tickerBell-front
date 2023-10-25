@@ -1,8 +1,9 @@
-import { atom, selector } from "recoil";
+import { atom, selector, selectorFamily } from "recoil";
 
 // UserState 타입 정의
 type UserState = {
   atk: string;
+  role: string;
   locationState: {
     latitude: number;
     longitude: number;
@@ -14,6 +15,7 @@ export const userState = atom<UserState>({
   key: "userState",
   default: {
     atk: "",
+    role: "",
     locationState: {
       latitude: 0,
       longitude: 0,
@@ -21,21 +23,41 @@ export const userState = atom<UserState>({
   },
 });
 
-// selector를 사용하여 locationState.latitude를 변경
-export const locationSelector = selector<any>({
-  key: "locationSelector",
-  get: ({ get }) => {
-    const user = get(userState);
-    return user.locationState.latitude;
-  },
-  set: ({ set }, newValue) => {
-    // userState를 가져와서 변경
-    set(userState, (prevUserState:any) => ({
-      ...prevUserState,
-      locationState: {
-        ...prevUserState.locationState,
-        latitude: newValue,
-      },
-    }));
-  },
+export const userSelector = selectorFamily({
+  key: "userPropertySelector",
+  get:
+    (property) =>
+    ({ get }) => {
+      const user = get(userState);
+
+      switch (property) {
+        case "atk":
+          return user && user.atk;
+        case "location":
+          return user && user.locationState;
+        case "role":
+          return user && user.role;
+        default:
+          return null;
+      }
+    },
+  set:
+    (property) =>
+    ({ set }, newValue) => {
+      set(userState, (prevUserState: any) => {
+        switch (property) {
+          case "atk":
+            return { ...prevUserState, atk: newValue };
+          case "location":
+            return {
+              ...prevUserState,
+              locationState: { ...prevUserState.locationState, newValue },
+            };
+          case "role":
+            return { ...prevUserState, role: newValue };
+          default:
+            return prevUserState;
+        }
+      });
+    },
 });
