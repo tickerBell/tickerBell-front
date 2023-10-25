@@ -1,27 +1,24 @@
-import React, { useEffect, useState } from 'react'
-import Button from '../button/Button';
-import { useForm, Controller } from "react-hook-form";
-import dayjs from 'dayjs';
-import { Radio } from './Input';
-import axios from 'axios';
-import apiInstance from '@/util/useInterceptor';
 import { userLoginApi, userRegistApi, vertifySMSApi } from '@/api/users';
-import { useRouter } from 'next/navigation';
-import { useSetRecoilState } from 'recoil';
-import { roleSelector, userState } from '@/recoil/user';
+import { userSelector } from '@/recoil/user';
 import { setCookie } from '@/util/authCookie';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import { useForm } from "react-hook-form";
+import { useSetRecoilState } from 'recoil';
+import Button from '../button/Button';
+import { Radio } from './Input';
 
 type formPropsType = {
   tab: number;
   registType?: 'login' | 'regist';
-  isRegistration: string;
-  setTab: React.Dispatch<React.SetStateAction<number>>;
+  isRegistration?: string;
+  setTab?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const RegistForm = ({ tab, setTab, registType = 'regist', isRegistration }: formPropsType) => {
   // const [sms, setSms] = useState(0);
-  const setUserInfo = useSetRecoilState(roleSelector);
-  const setUserAtk = useSetRecoilState(userState);
+  const setUserAtk = useSetRecoilState(userSelector('atk'));
+  const setUserInfo = useSetRecoilState(userSelector('role'));
   const router = useRouter();
   const [selectedAdult, setSelectedAdult] = useState('');
   const [sms, setSms] = useState({
@@ -88,7 +85,7 @@ const RegistForm = ({ tab, setTab, registType = 'regist', isRegistration }: form
     setSelectedAdult(e.target.value);
   };
 
-  console.log('회원가입 폼 : ', watch(), isRegistration)
+  // console.log('회원가입 폼 : ', watch(), isRegistration)
 
   const onSubmit = (data: any) => {
     console.log('form : ', data.username, data.password, data.phone, selectedAdult === 'adult' ? true : false, isRegistration === 'isRegistrationTrue' ? true : false, false);

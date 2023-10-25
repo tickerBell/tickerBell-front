@@ -23,34 +23,41 @@ export const userState = atom<UserState>({
   },
 });
 
-export const locationSelector = selector<any>({
-  key: "locationSelector",
-  get: ({ get }) => {
-    const user = get(userState);
-    return user && user.locationState;
-  },
-  set: ({ set }, newValue) => {
-    // userState를 가져와서 변경
-    set(userState, (prevUserState: any) => ({
-      ...prevUserState,
-      locationState: {
-        ...prevUserState.locationState,
-        latitude: newValue,
-      },
-    }));
-  },
-});
+export const userSelector = selectorFamily({
+  key: "userPropertySelector",
+  get:
+    (property) =>
+    ({ get }) => {
+      const user = get(userState);
 
-export const roleSelector = selector<any>({
-  key: "roleSelector",
-  get: ({ get }) => {
-    const user = get(userState);
-    return user && user.role;
-  },
-  set: ({ set }, newValue) => {
-    set(userState, (prevUserState: any) => ({
-      ...prevUserState,
-      role: newValue,
-    }));
-  },
+      switch (property) {
+        case "atk":
+          return user && user.atk;
+        case "location":
+          return user && user.locationState;
+        case "role":
+          return user && user.role;
+        default:
+          return null;
+      }
+    },
+  set:
+    (property) =>
+    ({ set }, newValue) => {
+      set(userState, (prevUserState: any) => {
+        switch (property) {
+          case "atk":
+            return { ...prevUserState, atk: newValue };
+          case "location":
+            return {
+              ...prevUserState,
+              locationState: { ...prevUserState.locationState, newValue },
+            };
+          case "role":
+            return { ...prevUserState, role: newValue };
+          default:
+            return prevUserState;
+        }
+      });
+    },
 });

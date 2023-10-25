@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from 'next/navigation';
 import { Radio } from '@/components/form/Input';
 import RegistForm from '@/components/form/RegistForm';
+import LoginForm from '@/components/form/LoginForm';
 
 const Index = () => {
   const [tab, setTab] = useState(-1);
@@ -32,17 +33,13 @@ http://localhost:3000/oauth/kakao`);
   return (
     <div className='flex h-screen max-w-400 m-auto flex-col justify-center items-center'>
       <div className='h-320 flex items-center flex-col relative'>
-        <nav className='flex gap-8'>
-          <Radio name="userType" id="예매자" label='예매자' />
-          <Radio name="userType" id="등록자" label='등록자' />
-        </nav>
         <nav className='flex gap-10 mt-10'>
           <Button onClick={click} className={classNames('bg-[#fae100] text-white', {})}>카카오 로그인</Button>
           <Button theme='border' onClick={() => setTab(1)} className={classNames('border-primary', {
             'bg-primary text-white': tab === 1
           })}>일반 회원 로그인</Button>
         </nav>
-        <RegistForm tab={tab} registType="login" isRegistration={'true'} />
+        <LoginForm tab={tab} setTab={setTab} />
       </div>
     </div>
   )
