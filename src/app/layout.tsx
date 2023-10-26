@@ -4,7 +4,7 @@ import Script from "next/script";
 import type { Metadata } from 'next'
 // import { Inter } from 'next/font/google'
 import RecoilRootProvider from '@/util/recoilRootProvider';
-
+import QueryProviders from '@/util/queryProvider';
 // const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -36,9 +36,11 @@ export default function RootLayout({
         <Script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ugm16gkcw2&submodules=geocoder"></Script>
       </head>
       <body>
-        <RecoilRootProvider>
-          {children}
-        </RecoilRootProvider>
+        <QueryProviders>
+          <RecoilRootProvider>
+            {children}
+          </RecoilRootProvider>
+        </QueryProviders>
         <div id='modal' />
       </body>
     </html>

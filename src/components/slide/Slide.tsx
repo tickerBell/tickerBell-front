@@ -4,20 +4,19 @@ import { useMemo } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
+import { day } from "@/util/day";
 
 type sliderProps = {
+  title?: string;
   data?: any;
-  /** 커스텀 클래스 */
   className?: string;
-  /** 자동재생 (속도 설정시 number 타입으로) */
   autoplay?: boolean | number;
-  /** 슬라이더 속도 */
   speed?: number;
-  /** 반복 여부 */
   loop?: boolean;
 };
 
 const Slide = ({
+  title,
   data,
   className,
   autoplay = false,
@@ -36,20 +35,28 @@ const Slide = ({
     }),
     [autoplay, loop, speed]
   );
+
   return (
     <div>
-      슬라이드 컴포넌트
-      <div className={className}>
-        <Slider {...settings}>
-          {data?.map((item: any, index: any) => (
-            <Link href={`/reserve/${item.id}`} key={index}>
-              <picture>
-                <img src={item.item} alt={item.name} />
-              </picture>
-            </Link>
-          ))}
-        </Slider>
-      </div>
+      {data !== null ?
+        <>
+          {title && <h4 className="text-center">{title}</h4>}
+          <div className={className}>
+            <Slider {...settings}>
+              {data?.map((item: any, index: any) => (
+                <Link href={`/reserve/${item.eventId}`} key={index}>
+                  <picture>
+                    <img src={item.item} alt={item.name} />
+                  </picture>
+                  {item.eventName}
+                  {day(item.startEvent)}
+                </Link>
+              ))}
+            </Slider>
+          </div>
+        </> :
+        null
+      }
     </div>
   );
 };

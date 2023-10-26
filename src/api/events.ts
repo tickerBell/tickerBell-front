@@ -1,20 +1,10 @@
 import apiInstance from "@/util/useInterceptor";
 
-type EventItem = {
-  category: string;
-  eventName: string;
-};
 
-type DataType = EventItem[];
-
-export async function eventApi(): Promise<DataType> {
+export async function eventSlideApi() {
   try {
-    const res = await apiInstance.get<{ data: { saleEventList: DataType } }>(
-      "/api/main",
-      {}
-    );
-    console.log(res.data.data.saleEventList);
-    return res.data.data.saleEventList;
+    const res = await apiInstance.get("/api/main", {});
+    return res;
   } catch (error) {
     console.error(error);
     throw error;

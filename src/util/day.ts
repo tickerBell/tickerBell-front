@@ -5,3 +5,7 @@ export const openDay = (date:any) => {
 
   const isTodayBeforeOtherDate = today.isBefore(date);
 }
+
+export const day = (date:any) => {
+  return dayjs(date).format('YY-MM-DD HH:mm');
+}

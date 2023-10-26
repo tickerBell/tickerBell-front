@@ -1,76 +1,46 @@
 "use client";
 
-import dayjs from "dayjs";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Slide from "../slide/Slide";
+import { eventSlideApi } from "@/api/events";
+import { useQuery } from "@tanstack/react-query";
+import cls from 'classnames';
 
-type listType = {
-  data: any;
-  datatype?: "open" | "ranking" | "sale" | "all";
-  headerTitle?: string;
-};
+const List = () => {
+  const [tab, setTab] = useState('rankingMusicalEventList');
 
-// 샘플 데이터
-const items = [
-  {
-    id: 0,
-    item: "`http://placehold.it/1200x400`",
-    name: "이미지01",
-  },
-  {
-    id: 1,
-    item: "http://placehold.it/1200x400/ff0000",
-    name: "이미지02",
-  },
-  {
-    id: 2,
-    item: "http://placehold.it/1200x400/00ffff",
-    name: "이미지03",
-  },
-  {
-    id: 3,
-    item: "`http://placehold.it/1200x400`",
-    name: "이미지01",
-  },
-  {
-    id: 4,
-    item: "http://placehold.it/1200x400/ff0000",
-    name: "이미지02",
-  },
-  {
-    id: 5,
-    item: "http://placehold.it/1200x400/00ffff",
-    name: "이미지03",
-  },
-];
-
-const List = ({ data, datatype = "all", headerTitle }: listType) => {
-  const [filterdata, setFilterdata] = useState([]);
-  // const filteredData =
-
-  useEffect(() => {
-    switch (datatype) {
-      case "open":
-        const today = dayjs();
-        const filteredData = data.filter((item: any) => {
-          const itemDate = dayjs(item.startTime); // 각 항목의 날짜
-          return itemDate.isAfter(today); // 날짜가 오늘보다 이전이면 true
-        });
-        setFilterdata(filteredData);
-        break;
-      default:
-        setFilterdata(data);
-        break;
-    }
-  }, []);
+  const { data, isSuccess } = useQuery({
+    queryKey: ["main-slide"],
+    queryFn: () => eventSlideApi(),
+  });
 
   return (
     <div>
-      {headerTitle && <h4 className="text-center">{headerTitle}</h4>}
-      <div>
-        <Slide data={items} />
-      </div>
+      {isSuccess &&
+        <>
+          <div className="flex gap-8 justify-center">
+            <div onClick={() => setTab('rankingMusicalEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
+              "bg-primary text-white": tab === 'rankingMusicalEventList'
+            })}>뮤지컬</div>
+            <div onClick={() => setTab('rankingConcertEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
+              "bg-primary text-white": tab === 'rankingConcertEventList'
+            })}>콘서트</div>
+            <div onClick={() => setTab('rankingPlayEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
+              "bg-primary text-white": tab === 'rankingPlayEventList'
+            })}>여가</div>
+            <div onClick={() => setTab('rankingClassicEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
+              "bg-primary text-white": tab === 'rankingClassicEventList'
+            })}>클래식</div>
+            <div onClick={() => setTab('rankingSportsEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
+              "bg-primary text-white": tab === 'rankingSportsEventList'
+            })}>스포츠</div>
+          </div>
+          <Slide data={data?.data[tab]} title="이벤트" />
+          <Slide data={data?.data['saleEventList']} title="세일" />
+          <Slide data={data?.data['deadLineEventList']} title="마감임박" />
+          <Slide data={data?.data['recommendEventList']} title="추천!" />
+        </>
+      }
       {/* <div className='flex'>
         {filterdata.map((item: any) => (
           <div key={item.id}>

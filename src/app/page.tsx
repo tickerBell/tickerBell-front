@@ -10,8 +10,7 @@ export default function Home() {
       <Location />
       <Header />
       <NavTab />
-      <List data={ticketDummyData} datatype="ranking" headerTitle="장르별 랭킹" />
-      <List data={ticketDummyData} datatype="open" headerTitle="오픈 예정" />
+      <List />
       {/* <List data={ticketDummyData} /> */}
 
     </main>

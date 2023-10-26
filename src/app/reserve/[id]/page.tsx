@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import axios from "axios";
 import Button from "@/components/button/Button";
 import EventDetailModal from "@/components/portalModal/eventDetailModal/EventDetailModal";
 import Header from "@/components/header/Header";
@@ -10,21 +9,19 @@ import "react-datepicker/dist/react-datepicker.css";
 import Image from "next/image";
 
 const Index = (data: any) => {
-  console.log("dd", data);
+  // console.log("dd", data);
   const [modal, setModal] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
 
   return (
-    <>
-      <div>
-        {modal && (
-          <EventDetailModal
-            className="w-400"
-            dimClick={false}
-            setOnModal={() => setModal(false)}
-          />
-        )}
-      </div>
+    <div>
+      {modal && (
+        <EventDetailModal
+          className="w-400"
+          dimClick={false}
+          setOnModal={() => setModal(false)}
+        />
+      )}
       <Header />
       <div className="flex lg:flex-row flex-col justify-center">
         <div className="flex flex-col lg:w-1/2 md:w-8/12 w-full lg:px-8 lg:py-14 py-8 md:py-10 border-t bg-white lg:h-screen h-auto">
@@ -61,7 +58,7 @@ const Index = (data: any) => {
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
