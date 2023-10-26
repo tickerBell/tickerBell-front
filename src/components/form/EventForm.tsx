@@ -3,13 +3,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Button from "../button/Button";
 import { Controller, useForm } from "react-hook-form";
-import DaumPostcode from "react-daum-postcode";
 import dayjs from "dayjs";
 import SearchMapModal from "../portalModal/mapModal/SearchMapModal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDropzone } from "react-dropzone";
 import { Radio } from "./Input";
+import { postEventApi } from "@/api/events";
 
 type FormProps = {
   registType?: "event" | "regist";
@@ -36,7 +36,8 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
 
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewUrl, setPreviewUrl] = useState("");
-  const [values, setValues] = useState<string[]>([]);
+  const [castingsValues, setCastingsValues] = useState<string[]>([]);
+  const [hostsValues, setHostsValues] = useState<string[]>([]);
   const [fileUrl, setFileUrl] = useState<string | null>(null);
 
   const onDrop = useCallback((acceptedFiles: any) => {
@@ -53,32 +54,70 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
     setPreviewUrl("");
   };
 
-  const onValid = (data: any) => {
-    data.casting = values;
+  const onValid = async (data: any) => {
+    if (!data.startDate) {
+      alert("시작일은 필수 입력입니다.");
+      return;
+    }
+
+    if (!data.endDate) {
+      alert("종료일은 필수 입력입니다.");
+      return;
+    }
+
+    if (!fileUrl) {
+      alert("첨부파일은 필수 입력입니다.");
+      return;
+    }
+
+    data.castings = castingsValues;
+    data.hosts = hostsValues;
     data.fileUrl = fileUrl;
     console.log(data);
-    setValues([]);
+    setCastingsValues([]);
+    setHostsValues([]);
+
+    postEventApi(data);
+    try {
+      const response = await postEventApi(data);
+      console.log(response); // 응답 확인
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onInvalid = (data: any) => console.log(data, "onInvalid");
 
-  //   const addToList = (data: any) => {
-  //     const list = data.casting.split(",");
-  //     setValues((prevValues) => [...prevValues, ...list]);
-  //     console.log(values.join(","));
-  //     reset();
-  //   };
   const addToList = () => {
-    const castingValue = watch("casting");
+    const castingValue = watch("castings");
+    const hostValue = watch("hosts");
+    const startDateValue = watch("startDate");
+    const endDateValue = watch("endDate");
+    const categoryValue = watch("category");
+    const ageValue = watch("age");
+
     if (castingValue) {
-      setValues((prevValues) => [...prevValues, castingValue]);
-      reset({ casting: "" });
+      setCastingsValues((prevValues) => [...prevValues, castingValue]);
     }
+
+    if (hostValue) {
+      setHostsValues((prevValues) => [...prevValues, hostValue]);
+    }
+
+    reset({
+      castings: "",
+      hosts: "",
+      startDate: startDateValue,
+      endDate: endDateValue,
+      category: categoryValue,
+      age: ageValue,
+    });
   };
 
   useEffect(() => {
-    console.log(values.join(", "));
-  }, [values]);
+    console.log(castingsValues.join(", "));
+    console.log(hostsValues.join(", "));
+  }, [castingsValues, hostsValues]);
 
   return (
     <>
@@ -103,6 +142,7 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
               render={({ field }) => (
                 <DatePicker
                   {...field}
+                  dateFormat="yyyy년 MM월 dd일"
                   selected={field.value ? dayjs(field.value).toDate() : null}
                   onChange={(date) => field.onChange(dayjs(date).toDate())}
                 />
@@ -115,8 +155,15 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
               render={({ field }) => (
                 <DatePicker
                   {...field}
+                  dateFormat="yyyy년 MM월 dd일"
                   selected={dayjs(field.value).toDate()}
                   onChange={(date) => field.onChange(dayjs(date).toDate())}
+                  minDate={watch("startDate")}
+                  maxDate={
+                    watch("startDate")
+                      ? dayjs(watch("startDate")).add(3, "weeks").toDate()
+                      : null
+                  }
                 />
               )}
             />
@@ -212,7 +259,7 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
                           id={option}
                           value={option}
                           label={option}
-                          onChange={(e:any) => field.onChange(e.target.value)}
+                          onChange={(e: any) => field.onChange(e.target.value)}
                           checked={field.value === option}
                         />
                       )
@@ -221,14 +268,36 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
                 )}
               />
             </nav>
+            <nav className="flex gap-8">
+              <span>성인여부 :</span>
+              <Controller
+                control={control}
+                name="age"
+                render={({ field }) => (
+                  <>
+                    {["성인", "청소년", "어린이"].map((option) => (
+                      <Radio
+                        key={option}
+                        name={field.name}
+                        id={option}
+                        value={option}
+                        label={option}
+                        onChange={(e: any) => field.onChange(e.target.value)}
+                        checked={field.value === option}
+                      />
+                    ))}
+                  </>
+                )}
+              />
+            </nav>
             <div className="mb-10 flex flex-row">
               <div className="flex items-center gap-6 whitespace-pre">
                 <label>배우명</label>
-                {values.length === 0 ? (
+                {castingsValues.length === 0 ? (
                   <textarea
-                    id="casting"
+                    id="castings"
                     placeholder="입력해주세요"
-                    {...register("casting", {
+                    {...register("castings", {
                       required: "배우명은 필수 입력입니다.",
                       minLength: {
                         value: 2,
@@ -239,9 +308,9 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
                   />
                 ) : (
                   <textarea
-                    id="casting"
+                    id="castings"
                     placeholder="입력해주세요"
-                    {...register("casting")}
+                    {...register("castings")}
                     className="border border-gray-600 focus:border-green-500"
                   />
                 )}
@@ -249,7 +318,37 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
                   입력
                 </Button>
               </div>
-              {values}
+              {castingsValues}
+            </div>
+            <div className="mb-10 flex flex-row">
+              <div className="flex items-center gap-6 whitespace-pre">
+                <label>주최자명</label>
+                {hostsValues.length === 0 ? (
+                  <textarea
+                    id="hosts"
+                    placeholder="입력해주세요"
+                    {...register("hosts", {
+                      required: "주최자명은 필수 입력입니다.",
+                      minLength: {
+                        value: 2,
+                        message: "2자리 이상 입력해주세요.",
+                      },
+                    })}
+                    className="border border-gray-600 focus:border-green-500"
+                  />
+                ) : (
+                  <textarea
+                    id="hosts"
+                    placeholder="입력해주세요"
+                    {...register("hosts")}
+                    className="border border-gray-600 focus:border-green-500"
+                  />
+                )}
+                <Button type="button" onClick={addToList}>
+                  입력
+                </Button>
+              </div>
+              {hostsValues}
             </div>
 
             <Button className="absolute bottom-0 mt-20" onClick={() => {}}>
