@@ -43,15 +43,16 @@ export const userSelector = selectorFamily({
     },
   set:
     (property) =>
-    ({ set }, newValue) => {
+    ({ set }, newValue: any) => {
       set(userState, (prevUserState: any) => {
         switch (property) {
           case "atk":
             return { ...prevUserState, atk: newValue };
           case "location":
+            console.log(newValue.latitude);
             return {
               ...prevUserState,
-              locationState: { ...prevUserState.locationState, newValue },
+              locationState: { latitude: newValue.latitude, longitude: newValue.longitude },
             };
           case "role":
             return { ...prevUserState, role: newValue };
