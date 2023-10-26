@@ -4,10 +4,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import Button from "@/components/button/Button";
 import EventDetailModal from "@/components/portalModal/eventDetailModal/EventDetailModal";
+import Header from "@/components/header/Header";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Index = (data: any) => {
   console.log("dd", data);
   const [modal, setModal] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
 
   return (
     <>
@@ -20,6 +24,7 @@ const Index = (data: any) => {
           />
         )}
       </div>
+      <Header />
       <div className="flex lg:flex-row flex-col justify-center">
         <div className="flex flex-col lg:w-1/2 md:w-8/12 w-full lg:px-8 lg:py-14 py-8 md:py-10 border-t bg-white lg:h-screen h-auto">
           <p className="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3">
@@ -40,6 +45,11 @@ const Index = (data: any) => {
           <p className="lg:text-4xl text-3xl font-black leading-9 text-gray-800">
             구매제목
           </p>
+          <DatePicker
+            selected={startDate}
+            onChange={(date: Date) => setStartDate(date)}
+            dateFormat="yyyy년 MM월 dd일"
+          />
           <p className="text-2xl leading-normal text-gray-800">총액</p>
           <p className="text-2xl font-bold leading-normal text-right text-gray-800">
             000,000원
