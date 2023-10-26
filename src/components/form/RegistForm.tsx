@@ -301,3 +301,5 @@ const RegistForm = ({
     </div>
   );
 };
+
+export default RegistForm;
