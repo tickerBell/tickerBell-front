@@ -8,7 +8,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Radio } from "@/components/form/Input";
-import RegistForm from "@/components/form/RegistForm";
 import LoginForm from "@/components/form/LoginForm";
 
 const Index = () => {
@@ -22,13 +21,13 @@ const Index = () => {
     watch,
     formState: { isSubmitting, isDirty, errors },
   } = useForm<formType>({ mode: "onChange" });
+  const router = useRouter();
 
-  // 카카오 로그인이 됬을때 0 번 보이기
-  // console.log('dd', localStorage.getItem('kakaoid'))
-  //   const click = () => {
-  //     router.push(`https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=8fd7a1f394d9bbd09fdfdd3827146d73&redirect_uri=
-  // http://localhost:3000/oauth/kakao`);
-  //   };
+  console.log("dd", localStorage.getItem("kakaoid"));
+  const click = () => {
+    router.push(`https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=8fd7a1f394d9bbd09fdfdd3827146d73&redirect_uri=
+  http://localhost:3000/oauth/kakao`);
+  };
 
   return (
     <div className="flex h-screen max-w-400 m-auto flex-col justify-center items-center">

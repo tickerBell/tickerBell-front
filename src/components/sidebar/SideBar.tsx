@@ -1,5 +1,9 @@
+"use client";
+
 import React from "react";
 import { SideBarItem } from "./SideBarItem";
+import { useRecoilValue } from "recoil";
+import { userSelector } from "@/recoil/user";
 
 const sideData = {
   to: [
@@ -7,7 +11,7 @@ const sideData = {
       title: "이벤트",
       submenu: [
         {
-          title: "이벤트 내역",
+          title: "이벤트 등록내역",
           route: "./reserve",
         },
       ],
@@ -24,10 +28,10 @@ const sideData = {
   ],
   show: [
     {
-      title: "이벤트",
+      title: "예약",
       submenu: [
         {
-          title: "이벤트 내역",
+          title: "이벤트 예약내역",
           route: "./reserve",
         },
       ],
@@ -45,11 +49,12 @@ const sideData = {
 };
 
 export const SideBar = () => {
-  const a = "ss"; // 권한은 로그인할때 스토어에 저장.
+  const getRole = useRecoilValue(userSelector("role"));
+
   return (
     <aside className="md:flex w-2/5 md:w-1/4  h-screen flex-col items-center justify-center border-r border-gray-200  ">
       <ul>
-        {a === "ss"
+        {getRole === "ROLE_REGISTRANT"
           ? sideData.to.map((route, key) => (
               <SideBarItem key={key} route={route} />
             ))

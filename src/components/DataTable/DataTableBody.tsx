@@ -3,13 +3,16 @@ interface DataTableHeaderProps {
   openModal: () => void;
 }
 
-export const DataTableBody: React.FC<DataTableHeaderProps> = ({ row }) => {
+export const DataTableBody: React.FC<DataTableHeaderProps> = ({
+  row,
+  openModal,
+}) => {
   const { startTime, place, title, speaker, maxuser, maxseats } = row;
 
   return (
     <tbody>
       <tr
-        onClick={() => console.log("모달클릭")}
+        onClick={() => openModal()}
         className="border-b text-sm text-gray-900 text-center"
       >
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
