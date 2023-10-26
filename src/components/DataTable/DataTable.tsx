@@ -5,6 +5,7 @@ import { DataTableHeader } from "./DataTableHeader";
 import ReactPaginate from "react-paginate";
 import { useState } from "react";
 import Pagination from "./Pagination";
+import { Pagenation } from "../Pagenation/Pagenation";
 
 export const DataTable = ({
   columns,

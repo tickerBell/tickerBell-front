@@ -1,4 +1,5 @@
 import apiInstance from "@/util/useInterceptor";
+import axios from "axios";
 
 // 회원가입시 문자 인증
 export async function vertifySMSApi(number: string) {
