@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import axios from "axios";
 import Button from "@/components/button/Button";
 import EventDetailModal from "@/components/portalModal/eventDetailModal/EventDetailModal";
 import Header from "@/components/header/Header";
@@ -15,29 +14,27 @@ const Index = (data: any) => {
   const [startDate, setStartDate] = useState(new Date());
 
   return (
-    <>
-      <div>
-        {modal && (
-          <EventDetailModal
-            className="w-400"
-            dimClick={false}
-            setOnModal={() => setModal(false)}
-          />
-        )}
-      </div>
+    <div>
+      {modal && (
+        <EventDetailModal
+          className="w-400"
+          dimClick={false}
+          setOnModal={() => setModal(false)}
+        />
+      )}
       <Header />
       <div className="flex lg:flex-row flex-col justify-center">
         <div className="flex flex-col lg:w-1/2 md:w-8/12 w-full lg:px-8 lg:py-14 py-8 md:py-10 border-t bg-white lg:h-screen h-auto">
           <p className="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3">
             제목영역
           </p>
-          <Image
-            src="http://placehold.it/800x600/ffff00"
-            alt=""
-            width={800} // 이미지 너비 설정
-            height={600} // 이미지 높이 설정
-            className="w-3/4 object-center object-cover"
-          />
+          <picture>
+            <img
+              src="http://placehold.it/800x600/ffff00"
+              alt=""
+              className="w-3/4 object-center object-cover"
+            />
+          </picture>
           <p>제목</p>
           <p>장소</p>
           <p>공연시간</p>
@@ -54,14 +51,14 @@ const Index = (data: any) => {
           />
           <p className="text-2xl leading-normal text-gray-800">총액</p>
           <p className="text-2xl font-bold leading-normal text-right text-gray-800">
-            000,000원
+            1000,000원
           </p>
           <Button className="w-full" onClick={() => setModal(true)}>
             예약하기
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

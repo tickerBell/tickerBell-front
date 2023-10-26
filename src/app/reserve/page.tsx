@@ -29,7 +29,7 @@ const Index = () => {
 
   const rows = useMemo(() => {
     if (getRole === "ROLE_REGISTRANT") {
-      return EventRows; // API에서 데이터 가져오기
+      return EventRows;
     } else {
       return UserRows;
     }
