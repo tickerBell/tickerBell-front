@@ -10,22 +10,46 @@ const Index = (data: any) => {
   const [modal, setModal] = useState(false);
 
   return (
-    <div>
-      {modal && (
-        <EventDetailModal
-          className="w-400"
-          dimClick={false}
-          setOnModal={() => setModal(false)}
-        />
-      )}
-      제목
-      {/* {data.title} */}
-      <div>컨텐츠 영역</div>
+    <>
       <div>
-        구매정보 영역
-        <Button onClick={() => setModal(true)}>예약하기</Button>
+        {modal && (
+          <EventDetailModal
+            className="w-400"
+            dimClick={false}
+            setOnModal={() => setModal(false)}
+          />
+        )}
       </div>
-    </div>
+      <div className="flex lg:flex-row flex-col justify-center">
+        <div className="flex flex-col lg:w-1/2 md:w-8/12 w-full lg:px-8 lg:py-14 py-8 md:py-10 border-t bg-white lg:h-screen h-auto">
+          <p className="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3">
+            제목영역
+          </p>
+          <img
+            src="	http://placehold.it/800x600/ffff00
+                "
+            alt=""
+            className="w-3/4 object-center object-cover"
+          />
+          <p>제목</p>
+          <p>장소</p>
+          <p>공연시간</p>
+          <p>관람연령</p>
+        </div>
+        <div className="lg:w-1/4 md:w-8/12 w-full shadow h-full flex flex-col lg:h-screen lg:px-8 md:px-7 px-4 lg:py-20 md:py-10 py-6">
+          <p className="lg:text-4xl text-3xl font-black leading-9 text-gray-800">
+            구매제목
+          </p>
+          <p className="text-2xl leading-normal text-gray-800">총액</p>
+          <p className="text-2xl font-bold leading-normal text-right text-gray-800">
+            000,000원
+          </p>
+          <Button className="w-full" onClick={() => setModal(true)}>
+            예약하기
+          </Button>
+        </div>
+      </div>
+    </>
   );
 };
 
