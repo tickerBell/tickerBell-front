@@ -159,6 +159,7 @@ export const EventRows = [
     maxuser: "90명",
     maxseats: "90",
   },
+<<<<<<< Updated upstream
   {
     id: 12,
     startTime: "2023-08-11 04:12:00",
@@ -204,6 +205,8 @@ export const EventRows = [
     maxuser: "90명",
     maxseats: "90",
   },
+=======
+>>>>>>> Stashed changes
 ];
 
 export const UserDummyData: IUserData[] = [

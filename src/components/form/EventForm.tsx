@@ -10,6 +10,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDropzone } from "react-dropzone";
 import { Radio } from "./Input";
+import axios from "axios";
+import { postEventApi } from "@/api/events";
 
 type FormProps = {
   registType?: "event" | "regist";
@@ -53,11 +55,33 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
     setPreviewUrl("");
   };
 
-  const onValid = (data: any) => {
+  const onValid = async (data: any) => {
+    if (!data.startDate) {
+      alert("시작일은 필수 입력입니다.");
+      return;
+    }
+
+    if (!data.endDate) {
+      alert("종료일은 필수 입력입니다.");
+      return;
+    }
+
+    if (!file) {
+      alert("첨부파일은 필수 입력입니다.");
+      return;
+    }
+
     data.casting = values;
     data.fileUrl = fileUrl;
     console.log(data);
     setValues([]);
+    postEventApi(data);
+    try {
+      const response = await postEventApi(data);
+      console.log(response); // 응답 확인
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onInvalid = (data: any) => console.log(data, "onInvalid");
@@ -212,7 +236,7 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
                           id={option}
                           value={option}
                           label={option}
-                          onChange={(e:any) => field.onChange(e.target.value)}
+                          onChange={(e: any) => field.onChange(e.target.value)}
                           checked={field.value === option}
                         />
                       )
