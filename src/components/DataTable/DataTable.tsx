@@ -5,6 +5,8 @@ import { DataTableHeader } from "./DataTableHeader";
 import ReactPaginate from "react-paginate";
 import { useState } from "react";
 import Pagination from "./Pagination";
+import { Pagenation } from "../Pagenation/Pagenation";
+import EventDetailModal from "../portalModal/eventDetailModal/EventDetailModal";
 
 export const DataTable = ({
   columns,
@@ -13,6 +15,7 @@ export const DataTable = ({
   columns: any[];
   rows: any[];
 }) => {
+  const [modal, setModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedRow, setSelectedRow] = useState(null);
   const [onModal, setOnModal] = useState(false);
@@ -27,6 +30,7 @@ export const DataTable = ({
     (currentPage + 1) * itemsPerPage
   );
   const openModal = (row: any) => {
+    setOnModal(true);
     setSelectedRow(row);
   };
 
@@ -35,30 +39,40 @@ export const DataTable = ({
   };
 
   return (
-    <div className="flex flex-col w-3/4 justify-center items-center">
-      <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
-        <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-          <table className="min-w-full">
-            {columns.map((column, key) => (
-              <DataTableHeader key={key} column={column} />
-            ))}
-            {displayedRows.map((row, key) => (
-              <DataTableBody
-                key={key}
-                row={row}
-                openModal={() => {
-                  openModal(row);
-                }}
-              />
-            ))}
-          </table>
-          <Pagenation />
-        </div>
+    <>
+      <div>
+        {onModal && (
+          <EventDetailModal
+            className="w-400"
+            dimClick={false}
+            setOnModal={() => setModal(false)}
+          />
+        )}
       </div>
-      <Pagination
-        pageCount={Math.ceil(rows.length / itemsPerPage)}
-        handlePageChange={handlePageChange}
-      />
-    </div>
+      <div className="flex flex-col w-3/4 justify-center items-center">
+        <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
+          <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+            <table className="min-w-full">
+              {columns.map((column, key) => (
+                <DataTableHeader key={key} column={column} />
+              ))}
+              {displayedRows.map((row, key) => (
+                <DataTableBody
+                  key={key}
+                  row={row}
+                  openModal={() => {
+                    openModal(row);
+                  }}
+                />
+              ))}
+            </table>
+          </div>
+        </div>
+        <Pagination
+          pageCount={Math.ceil(rows.length / itemsPerPage)}
+          handlePageChange={handlePageChange}
+        />
+      </div>
+    </>
   );
 };

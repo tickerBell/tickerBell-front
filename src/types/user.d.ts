@@ -1,3 +1,16 @@
+interface IUserColumnsData {
+  name: string;
+  speaker: string;
+  date: string;
+  place: string;
+}
+interface IUserRowsData {
+  id: number;
+  title: string;
+  speaker: string;
+  startTime: string;
+  place: string;
+}
 interface IEventColumnsData {
   name: string;
   speaker: string;
@@ -7,7 +20,6 @@ interface IEventColumnsData {
   maxseats: string;
   cancel: string;
 }
-
 interface IEventRowsData {
   id: number;
   startTime: string;
