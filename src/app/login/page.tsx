@@ -23,7 +23,6 @@ const Index = () => {
   } = useForm<formType>({ mode: "onChange" });
   const router = useRouter();
 
-  console.log("dd", localStorage.getItem("kakaoid"));
   const click = () => {
     router.push(`https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=8fd7a1f394d9bbd09fdfdd3827146d73&redirect_uri=
   http://localhost:3000/oauth/kakao`);
