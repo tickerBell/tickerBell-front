@@ -19,14 +19,21 @@ const Index = () => {
   const getAtk = useRecoilValue(userSelector("atk"));
   const getRole = useRecoilValue(userSelector("role"));
 
-  const columns =
-    getRole === "ROLE_REGISTRANT"
-      ? useMemo(() => EventColumns, [])
-      : useMemo(() => UserColumns, []);
-  const rows =
-    getRole === "ROLE_REGISTRANT"
-      ? useMemo(() => EventRows, [])
-      : useMemo(() => UserRows, []);
+  const columns = useMemo(() => {
+    if (getRole === "ROLE_REGISTRANT") {
+      return EventColumns;
+    } else {
+      return UserColumns;
+    }
+  }, [getRole]);
+
+  const rows = useMemo(() => {
+    if (getRole === "ROLE_REGISTRANT") {
+      return EventRows; // API에서 데이터 가져오기
+    } else {
+      return UserRows;
+    }
+  }, [getRole, getAtk]);
 
   return (
     <>
