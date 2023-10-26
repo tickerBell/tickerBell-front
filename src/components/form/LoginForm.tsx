@@ -1,3 +1,5 @@
+'use client';
+
 import { userLoginApi } from '@/api/users';
 import { userSelector } from '@/recoil/user';
 import { setCookie } from '@/util/authCookie';

@@ -1,8 +1,15 @@
-const { NODE_ENV } = process.env;
+// const { API_URL } = process.env;
 
-// isPro, isDev
-export const isPro = NODE_ENV === "production";
-export const isDev = NODE_ENV === "development";
+// alert(API_URL);
 
+// // isPro, isDev
+// export const isPro = API_URL === "production";
+// export const isDev = API_URL === "development";
 
+let isDev = false;
 
+if (process && process.env.NODE_ENV === "development") {
+  isDev = true;
+}
+
+export { isDev };
