@@ -1,26 +1,46 @@
 "use client";
 
-import Button from "@/components/button/Button";
+import { eventApi } from "@/api/events";
 import EventForm from "@/components/form/EventForm";
-import { Radio } from "@/components/form/Input";
-import RegistForm from "@/components/form/RegistForm";
 import Header from "@/components/header/Header";
 import NavTab from "@/components/NavTab/NavTab";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+
+type EventItem = {
+  category: string;
+  eventName: string;
+};
+
+type DataType = EventItem[];
 
 const Index = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    formState: { isSubmitting, isDirty, errors },
-  } = useForm<formType>({ mode: "onChange" });
+  const [data, setData] = useState<DataType | null>(null);
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await eventApi();
+        setData(response);
+        console.log(response); // 응답 데이터 확인을 위한 콘솔 출력
+        // 추가적인 로직 수행 가능
+      } catch (error) {
+        console.error(error); // 에러 처리
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
   return (
     <>
       <Header />
       <NavTab />
+      {data?.map((item, key) => (
+        <div key={key}>
+          <p>ID: {item.category}</p>
+          <p>Name: {item.eventName}</p>
+        </div>
+      ))}
       <div className="flex h-screen max-w-900 m-auto flex-row justify-center items-center">
         <div className="flex items-center flex-col relative">
           <nav className="flex gap-8">

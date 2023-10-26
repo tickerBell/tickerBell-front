@@ -1,24 +1,26 @@
-import { userLoginApi } from '@/api/users';
-import { userSelector } from '@/recoil/user';
-import { setCookie } from '@/util/authCookie';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+"use client";
+
+import { userLoginApi } from "@/api/users";
+import { userSelector } from "@/recoil/user";
+import { setCookie } from "@/util/authCookie";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSetRecoilState } from 'recoil';
-import Button from '../button/Button';
+import { useSetRecoilState } from "recoil";
+import Button from "../button/Button";
 
 type formPropsType = {
   tab: number;
   setTab?: React.Dispatch<React.SetStateAction<number>>;
-}
+};
 
 const LoginForm = ({ tab, setTab }: formPropsType) => {
   // const [sms, setSms] = useState(0);
-  const setUserAtk = useSetRecoilState(userSelector('atk'));
-  const setUserInfo = useSetRecoilState(userSelector('role'));
+  const setUserAtk = useSetRecoilState(userSelector("atk"));
+  const setUserInfo = useSetRecoilState(userSelector("role"));
 
   const router = useRouter();
-  const [selectedAdult, setSelectedAdult] = useState('');
+  const [selectedAdult, setSelectedAdult] = useState("");
 
   const {
     register,
@@ -30,7 +32,6 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
     formState: { isSubmitting, isDirty, errors },
   } = useForm<formType>({ mode: "onChange" });
 
-
   const handleGenderChange = (e: any) => {
     // console.log('ee', e);
     setSelectedAdult(e.target.value);
@@ -39,21 +40,20 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
   // console.log('회원가입 폼 : ', watch(), isRegistration)
 
   const onSubmit = (data: any) => {
-    console.log('data', data)
-    userLoginApi(
-      data.username,
-      data.password
-    ).then((res) => {
-      setUserAtk(res.data.accessToken);
-      setCookie("rtk", res.data.refreshToken, {
-        path: "/",
-        secure: "/",
+    console.log("data", data);
+    userLoginApi(data.username, data.password)
+      .then((res) => {
+        setUserAtk(res.data.accessToken);
+        setCookie("rtk", res.data.refreshToken, {
+          path: "/",
+          secure: "/",
+        });
+        setUserInfo("isRegistrationTrue" ? "ROLE_REGISTRANT" : "ROLE_USER");
+        router.push("/");
       })
-      setUserInfo('isRegistrationTrue' ? 'ROLE_REGISTRANT' : 'ROLE_USER')
-      router.push('/');
-    }).catch((err) => alert(err.response.data.data))
+      .catch((err) => alert(err.response.data.data));
     // userRegistApi()
-  }
+  };
 
   // useEffect(() => {
   //   setTab(-1);
@@ -62,17 +62,22 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
   return (
     <div>
       {
-        <form className='mt-40 w-full' onSubmit={handleSubmit(onSubmit)}>
-          {tab === 1 &&
+        <form className="mt-40 w-full" onSubmit={handleSubmit(onSubmit)}>
+          {tab === 1 && (
             <>
-              <div className='mb-10'>
-                <div className='flex gap-6'>
-                  <label>{tab === 1 ? '아이디' : '이름'}</label>
-                  <input type="text"
+              <div className="mb-10">
+                <div className="flex gap-6">
+                  <label>{tab === 1 ? "아이디" : "이름"}</label>
+                  <input
+                    type="text"
                     id="username"
-                    placeholder={tab === 1 ? '아이디를 입력해주세요' : '이름을 입력해주세요'}
+                    placeholder={
+                      tab === 1
+                        ? "아이디를 입력해주세요"
+                        : "이름을 입력해주세요"
+                    }
                     maxLength={10}
-                    {...register('username', {
+                    {...register("username", {
                       required: "이름은 필수 입력입니다.",
                       minLength: {
                         value: 2,
@@ -81,17 +86,20 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
                     })}
                   />
                 </div>
-                {errors.username && <small role="alert">{errors.username.message}</small>}
+                {errors.username && (
+                  <small role="alert">{errors.username.message}</small>
+                )}
               </div>
 
-              <div className='mb-10'>
-                <div className='flex gap-6'>
+              <div className="mb-10">
+                <div className="flex gap-6">
                   <label>비밀번호</label>
-                  <input type="password"
+                  <input
+                    type="password"
                     id="password"
-                    placeholder='비밀번호를 입력해주세요'
+                    placeholder="비밀번호를 입력해주세요"
                     minLength={6}
-                    {...register('password', {
+                    {...register("password", {
                       required: "비밀번호는 필수 입력입니다.",
                       minLength: {
                         value: 6,
@@ -104,25 +112,31 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
                     })}
                   />
                 </div>
-                {errors.password && <small role="alert">{errors.password.message}</small>}
+                {errors.password && (
+                  <small role="alert">{errors.password.message}</small>
+                )}
               </div>
 
-              <Button className='bottom-0' full
+              <Button
+                className="bottom-0"
+                full
                 type="submit"
                 // disabled={!isSubmitting}
                 // disabled={true}
                 onClick={() => {
-                  if (selectedAdult === '') {
-                    setSelectedAdult('false');
+                  if (selectedAdult === "") {
+                    setSelectedAdult("false");
                   }
                 }}
-              >로그인</Button>
+              >
+                로그인
+              </Button>
             </>
-          }
+          )}
         </form>
       }
     </div>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

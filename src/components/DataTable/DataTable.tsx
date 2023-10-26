@@ -52,6 +52,7 @@ export const DataTable = ({
               />
             ))}
           </table>
+          <Pagenation />
         </div>
       </div>
       <Pagination
