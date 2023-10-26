@@ -1,7 +1,7 @@
 "use client";
 export const dynamic = "force-dynamic";
 
-import { locationSelector } from "@/recoil/user";
+import { userSelector } from "@/recoil/user";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
@@ -21,7 +21,7 @@ const MapModal = ({
   isDim = true,
   className,
 }: MapModalType) => {
-  const getLocation = useRecoilValue(locationSelector);
+  const getLocation = useRecoilValue(userSelector("location"));
   const [route, setRoute] = useState([]);
 
   console.log("user 스토어", getLocation);
