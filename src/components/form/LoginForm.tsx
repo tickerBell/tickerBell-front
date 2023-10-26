@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { userLoginApi } from '@/api/users';
-import { userSelector } from '@/recoil/user';
-import { setCookie } from '@/util/authCookie';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import { userLoginApi } from "@/api/users";
+import { userSelector } from "@/recoil/user";
+import { setCookie } from "@/util/authCookie";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import Button from "../button/Button";
@@ -64,7 +64,7 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
       {
         <form className="mt-40 w-full" onSubmit={handleSubmit(onSubmit)}>
           {tab === 1 && (
-            <>
+            <div>
               <div className="mb-10">
                 <div className="flex gap-6">
                   <label>{tab === 1 ? "아이디" : "이름"}</label>
@@ -131,7 +131,7 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
               >
                 로그인
               </Button>
-            </>
+            </div>
           )}
         </form>
       }

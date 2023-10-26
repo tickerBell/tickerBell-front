@@ -32,7 +32,7 @@ const Index = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <Header />
       <NavTab />
       {data?.map((item, key) => (
@@ -46,7 +46,7 @@ const Index = () => {
           <EventForm registType="event" />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

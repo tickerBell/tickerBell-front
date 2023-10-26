@@ -177,9 +177,9 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
               {isDragActive ? (
                 <p>파일을 여기에 놓으세요...</p>
               ) : (
-                <>
+                <div>
                   {previewVisible ? (
-                    <>
+                    <div>
                       <button
                         onClick={removePreview}
                         className="absolute right-0 top-0 bg-red-500 text-black p-1"
@@ -193,13 +193,13 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
                           className="w-full h-full object-cover"
                         />
                       </picture>
-                    </>
+                    </div>
                   ) : (
                     <p>
                       파일을 이곳에 드래그 앤 드롭하거나 클릭하여 선택하세요.
                     </p>
                   )}
-                </>
+                </div>
               )}
             </div>
             {/* 장소 */}

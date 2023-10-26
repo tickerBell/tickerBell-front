@@ -39,7 +39,7 @@ export const DataTable = ({
   };
 
   return (
-    <>
+    <div>
       <div>
         {onModal && (
           <EventDetailModal
@@ -73,6 +73,6 @@ export const DataTable = ({
           handlePageChange={handlePageChange}
         />
       </div>
-    </>
+    </div>
   );
 };
