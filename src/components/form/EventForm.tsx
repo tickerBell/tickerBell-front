@@ -3,7 +3,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Button from "../button/Button";
 import { Controller, useForm } from "react-hook-form";
-import DaumPostcode from "react-daum-postcode";
 import dayjs from "dayjs";
 import SearchMapModal from "../portalModal/mapModal/SearchMapModal";
 import DatePicker from "react-datepicker";
