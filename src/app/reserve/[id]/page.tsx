@@ -7,6 +7,7 @@ import EventDetailModal from "@/components/portalModal/eventDetailModal/EventDet
 import Header from "@/components/header/Header";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Image from "next/image";
 
 const Index = (data: any) => {
   console.log("dd", data);
@@ -30,10 +31,11 @@ const Index = (data: any) => {
           <p className="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3">
             제목영역
           </p>
-          <img
-            src="	http://placehold.it/800x600/ffff00
-                "
+          <Image
+            src="http://placehold.it/800x600/ffff00"
             alt=""
+            width={800} // 이미지 너비 설정
+            height={600} // 이미지 높이 설정
             className="w-3/4 object-center object-cover"
           />
           <p>제목</p>
@@ -43,7 +45,7 @@ const Index = (data: any) => {
         </div>
         <div className="lg:w-1/4 md:w-8/12 w-full shadow h-full flex flex-col lg:h-screen lg:px-8 md:px-7 px-4 lg:py-20 md:py-10 py-6">
           <p className="lg:text-4xl text-3xl font-black leading-9 text-gray-800">
-            구매제목
+            구매제목
           </p>
           <DatePicker
             selected={startDate}
