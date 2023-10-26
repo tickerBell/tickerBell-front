@@ -6,7 +6,7 @@ import { eventSlideApi } from "@/api/events";
 import { useQuery } from "@tanstack/react-query";
 import cls from 'classnames';
 
-const List = () => {
+const SlideList = () => {
   const [tab, setTab] = useState('rankingMusicalEventList');
 
   const { data, isSuccess } = useQuery({
@@ -54,4 +54,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default SlideList;

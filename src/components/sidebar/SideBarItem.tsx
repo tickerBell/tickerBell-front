@@ -21,7 +21,7 @@ export const SideBarItem = ({ route }: SideBarItemProps) => {
   //   return <li>{route.title}</li>;
   // }
   return (
-    <div>
+    <li>
       <h3>{route.title}</h3>
       <ul>
         {route.submenu.map((item, index) => (
@@ -32,6 +32,6 @@ export const SideBarItem = ({ route }: SideBarItemProps) => {
           </li>
         ))}
       </ul>
-    </div>
+    </li>
   );
 };
