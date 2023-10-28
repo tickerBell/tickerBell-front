@@ -37,15 +37,6 @@ export const ticketDummyData = [
   },
 ];
 
-export const UserColumns: IUserColumnsData[] = [
-  {
-    name: "이벤트명",
-    speaker: "캐스팅",
-    date: "일시",
-    place: "장소",
-  },
-];
-
 export const UserRows: IUserRowsData[] = [
   {
     id: 0,
@@ -81,18 +72,6 @@ export const UserRows: IUserRowsData[] = [
     speaker: "가수D",
     startTime: "2023-12-11 04:12:00",
     place: "상암 공개홀D",
-  },
-];
-
-export const EventColumns: IEventColumnsData[] = [
-  {
-    name: "이벤트명",
-    speaker: "캐스팅",
-    date: "일시",
-    place: "장소",
-    totaluser: "예매좌수",
-    maxseats: "최대좌석",
-    cancel: "취소",
   },
 ];
 

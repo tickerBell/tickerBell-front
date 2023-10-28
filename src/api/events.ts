@@ -13,8 +13,8 @@ export async function eventApi(): Promise<DataType> {
       "/api/main",
       {}
     );
-    console.log(res.data.data.saleEventList);
-    return res.data.data.saleEventList;
+    console.log(res.data);
+    return res.data;
   } catch (error) {
     console.error(error);
     throw error;
