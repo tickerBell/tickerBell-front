@@ -35,7 +35,7 @@ const SlideList = () => {
               "bg-primary text-white": tab === 'rankingSportsEventList'
             })}>스포츠</div>
           </div>
-          <Slide data={data?.data[tab]} title="이벤트" />
+          <Slide data={data?.data[tab]} title="랭킹" />
           <Slide data={data?.data['saleEventList']} title="세일" />
           <Slide data={data?.data['deadLineEventList']} title="마감임박" />
           <Slide data={data?.data['recommendEventList']} title="추천!" />
