@@ -28,13 +28,13 @@ const Index = (data: any) => {
           <p className="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3">
             제목영역
           </p>
-          <Image
-            src="http://placehold.it/800x600/ffff00"
-            alt=""
-            width={800} // 이미지 너비 설정
-            height={600} // 이미지 높이 설정
-            className="w-3/4 object-center object-cover"
-          />
+          <picture>
+            <img
+              src="http://placehold.it/800x600/ffff00"
+              alt=""
+              className="w-3/4 object-center object-cover"
+            />
+          </picture>
           <p>제목</p>
           <p>장소</p>
           <p>공연시간</p>
@@ -51,7 +51,7 @@ const Index = (data: any) => {
           />
           <p className="text-2xl leading-normal text-gray-800">총액</p>
           <p className="text-2xl font-bold leading-normal text-right text-gray-800">
-            000,000원
+            1000,000원
           </p>
           <Button className="w-full" onClick={() => setModal(true)}>
             예약하기
