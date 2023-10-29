@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Image from "next/image";
 
 const Index = (data: any) => {
-  console.log("dd", data);
+  // console.log("dd", data);
   const [modal, setModal] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
 

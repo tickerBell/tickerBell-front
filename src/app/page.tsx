@@ -1,6 +1,6 @@
 import NavTab from "@/components/NavTab/NavTab";
+import SlideList from "@/components/SlideList/SlideList";
 import Header from "@/components/header/Header";
-import List from "@/components/list/List";
 import Location from "@/components/location/Location";
 import { ticketDummyData } from "@/dummyData/DummyData";
 
@@ -10,8 +10,7 @@ export default function Home() {
       <Location />
       <Header />
       <NavTab />
-      <List data={ticketDummyData} datatype="ranking" headerTitle="장르별 랭킹" />
-      <List data={ticketDummyData} datatype="open" headerTitle="오픈 예정" />
+      <SlideList />
       {/* <List data={ticketDummyData} /> */}
 
     </main>

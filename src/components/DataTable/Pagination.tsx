@@ -1,7 +1,7 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
 
-interface PaginationProps {
+type PaginationProps = {
   pageCount: number;
   handlePageChange: (selectedPage: number) => void;
 }

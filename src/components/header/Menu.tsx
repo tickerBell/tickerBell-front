@@ -10,9 +10,6 @@ import { getCookie } from "@/util/authCookie";
 const Menu = () => {
   const getAtk = useRecoilValue(userSelector("atk"));
   const getRole = useRecoilValue(userSelector("role"));
-
-  console.log('isDev', isDev);
-
   // console.log('권한: ', getRole && getRole, 'rtk : ', getCookie('rtk'), 'atk: ', getAtk)
 
   return (
