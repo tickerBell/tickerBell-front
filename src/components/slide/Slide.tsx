@@ -42,7 +42,7 @@ const Slide = ({
       <div className={className}>
         <Slider {...settings}>
           {data?.map((item: any, index: any) => (
-            <Link href={`/reserve/${item.id}`} key={index}>
+            <Link href={`/detail/${item.id}`} key={index}>
               <picture>
                 <img src={item.item} alt={item.name} />
               </picture>

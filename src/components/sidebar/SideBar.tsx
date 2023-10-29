@@ -21,7 +21,7 @@ const sideData = {
       submenu: [
         {
           title: "정보수정",
-          route: "./users",
+          route: "./mypage",
         },
       ],
     },
@@ -41,7 +41,7 @@ const sideData = {
       submenu: [
         {
           title: "정보수정",
-          route: "./users",
+          route: "./mypage",
         },
       ],
     },
@@ -52,7 +52,7 @@ export const SideBar = () => {
   const getRole = useRecoilValue(userSelector("role"));
 
   return (
-    <aside className="md:flex w-2/5 md:w-1/4  h-screen flex-col items-center justify-center border-r border-gray-200  ">
+    <aside className="flex w-1/4 h-screen flex-col items-center justify-center border-r border-gray-200  ">
       <ul>
         {getRole === "ROLE_REGISTRANT"
           ? sideData.to.map((route, key) => (
