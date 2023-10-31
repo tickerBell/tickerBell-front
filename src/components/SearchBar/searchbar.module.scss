@@ -1,8 +1,9 @@
-@import 'assets/style/variable.scss';
+// @import 'assets/style/variable.scss';
 
 .searchbar {
   display: flex;
-  border-bottom: 1px solid $primary;
+  // border-bottom: 1px solid $primary;
+  border-bottom: 1px solid black;
   align-items: center;
   width: 300px;
   input {

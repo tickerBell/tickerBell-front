@@ -1,5 +1,4 @@
 import apiInstance from "@/util/useInterceptor";
-import axios from "axios";
 
 // 회원가입시 문자 인증
 export async function vertifySMSApi(number: string) {
@@ -9,14 +8,6 @@ export async function vertifySMSApi(number: string) {
   return res;
 }
 
-type userRegistType = {
-  username: string;
-  password: string;
-  phone: string;
-  isAdult: boolean;
-  isRegistration: boolean;
-  isKakaoJoin: boolean;
-};
 // 회원가입
 export async function userRegistApi(
   username: string,
