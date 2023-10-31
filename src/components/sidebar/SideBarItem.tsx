@@ -16,10 +16,6 @@ type SideBarItemProps = {
 };
 
 export const SideBarItem = ({ route }: SideBarItemProps) => {
-  console.log("cc", route);
-  // if ("title" in route) {
-  //   return <li>{route.title}</li>;
-  // }
   return (
     <div>
       <h3>{route.title}</h3>

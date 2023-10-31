@@ -50,6 +50,7 @@ const sideData = {
 
 export const SideBar = () => {
   const getRole = useRecoilValue(userSelector("role"));
+  console.log(getRole);
 
   return (
     <aside className="flex w-1/4 h-screen flex-col items-center justify-center border-r border-gray-200  ">

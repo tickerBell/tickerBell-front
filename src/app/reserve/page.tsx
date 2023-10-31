@@ -1,7 +1,7 @@
 "use client";
 
 import { EventRows, UserRows } from "@/dummyData/DummyData";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { HistoryTable } from "@/components/HistoryTable/HistoryTable";
 import Header from "@/components/header/Header";
 import NavTab from "@/components/NavTab/NavTab";
@@ -44,6 +44,10 @@ const Index = () => {
       return UserRows;
     }
   }, [getRole, getAtk]);
+
+  useEffect(() => {
+    console.log(getRole);
+  });
 
   return (
     <>

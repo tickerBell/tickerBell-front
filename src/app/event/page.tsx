@@ -35,12 +35,6 @@ const Index = () => {
     <div>
       <Header />
       <NavTab />
-      {data?.map((item, key) => (
-        <div key={key}>
-          <p>ID: {item.category}</p>
-          <p>Name: {item.eventName}</p>
-        </div>
-      ))}
       <div className="flex h-screen max-w-900 m-auto flex-row justify-center items-center">
         <div className="flex items-center flex-col relative">
           <EventForm registType="event" />
