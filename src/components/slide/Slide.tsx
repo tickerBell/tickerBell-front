@@ -38,7 +38,7 @@ const Slide = ({
 
   return (
     <div>
-      {data && data.length > 0 ?
+      {data && data.length > 0 ? (
         <>
           {title && <h4 className="text-center">{title}</h4>}
           <div className={className}>
@@ -54,9 +54,8 @@ const Slide = ({
               ))}
             </Slider>
           </div>
-        </> :
-        null
-      }
+        </>
+      ) : null}
     </div>
   );
 };

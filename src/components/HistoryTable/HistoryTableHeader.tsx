@@ -1,8 +1,10 @@
-interface DataTableHeaderProps {
+interface HistoryTableHeaderProps {
   column: IEventColumnsData;
 }
 
-export const DataTableHeader: React.FC<DataTableHeaderProps> = ({ column }) => {
+export const HistoryTableHeader: React.FC<HistoryTableHeaderProps> = ({
+  column,
+}) => {
   const { name, speaker, date, totaluser, place, maxseats, cancel } = column;
 
   return (

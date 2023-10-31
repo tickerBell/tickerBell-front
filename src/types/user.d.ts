@@ -4,21 +4,19 @@ interface IUserColumnsData {
   date: string;
   place: string;
 }
+
+interface IEventColumnsData extends IUserColumnsData {
+  totaluser: string;
+  maxseats: string;
+  cancel: string;
+}
+
 interface IUserRowsData {
   id: number;
   title: string;
   speaker: string;
   startTime: string;
   place: string;
-}
-interface IEventColumnsData {
-  name: string;
-  speaker: string;
-  date: string;
-  place: string;
-  totaluser: string;
-  maxseats: string;
-  cancel: string;
 }
 interface IEventRowsData {
   id: number;

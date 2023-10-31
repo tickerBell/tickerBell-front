@@ -1,9 +1,9 @@
-interface DataTableHeaderProps {
+interface HistoryTableBodyProps {
   row: IEventRowsData;
   openModal: () => void;
 }
 
-export const DataTableBody: React.FC<DataTableHeaderProps> = ({
+export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
   row,
   openModal,
 }) => {

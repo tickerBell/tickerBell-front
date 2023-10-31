@@ -1,6 +1,5 @@
 import apiInstance from "@/util/useInterceptor";
 
-
 export async function eventSlideApi() {
   try {
     const res = await apiInstance.get("/api/main", {});
