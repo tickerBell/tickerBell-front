@@ -94,15 +94,6 @@ const RegistForm = ({
   // console.log('회원가입 폼 : ', watch(), isRegistration)
 
   const onSubmit = (data: any) => {
-    console.log(
-      "form : ",
-      data.username,
-      data.password,
-      data.phone,
-      selectedAdult === "adult" ? true : false,
-      isRegistration === "isRegistrationTrue" ? true : false,
-      false
-    );
     if (sms.success) {
       userRegistApi(
         data.username,
