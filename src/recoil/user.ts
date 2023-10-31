@@ -52,7 +52,10 @@ export const userSelector = selectorFamily({
             console.log(newValue.latitude);
             return {
               ...prevUserState,
-              locationState: { latitude: newValue.latitude, longitude: newValue.longitude },
+              locationState: {
+                latitude: newValue.latitude,
+                longitude: newValue.longitude,
+              },
             };
           case "role":
             return { ...prevUserState, role: newValue };

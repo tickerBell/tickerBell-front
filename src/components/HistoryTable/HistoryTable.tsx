@@ -1,14 +1,13 @@
 "use client";
 
-import { DataTableBody } from "./DataTableBody";
-import { DataTableHeader } from "./DataTableHeader";
+import { HistoryTableBody } from "./HistoryTableBody";
+import { HistoryTableHeader } from "./HistoryTableHeader";
 import ReactPaginate from "react-paginate";
 import { useState } from "react";
 import Pagination from "./Pagination";
-import { Pagenation } from "../Pagenation/Pagenation";
 import EventDetailModal from "../portalModal/eventDetailModal/EventDetailModal";
 
-export const DataTable = ({
+export const HistoryTable = ({
   columns,
   rows,
 }: {
@@ -39,7 +38,7 @@ export const DataTable = ({
   };
 
   return (
-    <>
+    <div className="flex w-3/4 justify-center items-center">
       <div>
         {onModal && (
           <EventDetailModal
@@ -49,15 +48,15 @@ export const DataTable = ({
           />
         )}
       </div>
-      <div className="flex flex-col w-3/4 justify-center items-center">
+      <div className="flex flex-col">
         <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
           <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
             <table className="min-w-full">
               {columns.map((column, key) => (
-                <DataTableHeader key={key} column={column} />
+                <HistoryTableHeader key={key} column={column} />
               ))}
               {displayedRows.map((row, key) => (
-                <DataTableBody
+                <HistoryTableBody
                   key={key}
                   row={row}
                   openModal={() => {
@@ -73,6 +72,6 @@ export const DataTable = ({
           handlePageChange={handlePageChange}
         />
       </div>
-    </>
+    </div>
   );
 };
