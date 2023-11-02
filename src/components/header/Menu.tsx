@@ -1,16 +1,31 @@
 "use client";
 
-import Link from "next/link";
-import React from "react";
-import { isDev } from "@/util/util";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { userSelector, userState } from "@/recoil/user";
+import { userInfoApi } from "@/api/users";
+import { getSession } from "@/hooks/useSeection";
+import { userSelector } from "@/recoil/user";
 import { getCookie } from "@/util/authCookie";
+import Link from "next/link";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const Menu = () => {
-  const getAtk = useRecoilValue(userSelector("atk"));
-  const getRole = useRecoilValue(userSelector("role"));
   // console.log('권한: ', getRole && getRole, 'rtk : ', getCookie('rtk'), 'atk: ', getAtk)
+  const getRole = useRecoilValue(userSelector("role"));
+  const setIsLogin = useSetRecoilState(userSelector("isLogin"));
+  const getIsLogin = useRecoilValue(userSelector("isLogin"));
+  const [atk, setAtk] = useState('');
+
+  useEffect(() => {
+    setAtk(getCookie('ticket-atk'));
+    setIsLogin(getCookie('ticket-atk') !== null ? true : false)
+    userInfoApi(getCookie('ticket-atk')).then((res) => console.log('re정보: ', res))
+  }, [])
+
+  // console.log('cc',
+  //   getIsLogin,
+  //   atk,
+  //   getCookie('ticket-atk')
+  // )
 
   return (
     <div className="flex gap-6 text-[14px]">
@@ -18,7 +33,7 @@ const Menu = () => {
       <Link href="/modal">모달 임시</Link>
 
       {getRole === "ROLE_REGISTRANT" && <Link href="/event_regist">이벤트 등록</Link>}
-      {!getAtk && <Link href="/login">로그인</Link>}
+      {!atk && <Link href="/login">로그인</Link>}
       <Link href="/regist">회원가입</Link>
       <Link href="/mypage">마이페이지</Link>
       <Link href="/reserve">예약확인/취소</Link>

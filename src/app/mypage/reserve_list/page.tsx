@@ -32,7 +32,6 @@ export const EventColumns: IEventColumnsData[] = [
 ];
 
 const Index = () => {
-  const getAtk = useRecoilValue(userSelector("atk"));
   const getRole = useRecoilValue(userSelector("role"));
 
   const columns = getRole === "ROLE_REGISTRANT" ? EventColumns : UserColumns;
@@ -43,7 +42,7 @@ const Index = () => {
     } else {
       return UserRows;
     }
-  }, [getRole, getAtk]);
+  }, [getRole]);
 
   useEffect(() => {
     console.log(getRole);

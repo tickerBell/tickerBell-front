@@ -1,10 +1,11 @@
-import './globals.css'
-import './index.scss';
+import type { Metadata } from 'next';
 import Script from "next/script";
-import type { Metadata } from 'next'
+import './globals.css';
+import './index.scss';
 // import { Inter } from 'next/font/google'
-import RecoilRootProvider from '@/util/recoilRootProvider';
 import QueryProviders from '@/util/queryProvider';
+import RecoilRootProvider from '@/util/recoilRootProvider';
+import CookiesRootProvider from '@/util/cookieProvider';
 // const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -37,9 +38,11 @@ export default function RootLayout({
       </head>
       <body>
         <QueryProviders>
-          <RecoilRootProvider>
-            {children}
-          </RecoilRootProvider>
+          <CookiesRootProvider>
+            <RecoilRootProvider>
+              {children}
+            </RecoilRootProvider>
+          </CookiesRootProvider>
         </QueryProviders>
         <div id='modal' />
       </body>

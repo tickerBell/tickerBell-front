@@ -1,8 +1,9 @@
-// import { TokenRefresh } from "api/auth";
+import { getSession } from "@/hooks/useSeection";
+import { userSelector } from "@/recoil/user";
 import axios from "axios";
-// import { ROOT_API } from "constants/api";
+import { useSetRecoilState } from "recoil";
+import { getCookie } from "./authCookie";
 
-// NOTE: api 별도 처리를 위한 임시 파일
 const apiInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: 5000,
@@ -10,7 +11,10 @@ const apiInstance = axios.create({
 
 apiInstance.interceptors.request.use(
   async (config) => {
-    // store에서 토큰 가져오기
+    if (getCookie("ticket-atk")) {
+      config.headers["Authorization"] = `Bearer ${getCookie("ticket-atk")}`;
+      return config;
+    }
     return config;
   },
   (error) => {
@@ -26,7 +30,6 @@ apiInstance.interceptors.response.use(
   async function (err) {
     // 유효하지 않은 토큰
     if (err.response && err.response.status === 400) {
-      
     }
 
     // 인증실패

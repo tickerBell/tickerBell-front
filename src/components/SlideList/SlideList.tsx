@@ -9,14 +9,14 @@ import cls from 'classnames';
 const SlideList = () => {
   const [tab, setTab] = useState('rankingMusicalEventList');
 
-  const { data, isSuccess } = useQuery({
+  const { data, isSuccess, isError, error } = useQuery({
     queryKey: ["main-slide"],
     queryFn: () => eventSlideApi(),
   });
 
   return (
     <div>
-      {isSuccess &&
+      {!isError && isSuccess &&
         <>
           <div className="flex gap-8 justify-center">
             <div onClick={() => setTab('rankingMusicalEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {

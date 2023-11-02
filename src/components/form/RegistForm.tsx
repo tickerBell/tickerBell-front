@@ -8,6 +8,7 @@ import { useSetRecoilState } from "recoil";
 import Button from "../button/Button";
 import { Radio } from "./Input";
 import dayjs from "dayjs";
+import { setSession } from "@/hooks/useSeection";
 
 type formPropsType = {
   tab: number;
@@ -23,8 +24,8 @@ const RegistForm = ({
   isRegistration,
 }: formPropsType) => {
   // const [sms, setSms] = useState(0);
-  const setUserAtk = useSetRecoilState(userSelector("atk"));
   const setUserInfo = useSetRecoilState(userSelector("role"));
+  const setIsLogin = useSetRecoilState(userSelector("isLogin"));
   const router = useRouter();
   const [selectedAdult, setSelectedAdult] = useState("");
   const [sms, setSms] = useState({
@@ -104,9 +105,12 @@ const RegistForm = ({
         false
       ).then((res) => {
         userLoginApi(data.username, data.password).then((res) => {
-          console.log("res", res.data);
-          setUserAtk(res.data.accessToken);
-          setCookie("rtk", res.data.refreshToken, {
+          // setSession('atk', res.data.accessToken);
+          setCookie("ticket-rtk", res.data.refreshToken, {
+            path: "/",
+            secure: "/",
+          });
+          setCookie("ticket-atk", res.data.accessToken, {
             path: "/",
             secure: "/",
           });
