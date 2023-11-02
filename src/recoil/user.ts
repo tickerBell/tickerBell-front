@@ -2,7 +2,7 @@ import { atom, selector, selectorFamily } from "recoil";
 
 // UserState 타입 정의
 type UserState = {
-  atk: string;
+  isLogin: boolean;
   role: string;
   locationState: {
     latitude: number;
@@ -14,7 +14,7 @@ type UserState = {
 export const userState = atom<UserState>({
   key: "userState",
   default: {
-    atk: "",
+    isLogin: false,
     role: "",
     locationState: {
       latitude: 0,
@@ -31,8 +31,8 @@ export const userSelector = selectorFamily({
       const user = get(userState);
 
       switch (property) {
-        case "atk":
-          return user && user.atk;
+        case "isLogin":
+          return user && user.isLogin;
         case "location":
           return user && user.locationState;
         case "role":
@@ -46,8 +46,8 @@ export const userSelector = selectorFamily({
     ({ set }, newValue: any) => {
       set(userState, (prevUserState: any) => {
         switch (property) {
-          case "atk":
-            return { ...prevUserState, atk: newValue };
+          case "isLogin":
+            return { ...prevUserState, isLogin: newValue };
           case "location":
             console.log(newValue.latitude);
             return {

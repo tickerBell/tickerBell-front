@@ -1,4 +1,6 @@
+import { userSelector } from "@/recoil/user";
 import apiInstance from "@/util/useInterceptor";
+import { useRecoilValue } from "recoil";
 
 // 회원가입시 문자 인증
 export async function vertifySMSApi(number: string) {
@@ -38,7 +40,11 @@ export async function userLoginApi(username: string, password: string) {
 }
 
 // 회원 정보 조회
-export async function userInfoApi() {
-  const res = await apiInstance.post("/api/member", {});
+export async function userInfoApi(atk: string) {
+  const res = await apiInstance.get("/api/member", {
+    headers: {
+      Authorization: `Bearer ${atk}`,
+    },
+  });
   return res;
 }

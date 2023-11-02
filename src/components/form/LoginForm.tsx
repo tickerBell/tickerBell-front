@@ -1,6 +1,6 @@
 "use client";
 
-import { userLoginApi } from "@/api/users";
+import { userInfoApi, userLoginApi } from "@/api/users";
 import { userSelector } from "@/recoil/user";
 import { setCookie } from "@/util/authCookie";
 import { useRouter } from "next/navigation";
@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import Button from "../button/Button";
+import { setSession } from "@/hooks/useSeection";
 
 type formPropsType = {
   tab: number;
@@ -16,7 +17,7 @@ type formPropsType = {
 
 const LoginForm = ({ tab, setTab }: formPropsType) => {
   // const [sms, setSms] = useState(0);
-  const setUserAtk = useSetRecoilState(userSelector("atk"));
+  const setIsLogin = useSetRecoilState(userSelector("isLogin"));
   const setUserInfo = useSetRecoilState(userSelector("role"));
 
   const router = useRouter();
@@ -40,18 +41,26 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
   // console.log('회원가입 폼 : ', watch(), isRegistration)
 
   const onSubmit = (data: any) => {
-    console.log("data", data);
     userLoginApi(data.username, data.password)
       .then((res) => {
-        setUserAtk(res.data.accessToken);
-        setCookie("rtk", res.data.refreshToken, {
+        // setSession('atk', res.data.accessToken);
+        setIsLogin(true);
+        userInfoApi(res.data.accessToken).then((res) => {
+          setUserInfo(res.data.role)
+        })
+        setCookie("ticket-atk", res.data.accessToken, {
+          path: "/",
+          secure: "/",
+        });
+        setCookie("ticket-rtk", res.data.refreshToken, {
           path: "/",
           secure: "/",
         });
         setUserInfo("isRegistrationTrue" ? "ROLE_REGISTRANT" : "ROLE_USER");
         router.push("/");
       })
-      .catch((err) => alert(err.response.data.data));
+      // .catch((err) => alert(err.response.data.data));
+      .catch((err) => console.log('err', err));
     // userRegistApi()
   };
 

@@ -6,7 +6,6 @@ export async function eventSlideApi() {
     const res = await apiInstance.get("/api/main", {});
     return res;
   } catch (error) {
-    console.error(error);
     throw error;
   }
 }
