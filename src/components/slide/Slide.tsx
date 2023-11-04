@@ -25,7 +25,7 @@ const Slide = ({
 }: sliderProps) => {
   const settings = useMemo<Settings>(
     () => ({
-      // dots: true,
+      dots: true,
       infinite: loop,
       speed: speed,
       slidesToShow: 5,
@@ -44,13 +44,14 @@ const Slide = ({
           <div className={className}>
             <Slider {...settings}>
               {data?.map((item: any, index: any) => (
-                <Link href={`/reserve/${item.eventId}`} key={index}>
+                // <div href={`/reserve/${item.eventId}`} key={index}>
+                <div key={index}>
                   <picture>
                     <img src={item.item} alt={item.name} />
                   </picture>
                   {item.eventName}
                   {day(item.startEvent)}
-                </Link>
+                </div>
               ))}
             </Slider>
           </div>

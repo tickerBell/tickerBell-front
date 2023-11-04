@@ -19,7 +19,7 @@ const Menu = () => {
     setAtk(getCookie('ticket-atk'));
     setIsLogin(getCookie('ticket-atk') !== null ? true : false)
     userInfoApi(getCookie('ticket-atk')).then((res) => console.log('re정보: ', res))
-  }, [])
+  }, [getCookie('ticket-atk')])
 
   // console.log('cc',
   //   getIsLogin,
@@ -32,7 +32,7 @@ const Menu = () => {
       {/* {isDev && } */}
       <Link href="/modal">모달 임시</Link>
 
-      {getRole === "ROLE_REGISTRANT" && <Link href="/event_regist">이벤트 등록</Link>}
+      {getRole === "ROLE_REGISTRANT" && <Link href="/event-regist">이벤트 등록</Link>}
       {!atk && <Link href="/login">로그인</Link>}
       <Link href="/regist">회원가입</Link>
       <Link href="/mypage">마이페이지</Link>

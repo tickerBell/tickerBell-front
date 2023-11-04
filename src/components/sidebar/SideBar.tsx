@@ -5,6 +5,7 @@ import { SideBarItem } from "./SideBarItem";
 import { useRecoilValue } from "recoil";
 import { userSelector } from "@/recoil/user";
 import { sideData } from "./SideBarMenu";
+import LogoutButton from "../button/LogoutButton";
 
 export const SideBar = () => {
   const getRole = useRecoilValue(userSelector("role"));
@@ -21,6 +22,7 @@ export const SideBar = () => {
               <SideBarItem key={key} route={route} />
             ))}
       </ul>
+      <LogoutButton />
     </aside>
   );
 };
