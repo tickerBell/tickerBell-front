@@ -50,11 +50,15 @@ export async function userInfoApi(atk: string) {
 }
 
 export async function userReserveApi(
+  atk: string,
   page: number,
   size: number,
   sort: string[]
 ) {
   const res = await apiInstance.get("/api/member/my", {
+    headers: {
+      Authorization: `Bearer ${atk}`,
+    },
     params: { page: 0, size: 1, sort: ["string"] },
   });
   return res;

@@ -47,7 +47,7 @@ const Index = () => {
     setAtk(atk);
     setIsLogin(atk !== null);
     if (atk) {
-      userReserveApi(page, size, sort).then((res) => {
+      userReserveApi(atk, page, size, sort).then((res) => {
         console.log("re정보: ", res);
         // 여기에서 API 응답을 처리합니다.
       });

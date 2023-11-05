@@ -17,18 +17,11 @@ const Menu = () => {
   const [atk, setAtk] = useState("");
   const router = useRouter();
 
-  const page = 0;
-  const size = 1;
-  const sort = ["string"];
-
   useEffect(() => {
     setAtk(getCookie("ticket-atk"));
     setIsLogin(getCookie("ticket-atk") !== null ? true : false);
     userInfoApi(getCookie("ticket-atk")).then((res) =>
       console.log("re정보: ", res)
-    );
-    userReserveApi(page, size, sort).then((res) =>
-      console.log("list정보: ", res)
     );
   }, []);
 
