@@ -50,3 +50,13 @@ export async function userInfoApi(atk: string | undefined) {
     return res;
   }
 }
+
+export async function userReserveApi(atk: string, page: number, size: number) {
+  const res = await apiInstance.get("/api/member/my", {
+    headers: {
+      Authorization: `Bearer ${atk}`,
+    },
+    params: { page: 0, size: 1 },
+  });
+  return res;
+}

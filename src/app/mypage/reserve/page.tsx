@@ -9,8 +9,8 @@ import { SideBar } from "@/components/sidebar/SideBar";
 import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userSelector } from "@/recoil/user";
-import { getCookie } from "@/util/authCookie";
 import { userReserveApi } from "@/api/users";
+import { getCookie } from "@/util/authCookie";
 
 export const UserColumns: IUserColumnsData[] = [
   {
@@ -43,16 +43,13 @@ const Index = () => {
   const [atk, setAtk] = useState("");
 
   useEffect(() => {
-    const atk = getCookie("ticket-atk");
     setAtk(atk);
     setIsLogin(atk !== null);
-    if (atk) {
-      userReserveApi(atk, page, size, sort).then((res) => {
-        console.log("re정보: ", res);
-        // 여기에서 API 응답을 처리합니다.
-      });
-    }
-  }, []);
+    const atkT = getCookie("ticket-atk");
+    userReserveApi(atkT, page, size).then((res) => {
+      console.log("re정보: ", res);
+    });
+  }, [atk]);
   //   setAtk(getCookie("ticket-atk"));
   //   setIsLogin(getCookie("ticket-atk") !== null ? true : false);
 
