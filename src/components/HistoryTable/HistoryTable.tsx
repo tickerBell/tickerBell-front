@@ -5,7 +5,8 @@ import { HistoryTableHeader } from "./HistoryTableHeader";
 import ReactPaginate from "react-paginate";
 import { useState } from "react";
 import Pagination from "./Pagination";
-import EventDetailModal from "../portalModal/eventDetailModal/EventDetailModal";
+
+import ReserveModal from "../portalModal/reserveModal/ReserveModal";
 
 export const HistoryTable = ({
   columns,
@@ -41,10 +42,10 @@ export const HistoryTable = ({
     <div className="flex w-3/4 justify-center items-center">
       <div>
         {onModal && (
-          <EventDetailModal
+          <ReserveModal
             className="w-400"
-            dimClick={false}
-            setOnModal={() => setModal(false)}
+            dimClick={true}
+            setOnModal={() => setOnModal(false)}
           />
         )}
       </div>
