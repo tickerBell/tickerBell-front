@@ -49,7 +49,7 @@ const Index = () => {
     userReserveApi(atkT, page, size, sort).then((res) => {
       console.log("re정보: ", res);
     });
-  }, []);
+  }, [atk]);
   //   setAtk(getCookie("ticket-atk"));
   //   setIsLogin(getCookie("ticket-atk") !== null ? true : false);
 

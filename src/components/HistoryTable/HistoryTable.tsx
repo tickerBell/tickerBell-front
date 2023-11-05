@@ -45,7 +45,7 @@ export const HistoryTable = ({
           <ReserveModal
             className="w-400"
             dimClick={true}
-            setOnModal={() => setModal(false)}
+            setOnModal={() => setOnModal(false)}
           />
         )}
       </div>

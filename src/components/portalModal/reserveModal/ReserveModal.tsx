@@ -5,7 +5,6 @@ import ModalTitle from "../modalItem/ModalTitle";
 
 type ReserveModalType = {
   setOnModal: React.Dispatch<React.SetStateAction<boolean>>;
-  children: React.ReactNode;
   dimClick?: boolean;
   isDim?: boolean;
   onClose?: boolean;
@@ -14,7 +13,6 @@ type ReserveModalType = {
 
 const ReserveModal = ({
   setOnModal,
-  children,
   dimClick,
   isDim = true,
   className,
