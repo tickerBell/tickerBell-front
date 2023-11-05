@@ -46,7 +46,7 @@ const Index = () => {
     setAtk(atk);
     setIsLogin(atk !== null);
     const atkT = getCookie("ticket-atk");
-    userReserveApi(atkT, page, size, sort).then((res) => {
+    userReserveApi(atkT, page, size).then((res) => {
       console.log("re정보: ", res);
     });
   }, [atk]);
