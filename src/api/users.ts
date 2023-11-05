@@ -40,13 +40,15 @@ export async function userLoginApi(username: string, password: string) {
 }
 
 // 회원 정보 조회
-export async function userInfoApi(atk: string) {
-  const res = await apiInstance.get("/api/member", {
-    headers: {
-      Authorization: `Bearer ${atk}`,
-    },
-  });
-  return res;
+export async function userInfoApi(atk: string | undefined) {
+  if (atk !== undefined) {
+    const res = await apiInstance.get(`/api/member`, {
+      headers: {
+        Authorization: `Bearer ${atk}`,
+      },
+    });
+    return res;
+  }
 }
 
 export async function userReserveApi(atk: string, page: number, size: number) {

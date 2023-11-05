@@ -25,7 +25,7 @@ const Slide = ({
 }: sliderProps) => {
   const settings = useMemo<Settings>(
     () => ({
-      // dots: true,
+      dots: true,
       infinite: loop,
       speed: speed,
       slidesToShow: 5,
@@ -50,7 +50,7 @@ const Slide = ({
                   </picture>
                   {item.eventName}
                   {day(item.startEvent)}
-                </Link>
+                </div>
               ))}
             </Slider>
           </div>

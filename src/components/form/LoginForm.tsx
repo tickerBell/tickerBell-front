@@ -46,7 +46,7 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
         // setSession('atk', res.data.accessToken);
         setIsLogin(true);
         userInfoApi(res.data.accessToken).then((res) => {
-          setUserInfo(res.data.role)
+          setUserInfo(res?.data.role)
         })
         setCookie("ticket-atk", res.data.accessToken, {
           path: "/",
