@@ -1,7 +1,7 @@
 "use client";
 
 import { EventRows, UserRows } from "@/dummyData/DummyData";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { HistoryTable } from "@/components/HistoryTable/HistoryTable";
 import Header from "@/components/header/Header";
 import NavTab from "@/components/NavTab/NavTab";
@@ -9,7 +9,6 @@ import { SideBar } from "@/components/sidebar/SideBar";
 import React from "react";
 import { useRecoilValue } from "recoil";
 import { userSelector } from "@/recoil/user";
-import { userInfoApi } from "../../../api/users";
 
 export const UserColumns: IUserColumnsData[] = [
   {
@@ -34,9 +33,6 @@ export const EventColumns: IEventColumnsData[] = [
 
 const Index = () => {
   const getRole = useRecoilValue(userSelector("role"));
-  const getAtk = useRecoilValue(userSelector("atk"));
-  const [eventRows, setEventRows] = useState([]);
-
   const columns = getRole === "ROLE_REGISTRANT" ? EventColumns : UserColumns;
 
   const rows = useMemo(() => {
@@ -44,19 +40,6 @@ const Index = () => {
       return EventRows;
     } else {
       return UserRows;
-    }
-  }, [getRole]);
-
-  useEffect(() => {
-    if (getRole === "ROLE_REGISTRANT") {
-      userInfoApi(getAtk)
-        .then((res) => {
-          const eventInfo = res.data.eventInfo;
-          setEventRows(eventInfo);
-        })
-        .catch((error) => {
-          console.error("API 호출 중 오류 발생:", error);
-        });
     }
   }, [getRole]);
 

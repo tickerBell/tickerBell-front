@@ -5,7 +5,7 @@ export const sideData = {
       submenu: [
         {
           title: "이벤트 등록내역",
-          route: "./reserve",
+          route: "./mypage/reserve",
         },
       ],
     },
@@ -25,7 +25,7 @@ export const sideData = {
       submenu: [
         {
           title: "이벤트 예약내역",
-          route: "./reserve",
+          route: "./mypage/reserve",
         },
       ],
     },

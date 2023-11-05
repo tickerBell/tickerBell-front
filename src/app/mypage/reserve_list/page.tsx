@@ -1,14 +1,16 @@
 "use client";
 
 import { EventRows, UserRows } from "@/dummyData/DummyData";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { HistoryTable } from "@/components/HistoryTable/HistoryTable";
 import Header from "@/components/header/Header";
 import NavTab from "@/components/NavTab/NavTab";
 import { SideBar } from "@/components/sidebar/SideBar";
 import React from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userSelector } from "@/recoil/user";
+import { getCookie } from "@/util/authCookie";
+import { userReserveApi } from "@/api/users";
 
 export const UserColumns: IUserColumnsData[] = [
   {
@@ -32,7 +34,29 @@ export const EventColumns: IEventColumnsData[] = [
 ];
 
 const Index = () => {
+  const page = 0;
+  const size = 1;
+  const sort = ["string"];
   const getRole = useRecoilValue(userSelector("role"));
+  const setIsLogin = useSetRecoilState(userSelector("isLogin"));
+  const getIsLogin = useRecoilValue(userSelector("isLogin"));
+  const [atk, setAtk] = useState("");
+
+  useEffect(() => {
+    const atk = getCookie("ticket-atk");
+    setAtk(atk);
+    setIsLogin(atk !== null);
+    if (atk) {
+      userReserveApi(page, size, sort).then((res) => {
+        console.log("re정보: ", res);
+        // 여기에서 API 응답을 처리합니다.
+      });
+    }
+  }, []);
+  //   setAtk(getCookie("ticket-atk"));
+  //   setIsLogin(getCookie("ticket-atk") !== null ? true : false);
+
+  // }, []);
 
   const columns = getRole === "ROLE_REGISTRANT" ? EventColumns : UserColumns;
 

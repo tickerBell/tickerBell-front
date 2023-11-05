@@ -1,6 +1,6 @@
 "use client";
 
-import { userInfoApi } from "@/api/users";
+import { userInfoApi, userReserveApi } from "@/api/users";
 import { getSession } from "@/hooks/useSeection";
 import { userSelector } from "@/recoil/user";
 import { getCookie } from "@/util/authCookie";
@@ -17,16 +17,23 @@ const Menu = () => {
   const [atk, setAtk] = useState("");
   const router = useRouter();
 
+  const page = 0;
+  const size = 1;
+  const sort = ["string"];
+
   useEffect(() => {
     setAtk(getCookie("ticket-atk"));
     setIsLogin(getCookie("ticket-atk") !== null ? true : false);
     userInfoApi(getCookie("ticket-atk")).then((res) =>
       console.log("re정보: ", res)
     );
+    userReserveApi(page, size, sort).then((res) =>
+      console.log("list정보: ", res)
+    );
   }, []);
 
   // console.log("cc", getIsLogin, atk, getCookie("ticket-atk"));
-  const handleMyPageClick = (e) => {
+  const handleMyPageClick = (e: any) => {
     if (!atk) {
       e.preventDefault();
       alert("로그인 후 이용해주세요");

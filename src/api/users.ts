@@ -48,3 +48,14 @@ export async function userInfoApi(atk: string) {
   });
   return res;
 }
+
+export async function userReserveApi(
+  page: number,
+  size: number,
+  sort: string[]
+) {
+  const res = await apiInstance.get("/api/member/my", {
+    params: { page: 0, size: 1, sort: ["string"] },
+  });
+  return res;
+}
