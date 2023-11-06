@@ -7,11 +7,21 @@ import Header from "@/components/header/Header";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
+import { getEventIdApi } from "@/api/events";
 
-const Index = (data: any) => {
-  // console.log("dd", data);
+const Index = () => {
+  const params = useParams();
   const [modal, setModal] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
+
+  const { data, isSuccess, isError, error } = useQuery({
+    queryKey: ["event-id", params.id],
+    queryFn: () => getEventIdApi(params.id),
+  });
+
+  console.log('data', data);
 
   return (
     <div>

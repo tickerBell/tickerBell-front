@@ -3,7 +3,7 @@
 import { userInfoApi, userReserveApi } from "@/api/users";
 import { getSession } from "@/hooks/useSeection";
 import { userSelector } from "@/recoil/user";
-import { getCookie } from "@/util/authCookie";
+import { getCookie, removeCookie } from "@/util/authCookie";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useState } from "react";
@@ -34,6 +34,15 @@ const Menu = () => {
     }
   };
 
+  const auth = () => {
+    if(atk) {
+      removeCookie('ticket-atk');
+      removeCookie('ticket-rtk');
+    } else {
+      router.push("/login");
+    }
+  }
+
   return (
     <div className="flex gap-6 text-[14px]">
       {/* {isDev && } */}
@@ -42,7 +51,8 @@ const Menu = () => {
       {getRole === "ROLE_REGISTRANT" && (
         <Link href="/event_regist">이벤트 등록</Link>
       )}
-      {!atk && <Link href="/login">로그인</Link>}
+      {/* {!atk && <Link href="/login">로그인</Link>} */}
+      <div onClick={auth} className="cursor-pointer">{atk ? '로그아웃' : '로그인'}</div>
       <Link href="/regist">회원가입</Link>
       <Link href="/mypage" onClick={handleMyPageClick}>
         마이페이지

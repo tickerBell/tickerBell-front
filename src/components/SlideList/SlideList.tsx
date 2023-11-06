@@ -15,7 +15,7 @@ const SlideList = () => {
   });
 
   return (
-    <div>
+    <div className="mt-60">
       {!isError && isSuccess &&
         <>
           <div className="flex gap-8 justify-center">
@@ -35,7 +35,7 @@ const SlideList = () => {
               "bg-primary text-white": tab === 'rankingSportsEventList'
             })}>스포츠</div>
           </div>
-          <Slide data={data?.data[tab]} title="랭킹" autoplay />
+        <Slide data={data?.data[tab]} title="랭킹" viewCount={data?.data[tab].length}/>
           <Slide data={data?.data['saleEventList']} title="세일" autoplay />
           <Slide data={data?.data['deadLineEventList']} title="마감임박" />
           <Slide data={data?.data['recommendEventList']} title="추천!" />

@@ -5,11 +5,13 @@ import Location from "@/components/location/Location";
 
 export default function Home() {
   return (
-    <main className="max-w-1200 m-auto">
+    <main className="">
       <Location />
       <Header />
-      <NavTab />
-      <SlideList />
+      <div className="pt-10 m-auto max-w-1200">
+        <NavTab />
+        <SlideList />
+      </div>
       {/* <List data={ticketDummyData} /> */}
 
     </main>
