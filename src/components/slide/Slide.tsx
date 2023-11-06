@@ -13,6 +13,7 @@ type sliderProps = {
   autoplay?: boolean | number;
   speed?: number;
   loop?: boolean;
+  viewCount?: number;
 };
 
 const Slide = ({
@@ -22,13 +23,14 @@ const Slide = ({
   autoplay = false,
   speed = 300,
   loop = true,
+  viewCount = 5
 }: sliderProps) => {
   const settings = useMemo<Settings>(
     () => ({
-      dots: true,
+      // dots: true,
       infinite: loop,
       speed: speed,
-      slidesToShow: 5,
+      slidesToShow: Number(viewCount),
       autoplay: Boolean(autoplay),
       autoplaySpeed: typeof autoplay === "boolean" ? 3000 : autoplay,
       // gap:
@@ -37,7 +39,7 @@ const Slide = ({
   );
 
   return (
-    <div>
+    <div className="mt-40">
       {data && data.length > 0 ? (
         <>
           {title && <h4 className="text-center">{title}</h4>}
@@ -50,7 +52,7 @@ const Slide = ({
                   </picture>
                   {item.eventName}
                   {day(item.startEvent)}
-                </div>
+                </Link>
               ))}
             </Slider>
           </div>
