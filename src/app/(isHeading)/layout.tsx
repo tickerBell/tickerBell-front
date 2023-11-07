@@ -9,7 +9,10 @@ export default function IsHeadingLayout({
   return (
     <>
       <Header />
-      {children}
+      <div className="pt-10 m-auto max-w-1200">
+        <NavTab />
+        {children}
+      </div>
     </>
   )
 }
