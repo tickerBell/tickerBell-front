@@ -1,9 +1,14 @@
+import Image from 'next/image'
 import React from 'react'
 
 const Card = () => {
   return (
     <div>
-      카드1
+      {/* <Image src="" alt=""/> */}
+      <div>스피커</div>
+      <div>공연이름</div>
+      <div>장소</div>
+      <div>시작날짜~</div>
     </div>
   )
 }

@@ -6,6 +6,7 @@ import './index.scss';
 import QueryProviders from '@/util/queryProvider';
 import RecoilRootProvider from '@/util/recoilRootProvider';
 import CookiesRootProvider from '@/util/cookieProvider';
+import ApolloProviders from '@/util/apolloProvider';
 // const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -40,7 +41,9 @@ export default function RootLayout({
         <QueryProviders>
           <CookiesRootProvider>
             <RecoilRootProvider>
-              {children}
+              <ApolloProviders>
+                {children}
+              </ApolloProviders>
             </RecoilRootProvider>
           </CookiesRootProvider>
         </QueryProviders>
