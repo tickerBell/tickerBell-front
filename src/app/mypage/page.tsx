@@ -19,7 +19,7 @@ type User = {
   phone: string;
 };
 
-const index = () => {
+const Index = () => {
   const getRole = useRecoilValue(userSelector("role"));
   const setIsLogin = useSetRecoilState(userSelector("isLogin"));
   const getIsLogin = useRecoilValue(userSelector("isLogin"));
@@ -30,7 +30,7 @@ const index = () => {
     setAtk(getCookie("ticket-atk"));
     setIsLogin(getCookie("ticket-atk") !== null ? true : false);
     userInfoApi(getCookie("ticket-atk")).then((res) => {
-      setUserData(res.data);
+      setUserData(res?.data);
       console.log("re정보: ", res);
     });
   }, []);
@@ -55,4 +55,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
