@@ -12,7 +12,7 @@ import { userSelector } from "@/recoil/user";
 import { userReserveApi } from "@/api/users";
 import { getCookie } from "@/util/authCookie";
 
-export const UserColumns: IUserColumnsData[] = [
+const UserColumns: IUserColumnsData[] = [
   {
     name: "이벤트명",
     speaker: "캐스팅",
@@ -21,7 +21,7 @@ export const UserColumns: IUserColumnsData[] = [
   },
 ];
 
-export const EventColumns: IEventColumnsData[] = [
+const EventColumns: IEventColumnsData[] = [
   {
     name: "이벤트명",
     speaker: "캐스팅",
