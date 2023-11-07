@@ -7,6 +7,7 @@ import SearchMapModal from '@/components/portalModal/mapModal/SearchMapModal';
 import React, { useState } from 'react'
 import { userState } from '@/recoil/user';
 import { useRecoilState } from 'recoil';
+import { useQuery, gql } from "@apollo/client";
 
 const ModalPage = () => {
   const [modal, setModal] = useState(false);
@@ -18,6 +19,49 @@ const ModalPage = () => {
 
   // const [user] = useRecoilState(userState);
   // console.log('user 스토어', user);
+  // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ graphql 테스트
+  interface Country {
+    code: string;
+    emoji: string;
+    name: string;
+  }
+
+  interface CountryData {
+    countries: Country[];
+  }
+
+  const GET_COUNTRIES = gql`
+  query Countries($filter: CountryFilterInput) {
+    countries(filter: $filter) {
+      code
+      name
+      emoji
+    }
+  }
+`;
+
+  // GRAPHQL READ_BYFILTER
+  const { data, loading, error } = useQuery<CountryData>(GET_COUNTRIES, {
+    variables: {
+      filter: {
+        code: {
+          eq: "AD",
+        },
+      },
+    },
+  });
+
+  if (loading) {
+    return <h2>로딩중</h2>;
+  }
+
+  if (error) {
+    return <h1>에러 발생</h1>;
+  }
+
+  const countries = data?.countries.slice(0, 4);
+
+  console.log('gql : ', countries);
 
   return (
     <div>

@@ -4,6 +4,7 @@ import { userInfoApi, userReserveApi } from "@/api/users";
 import { getSession } from "@/hooks/useSeection";
 import { userSelector } from "@/recoil/user";
 import { getCookie, removeCookie } from "@/util/authCookie";
+import { isDev } from "@/util/util";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useState } from "react";
@@ -19,7 +20,7 @@ const Menu = () => {
 
   useEffect(() => {
     setAtk(getCookie("ticket-atk"));
-    setIsLogin(getCookie("ticket-atk") !== null ? true : false);
+    // setIsLogin(getCookie("ticket-atk") !== null ? true : false);
     userInfoApi(getCookie("ticket-atk")).then((res) =>
       console.log("re정보: ", res)
     );
@@ -35,9 +36,11 @@ const Menu = () => {
   };
 
   const auth = () => {
-    if(atk) {
+    if (atk) {
       removeCookie('ticket-atk');
       removeCookie('ticket-rtk');
+      // setIsLogin(false);
+      router.push("/");
     } else {
       router.push("/login");
     }
@@ -45,9 +48,9 @@ const Menu = () => {
 
   return (
     <div className="flex gap-6 text-[14px]">
-      {/* {isDev && } */}
-      <Link href="/modal">모달 임시</Link>
-
+      {isDev &&
+        <Link href="/modal">모달 임시</Link>
+      }
       {getRole === "ROLE_REGISTRANT" && (
         <Link href="/event_regist">이벤트 등록</Link>
       )}

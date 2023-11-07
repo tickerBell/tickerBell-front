@@ -1,15 +1,23 @@
 'use client';
 
+import Card from '@/components/item/Card';
 import { useParams } from 'next/navigation'
 import React from 'react'
 
 const Index = () => {
   const params = useParams();
-  console.log('dd', params);
-  
+  // console.log('dd', params);
+
   return (
     <div>
-      메뉴 클릭시 카드 리스트
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
     </div>
   )
 }
