@@ -34,3 +34,14 @@ export async function getEventIdApi(id: any) {
 }
 
 // 카테고리별 보여주기
+export async function getEventCategoryApi(currentPage: number, category: any, selectText: string) {
+  try {
+    const res = await apiInstance.get(`/api/events/${category}`, {
+      params: { page: currentPage - 1, size: 10, sort: category },
+    });
+    return res;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}

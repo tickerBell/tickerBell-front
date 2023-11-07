@@ -22,7 +22,7 @@ const navdata2 = [
   },
   {
     name: '스포츠',
-    link: '/sport'
+    link: '/sports'
   }
 ]
 
