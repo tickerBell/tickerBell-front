@@ -12,26 +12,26 @@ import { userSelector } from "@/recoil/user";
 import { userReserveApi } from "@/api/users";
 import { getCookie } from "@/util/authCookie";
 
-const UserColumns: IUserColumnsData[] = [
-  {
-    name: "이벤트명",
-    speaker: "캐스팅",
-    date: "일시",
-    place: "장소",
-  },
-];
+// const UserColumns: IUserColumnsData[] = [
+//   {
+//     name: "이벤트명",
+//     speaker: "캐스팅",
+//     date: "일시",
+//     place: "장소",
+//   },
+// ];
 
-const EventColumns: IEventColumnsData[] = [
-  {
-    name: "이벤트명",
-    speaker: "캐스팅",
-    date: "일시",
-    place: "장소",
-    totaluser: "예매좌수",
-    maxseats: "최대좌석",
-    cancel: "취소",
-  },
-];
+// const EventColumns: IEventColumnsData[] = [
+//   {
+//     name: "이벤트명",
+//     speaker: "캐스팅",
+//     date: "일시",
+//     place: "장소",
+//     totaluser: "예매좌수",
+//     maxseats: "최대좌석",
+//     cancel: "취소",
+//   },
+// ];
 
 const Index = () => {
   const page = 0;
@@ -55,7 +55,7 @@ const Index = () => {
 
   // }, []);
 
-  const columns = getRole === "ROLE_REGISTRANT" ? EventColumns : UserColumns;
+  // const columns = getRole === "ROLE_REGISTRANT" ? EventColumns : UserColumns;
 
   const rows = useMemo(() => {
     if (getRole === "ROLE_REGISTRANT") {
@@ -75,7 +75,7 @@ const Index = () => {
       <NavTab />
       <main className="flex">
         <SideBar />
-        <HistoryTable columns={columns} rows={rows} />
+        {/* <HistoryTable columns={columns} rows={rows} /> */}
       </main>
     </>
   );
