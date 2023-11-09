@@ -1,3 +1,4 @@
+// 예매자
 export const UserColumns: IUserColumnsData[] = [
   {
     name: "이벤트명",
@@ -7,6 +8,7 @@ export const UserColumns: IUserColumnsData[] = [
   },
 ];
 
+// 등록자
 export const EventColumns: IEventColumnsData[] = [
   {
     name: "이벤트명",

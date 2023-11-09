@@ -6,9 +6,9 @@ interface IUserColumnsData {
 }
 
 interface IEventColumnsData extends IUserColumnsData {
-  totaluser: string;
-  maxseats: string;
-  cancel: string;
+  totaluser?: string;
+  maxseats?: string;
+  cancel?: string;
 }
 
 interface IUserRowsData {
@@ -24,8 +24,8 @@ interface IEventRowsData {
   place: string;
   title: string;
   speaker: string;
-  maxuser: string;
-  maxseats: string;
+  maxuser?: string;
+  maxseats?: string;
 }
 
 interface IUserData {
