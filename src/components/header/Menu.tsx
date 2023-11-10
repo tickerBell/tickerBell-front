@@ -11,7 +11,6 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const Menu = () => {
-  // console.log('권한: ', getRole && getRole, 'rtk : ', getCookie('rtk'), 'atk: ', getAtk)
   const getRole = useRecoilValue(userSelector("role"));
   const setRole = useSetRecoilState(userSelector("role"));
   const setIsLogin = useSetRecoilState(userSelector("isLogin"));
