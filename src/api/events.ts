@@ -22,6 +22,34 @@ export async function postEventApi(data: any) {
   }
 }
 
+// 이벤트 이미지 등록
+export async function postEventImageApi(
+  atk: string,
+  thumbNailImage: File,
+  eventImages: File[]
+) {
+  try {
+    const formData = new FormData();
+    formData.append("thumbNailImage", thumbNailImage);
+
+    eventImages.forEach((file) => {
+      formData.append("eventImages", file);
+    });
+
+    const response = await apiInstance.post("/api/image", formData, {
+      headers: {
+        Authorization: `Bearer ${atk}`,
+      },
+    });
+    console.log("업로드 성공:", response);
+    return response;
+  } catch (error) {
+    console.error(error);
+    console.error("업로드 중 에러 발생:", error);
+    throw error;
+  }
+}
+
 // 이벤트 id 정보
 export async function getEventIdApi(id: any) {
   try {
@@ -34,7 +62,11 @@ export async function getEventIdApi(id: any) {
 }
 
 // 카테고리별 보여주기
-export async function getEventCategoryApi(currentPage: number, category: any, selectText: string) {
+export async function getEventCategoryApi(
+  currentPage: number,
+  category: any,
+  selectText: string
+) {
   try {
     const res = await apiInstance.get(`/api/events/${category}`, {
       params: { page: currentPage - 1, size: 10, sort: category },
