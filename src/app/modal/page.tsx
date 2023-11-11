@@ -1,4 +1,5 @@
 "use client";
+"use client";
 
 import Button from "@/components/button/Button";
 import EventDetailModal from "@/components/portalModal/eventDetailModal/EventDetailModal";
@@ -8,7 +9,7 @@ import React, { useState } from "react";
 import { userState } from "@/recoil/user";
 import { useRecoilState } from "recoil";
 import { useQuery, gql } from "@apollo/client";
-import { onClickPayment } from '@/hooks/Payment';
+import { onClickPayment } from "@/hooks/Payment";
 
 const ModalPage = () => {
   const [modal, setModal] = useState(false);
@@ -40,8 +41,15 @@ const ModalPage = () => {
       }
     }
   `;
+  //   query Countries($filter: CountryFilterInput) {
+  //     countries(filter: $filter) {
+  //       code
+  //       name
+  //       emoji
+  //     }
+  //   }
+  // `;
 
-  // GRAPHQL READ_BYFILTER
   const { data, loading, error } = useQuery<CountryData>(GET_COUNTRIES, {
     variables: {
       filter: {
@@ -66,13 +74,13 @@ const ModalPage = () => {
 
   return (
     <div>
-      {modal && (
+      {/* {modal && (
         <EventDetailModal
           className="w-400"
           dimClick={false}
           setOnModal={() => setModal(false)}
         />
-      )}
+      )} */}
       {modal1 && (
         <MapModal
           className="w-600"
@@ -89,7 +97,7 @@ const ModalPage = () => {
         />
       )}
 
-      <button onClick={onClickPayment}>결제</button>
+      {/* <button onClick={onClickPayment}>결제</button> */}
 
       <Button onClick={() => setModal(true)}>예약하기</Button>
       <Button onClick={() => setModal1(true)}>지도모달</Button>

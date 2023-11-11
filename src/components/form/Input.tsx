@@ -1,5 +1,4 @@
 import React, { HTMLProps } from "react";
-
 type InputType = {
   children?: React.ReactNode;
   label?: string;
