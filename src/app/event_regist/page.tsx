@@ -1,10 +1,11 @@
 "use client";
 
+import Event from "@/components/form/Event";
 import EventForm from "@/components/form/EventForm";
+import { Images } from "@/components/form/images";
 import Header from "@/components/header/Header";
 import NavTab from "@/components/NavTab/NavTab";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 type EventItem = {
   category: string;
@@ -22,7 +23,8 @@ const Index = () => {
       <NavTab />
       <div className="flex h-screen max-w-900 m-auto flex-row justify-center items-center">
         <div className="flex items-center flex-col relative">
-          <EventForm registType="event" />
+          {/* <EventForm registType="event" /> */}
+          <Event />
         </div>
       </div>
     </div>

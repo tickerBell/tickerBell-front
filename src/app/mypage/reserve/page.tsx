@@ -36,7 +36,6 @@ export const EventColumns: IEventColumnsData[] = [
 const Index = () => {
   const page = 0;
   const size = 1;
-  const sort = ["string"];
   const getRole = useRecoilValue(userSelector("role"));
   const setIsLogin = useSetRecoilState(userSelector("isLogin"));
   const getIsLogin = useRecoilValue(userSelector("isLogin"));
