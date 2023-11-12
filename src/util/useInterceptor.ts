@@ -43,8 +43,8 @@ apiInstance.interceptors.response.use(
     console.log("err", err);
     // atk 만료
     if (err.response && err.response.status === 400) {
-      // const router = useRouter();
-      // router.push("/");
+      const router = useRouter();
+      router.push("/");
     }
 
     // atk 만료 or인증실패
