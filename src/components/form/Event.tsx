@@ -252,9 +252,7 @@ const Event = () => {
                 />
               </div>
             </div>
-
             {/* 이벤트 캐스팅 */}
-
             <div>
               <InputField
                 id="tags"
@@ -283,7 +281,7 @@ const Event = () => {
                 fields={hostsFields}
                 remove={removeHost}
               />
-              <div>
+              <div className="flex flex-row ">
                 주최자:
                 {hostsFields.map((field, index) => (
                   <div
@@ -297,12 +295,11 @@ const Event = () => {
                         onClick={() => removeHost(index)}
                         className="text-black bg-red-500 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 text-center"
                       >
-                        제거
+                        x
                       </button>
                     </div>
                   </div>
                 ))}
-                <div>주최자: {JSON.stringify(hostValue)}</div>
               </div>
             </div>
             <div className="mb-10">
