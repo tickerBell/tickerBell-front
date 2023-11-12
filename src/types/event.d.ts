@@ -8,7 +8,7 @@ interface FormData {
   place: string;
   category: string;
   isAdult: boolean;
-  availablePurchaseTime: Date;
+  availablePurchaseTime: string;
   normalPrice: number;
   premiumPrice: number;
   saleDegree: number;

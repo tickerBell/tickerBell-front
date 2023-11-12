@@ -8,9 +8,12 @@ type InputType = {
 export const Radio = ({ label, ...attr }: InputType) => {
   return (
     <div>
-      <label htmlFor={attr.id} className="cursor-pointer flex items-center gap-4">
+      <label
+        htmlFor={attr.id}
+        className="cursor-pointer flex items-center gap-4"
+      >
         <span>{label}</span>
-        <input type="radio" {...attr} className="cursor-pointer"/>
+        <input type="radio" {...attr} className="cursor-pointe " />
       </label>
     </div>
   );
@@ -19,10 +22,12 @@ export const Radio = ({ label, ...attr }: InputType) => {
 export const Text = ({ label, ...attr }: InputType) => {
   return (
     <div className="flex">
-      {label &&
-        <label htmlFor={attr.id} className="m-w-80">{label}</label>
-      }
-      <input type="text" {...attr} className="h-26"/>
+      {label && (
+        <label htmlFor={attr.id} className="m-w-80">
+          {label}
+        </label>
+      )}
+      <input type="text" {...attr} className="h-26" />
     </div>
   );
 };
