@@ -578,15 +578,3 @@ export default Event;
               )}
             </div> */
 }
-
-// const handleKeyDown = (
-//   event: KeyboardEvent<HTMLInputElement>,
-//   field: Field
-// ) => {
-//   if (event.key === "Enter" && event.currentTarget.value.trim() !== "") {
-//     event.preventDefault();
-//     const newValue = event.currentTarget.value.trim();
-//     updateState(field, newValue);
-//     event.currentTarget.value = "";
-//   }
-// };
