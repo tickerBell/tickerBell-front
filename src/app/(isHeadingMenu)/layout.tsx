@@ -1,14 +1,18 @@
 import NavTab from "@/components/NavTab/NavTab"
 import Header from "@/components/header/Header"
 
-export default function Layout({
+export default function IsHeadingMenuLayout({
   children, // will be a page or nested layout
 }: {
   children: React.ReactNode
 }) {
   return (
-    <div>
-      {children}
-    </div>
+    <>
+      <Header />
+      <div className="pt-10 m-auto max-w-1280">
+        <NavTab />
+        {children}
+      </div>
+    </>
   )
 }

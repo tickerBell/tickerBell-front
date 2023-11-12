@@ -20,7 +20,13 @@
   .flex-vertical-center {
     @apply flex;
   }
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
   .button-hover {
     @apply hover:bg-primary hover:saturate-100 hover:text-white
+  }
+  .hover-text {
+    @apply hover:text-primary
   }
 }

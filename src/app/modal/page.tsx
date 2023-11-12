@@ -8,6 +8,7 @@ import React, { useState } from 'react'
 import { userState } from '@/recoil/user';
 import { useRecoilState } from 'recoil';
 import { useQuery, gql } from "@apollo/client";
+import { onClickPayment } from '@/hooks/Payment';
 
 const ModalPage = () => {
   const [modal, setModal] = useState(false);
@@ -74,6 +75,8 @@ const ModalPage = () => {
         setCompany={setEnroll_company}
       />
       }
+
+      <button onClick={onClickPayment}>결제</button>
 
       <Button onClick={() => setModal(true)}>예약하기</Button>
       <Button onClick={() => setModal1(true)}>지도모달</Button>

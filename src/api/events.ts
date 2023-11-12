@@ -45,3 +45,14 @@ export async function getEventCategoryApi(currentPage: number, category: any, se
     throw error;
   }
 }
+
+// 이벤트 취소 
+export async function deleteEventApi(id: number) {
+  try {
+    const res = await apiInstance.delete(`/ticketing/${id}`, {});
+    return res;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}

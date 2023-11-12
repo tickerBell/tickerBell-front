@@ -16,7 +16,11 @@ apiInstance.interceptors.request.use(
       config.headers["Authorization"] = `Bearer ${getCookie("ticket-atk")}`;
       return config;
     }
-    if (getCookie("ticket-atk") === "undefined" && getCookie("ticket-trk") !== "undefined") {
+    if (getCookie("ticket-atk") == undefined && getCookie("ticket-trk") != undefined) {
+      return config;
+    }
+    if (getCookie("ticket-atk") == undefined) {
+      removeCookie("ticket-atk");
       return config;
     }
     return config;
@@ -52,11 +56,10 @@ apiInstance.interceptors.response.use(
             accept: "*/*",
             "Content-Type": "application/json",
           },
-        })
-        // console.log("갱신", data.);
-
+        });
+        console.log("갱신", data);
         //  갱신
-        
+
         setCookie("ticket-atk", `${data.data.accessToken}`);
 
         // 헤더에 담긴 토큰 값 변경
@@ -71,6 +74,11 @@ apiInstance.interceptors.response.use(
         return originalResponse.data;
       }
       return Promise.reject(err);
+    }
+
+    // atk가 undefined일때 500
+    if (err.response && err.response.status === 500) {
+      removeCookie("ticket-atk");
     }
   }
 );

@@ -8,12 +8,11 @@ export default function Home() {
     <main className="">
       <Location />
       <Header />
-      <div className="pt-10 m-auto max-w-1200">
+      <div className="pt-10 m-auto max-w-1280">
         <NavTab />
         <SlideList />
       </div>
       {/* <List data={ticketDummyData} /> */}
-
     </main>
   )
 }

@@ -1,31 +1,13 @@
-interface IUserColumnsData {
-  name: string;
-  speaker: string;
-  date: string;
+interface IEventHistoryTableType {
+  eventName: string;
+  casting: string;
+  startEvent: string;
   place: string;
 }
 
-interface IEventColumnsData extends IUserColumnsData {
-  totaluser: string;
-  maxseats: string;
-  cancel: string;
-}
-
-interface IUserRowsData {
-  id: number;
-  title: string;
-  speaker: string;
-  startTime: string;
-  place: string;
-}
-interface IEventRowsData {
-  id: number;
-  startTime: string;
-  place: string;
-  title: string;
-  speaker: string;
-  maxuser: string;
-  maxseats: string;
+interface IEventHistoryTableReserverType extends IEventHistoryTableType {
+  ticketHolderCounts?: number | string;
+  isCancelled?: boolean | string;
 }
 
 interface IUserData {
