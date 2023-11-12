@@ -21,6 +21,7 @@ const Event = () => {
     control,
     handleSubmit,
     watch,
+
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
@@ -251,6 +252,9 @@ const Event = () => {
                 />
               </div>
             </div>
+
+            {/* 이벤트 캐스팅 */}
+
             <div>
               <InputField
                 id="tags"
@@ -279,6 +283,27 @@ const Event = () => {
                 fields={hostsFields}
                 remove={removeHost}
               />
+              <div>
+                주최자:
+                {hostsFields.map((field, index) => (
+                  <div
+                    key={field.id}
+                    className="flex items-center space-x-2 mt-2"
+                  >
+                    <div className="bg-gray-100 border border-gray-300 rounded-lg px-3 py-1 text-sm text-gray-900">
+                      {field.name}
+                      <button
+                        type="button"
+                        onClick={() => removeHost(index)}
+                        className="text-black bg-red-500 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 text-center"
+                      >
+                        제거
+                      </button>
+                    </div>
+                  </div>
+                ))}
+                <div>주최자: {JSON.stringify(hostValue)}</div>
+              </div>
             </div>
             <div className="mb-10">
               <label
