@@ -21,9 +21,9 @@ export const SideBarItem = ({ route }: SideBarItemProps) => {
       <h3>{route.title}</h3>
       <ul>
         {route.submenu.map((item, index) => (
-          <li key={index}>
-            <Link href={item.route}>
-              <span>{item.title}</span>
+          <li key={index} className="mb-10">
+            <Link href={item.route} className="hover-text">
+              <span>- {item.title}</span>
             </Link>
           </li>
         ))}

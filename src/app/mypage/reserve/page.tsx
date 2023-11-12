@@ -4,7 +4,7 @@ import { HistoryTable } from "@/components/HistoryTable/HistoryTable";
 const Index = () => {
   return (
     <>
-      <main className="flex">
+      <main className="h-full flex-center">
         <HistoryTable />
       </main>
     </>

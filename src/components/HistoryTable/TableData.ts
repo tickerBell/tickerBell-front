@@ -1,22 +1,21 @@
 // 예매자
-export const UserColumns: IUserColumnsData[] = [
+export const UserColumns: IEventHistoryTableType[] = [
   {
-    name: "이벤트명",
-    speaker: "캐스팅",
-    date: "일시",
+    eventName: "이벤트명",
+    casting: "캐스팅",
+    startEvent: "일시",
     place: "장소",
   },
 ];
 
 // 등록자
-export const EventColumns: IEventColumnsData[] = [
+export const EventColumns: IEventHistoryTableReserverType[] = [
   {
-    name: "이벤트명",
-    speaker: "캐스팅",
-    date: "일시",
+    eventName: "이벤트명",
+    casting: "캐스팅",
+    startEvent: "일시",
     place: "장소",
-    totaluser: "예매좌수",
-    maxseats: "최대좌석",
-    cancel: "취소",
+    ticketHolderCounts: "예매자수",
+    isCancelled: "상태",
   },
 ];

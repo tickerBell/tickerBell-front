@@ -58,7 +58,6 @@ apiInstance.interceptors.response.use(
           },
         });
         console.log("갱신", data);
-        alert(data);
         //  갱신
 
         setCookie("ticket-atk", `${data.data.accessToken}`);

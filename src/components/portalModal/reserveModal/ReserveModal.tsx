@@ -2,6 +2,8 @@ import React from "react";
 import ModalFrame from "../ModalFrame";
 import ModalContent from "../modalItem/ModalContent";
 import ModalTitle from "../modalItem/ModalTitle";
+import { useQuery } from "@tanstack/react-query";
+import { deleteEventApi } from "@/api/events";
 
 type ReserveModalType = {
   setOnModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -9,6 +11,7 @@ type ReserveModalType = {
   isDim?: boolean;
   onClose?: boolean;
   className?: string;
+  eventId?:any;
 };
 
 const ReserveModal = ({
@@ -16,7 +19,14 @@ const ReserveModal = ({
   dimClick,
   isDim = true,
   className,
+  eventId
 }: ReserveModalType) => {
+
+  const { data, isSuccess, isError, error } = useQuery({
+    queryKey: ["event-delete"],
+    queryFn: () => deleteEventApi(eventId.id),
+  });
+
   return (
     <ModalFrame
       setOnModal={setOnModal}

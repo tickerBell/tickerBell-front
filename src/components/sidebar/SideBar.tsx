@@ -9,10 +9,9 @@ import LogoutButton from "../button/LogoutButton";
 
 export const SideBar = () => {
   const getRole = useRecoilValue(userSelector("role"));
-  console.log(getRole);
 
   return (
-    <aside className="flex w-250 h-screen flex-col items-center justify-center border-r border-gray-200  ">
+    <aside className="flex min-w-250 min-h-[calc(100vh-60px)]   flex-col items-center justify-center border-r border-gray-200">
       <ul>
         {getRole === "ROLE_REGISTRANT"
           ? sideData.to.map((route, key) => (

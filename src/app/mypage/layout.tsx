@@ -12,7 +12,7 @@ export default function IsHeadingLayout({
       <Header />
       <div className="flex">
         <SideBar />
-        <div>
+        <div className="w-full">
           {children}
         </div>
       </div>
