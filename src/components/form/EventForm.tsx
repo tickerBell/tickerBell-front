@@ -50,7 +50,7 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
   };
 
   const onSubmit = async (data: any) => {
-    console.log('dd', data);
+    console.log("dd", data);
     // if (!data.startDate) {
     //   alert("시작일은 필수 입력입니다.");
     //   return;
@@ -74,23 +74,23 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
 
     // postEventApi(data);
     const frm = new FormData();
-    frm.append('name', data.name);
-    frm.append('startEvent', data.name);
-    frm.append('endEvent', data.name);
-    frm.append('availablePurchaseTime', data.name);
-    frm.append('normalPrice', data.name);
-    frm.append('premiumPrice', data.name);
-    frm.append('saleDegree', data.name);
-    frm.append('castings', data.name);
-    frm.append('hosts', data.name);
-    frm.append('place', data.name);
+    frm.append("name", data.name);
+    frm.append("startEvent", data.name);
+    frm.append("endEvent", data.name);
+    frm.append("availablePurchaseTime", data.name);
+    frm.append("normalPrice", data.name);
+    frm.append("premiumPrice", data.name);
+    frm.append("saleDegree", data.name);
+    frm.append("castings", data.name);
+    frm.append("hosts", data.name);
+    frm.append("place", data.name);
 
-    try {
-      const response = await postEventApi(frm);
-      console.log(response); // 응답 확인
-    } catch (error) {
-      console.error(error);
-    }
+    // try {
+    //   const response = await postEventApi(frm);
+    //   console.log(response); // 응답 확인
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   // const onInvalid = (data: any) => console.log(data, "onInvalid");
@@ -181,9 +181,9 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
             <label htmlFor="">썸네일 이미지</label>
             <div
               {...getRootProps()}
-              className={classNames('w-full  p-3 cursor-pointer', {
-                'h-auto': previewVisible,
-                'h-50 border-black border rounded': !previewVisible
+              className={classNames("w-full  p-3 cursor-pointer", {
+                "h-auto": previewVisible,
+                "h-50 border-black border rounded": !previewVisible,
               })}
             >
               <input {...getInputProps()} />
@@ -204,7 +204,6 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
                           src={previewUrl}
                           alt=""
                           className="w-full h-full object-conatin"
-
                         />
                       </picture>
                     </div>
@@ -274,19 +273,17 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
               name="category"
               render={({ field }) => (
                 <>
-                  {["뮤지컬", "콘서트", "연극", "클래식/무용"].map(
-                    (option) => (
-                      <Radio
-                        key={option}
-                        name={field.name}
-                        id={option}
-                        value={option}
-                        label={option}
-                        onChange={(e: any) => field.onChange(e.target.value)}
-                        checked={field.value === option}
-                      />
-                    )
-                  )}
+                  {["뮤지컬", "콘서트", "연극", "클래식/무용"].map((option) => (
+                    <Radio
+                      key={option}
+                      name={field.name}
+                      id={option}
+                      value={option}
+                      label={option}
+                      onChange={(e: any) => field.onChange(e.target.value)}
+                      checked={field.value === option}
+                    />
+                  ))}
                 </>
               )}
             />
@@ -350,9 +347,7 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
                 className="border border-gray-600 focus:border-green-500"
               />
             </div>
-            {errors.hosts && (
-              <small role="alert">{errors.hosts.message}</small>
-            )}
+            {errors.hosts && <small role="alert">{errors.hosts.message}</small>}
           </div>
           <div className="mb-10 flex flex-row">
             <div className="flex items-center gap-6 whitespace-pre">
@@ -373,7 +368,10 @@ const EventForm = ({ registType = "regist" }: FormProps) => {
             {watch().tag}
           </div>
 
-          <Button className="mt-20" type="submit"> 이벤트 생성 </Button>
+          <Button className="mt-20" type="submit">
+            {" "}
+            이벤트 생성{" "}
+          </Button>
         </div>
       </form>
     </>
