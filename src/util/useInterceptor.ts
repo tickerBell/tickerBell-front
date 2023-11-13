@@ -4,6 +4,7 @@ import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { getCookie, removeCookie, setCookie } from "./authCookie";
 import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const apiInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -18,9 +19,13 @@ apiInstance.interceptors.request.use(
       return config;
     }
     if (
-      getCookie("ticket-atk") === "undefined" &&
-      getCookie("ticket-trk") !== "undefined"
+      getCookie("ticket-atk") == undefined &&
+      getCookie("ticket-trk") != undefined
     ) {
+      return config;
+    }
+    if (getCookie("ticket-atk") == undefined) {
+      removeCookie("ticket-atk");
       return config;
     }
     return config;
@@ -64,8 +69,7 @@ apiInstance.interceptors.response.use(
             },
           }
         );
-        // console.log("갱신", data.);
-
+        console.log("갱신", data);
         //  갱신
 
         setCookie("ticket-atk", `${data.data.accessToken}`);
@@ -82,6 +86,11 @@ apiInstance.interceptors.response.use(
         return originalResponse.data;
       }
       return Promise.reject(err);
+    }
+
+    // atk가 undefined일때 500
+    if (err.response && err.response.status === 500) {
+      removeCookie("ticket-atk");
     }
   }
 );

@@ -1,4 +1,3 @@
-import NavTab from "@/components/NavTab/NavTab"
 import Header from "@/components/header/Header"
 
 export default function IsHeadingLayout({
@@ -9,8 +8,7 @@ export default function IsHeadingLayout({
   return (
     <>
       <Header />
-      <div className="pt-10 m-auto max-w-1200">
-        <NavTab />
+      <div className="pt-10 m-auto max-w-1280">
         {children}
       </div>
     </>

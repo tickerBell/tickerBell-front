@@ -37,43 +37,6 @@ export const ticketDummyData = [
   },
 ];
 
-export const UserRows: IUserRowsData[] = [
-  {
-    id: 0,
-    title: "내한 공연",
-    speaker: "가수A",
-    startTime: "2023-12-11 04:12:00",
-    place: "상암 공개홀",
-  },
-  {
-    id: 1,
-    title: "내한 공연A ",
-    speaker: "가수A",
-    startTime: "2023-12-11 04:12:00",
-    place: "상암 공개홀A",
-  },
-  {
-    id: 2,
-    title: "내한 공연B ",
-    speaker: "가수B",
-    startTime: "2023-12-11 04:12:00",
-    place: "상암 공개홀B",
-  },
-  {
-    id: 3,
-    title: "내한 공연C ",
-    speaker: "가수C",
-    startTime: "2023-12-11 04:12:00",
-    place: "상암 공개홀C",
-  },
-  {
-    id: 4,
-    title: "내한 공연D ",
-    speaker: "가수D",
-    startTime: "2023-12-11 04:12:00",
-    place: "상암 공개홀D",
-  },
-];
 
 export const EventRows = [
   {

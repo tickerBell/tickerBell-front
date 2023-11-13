@@ -51,12 +51,29 @@ export async function userInfoApi(atk: string | undefined) {
   }
 }
 
-export async function userReserveApi(atk: string, page: number, size: number) {
+type pagingType = {
+  page: number,
+  size?: number
+}
+
+// 예매 내역 or 등록 내역 조회
+export async function userReserveApi(atk: string, page: number) {
   const res = await apiInstance.get("/api/member/my", {
     headers: {
       Authorization: `Bearer ${atk}`,
     },
-    params: { page: 0, size: 1 },
+    params: { page: page, size: 10 },
+  });
+  return res;
+}
+
+// 예매 내역 or 등록 내역 삭제
+// export async function userDeleteReserveIdApi(atk: string, id: number) {
+export async function userDeleteReserveIdApi(id: number) {
+  const res = await apiInstance.delete(`/ticketing/${id}`, {
+    // headers: {
+    //   Authorization: `Bearer ${atk}`,
+    // },
   });
   return res;
 }

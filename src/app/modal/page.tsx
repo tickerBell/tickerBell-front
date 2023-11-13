@@ -1,4 +1,5 @@
 "use client";
+"use client";
 
 import Button from "@/components/button/Button";
 import EventDetailModal from "@/components/portalModal/eventDetailModal/EventDetailModal";
@@ -8,6 +9,7 @@ import React, { useState } from "react";
 import { userState } from "@/recoil/user";
 import { useRecoilState } from "recoil";
 import { useQuery, gql } from "@apollo/client";
+import { onClickPayment } from '@/hooks/Payment';
 
 const ModalPage = () => {
   const [modal, setModal] = useState(false);
@@ -31,6 +33,14 @@ const ModalPage = () => {
   }
 
   const GET_COUNTRIES = gql`
+    query Countries($filter: CountryFilterInput) {
+      countries(filter: $filter) {
+        code
+        name
+        emoji
+      }
+    }
+  `;
     query Countries($filter: CountryFilterInput) {
       countries(filter: $filter) {
         code
@@ -88,10 +98,16 @@ const ModalPage = () => {
         />
       )}
 
+      <button onClick={onClickPayment}>결제</button>
+
       <Button onClick={() => setModal(true)}>예약하기</Button>
       <Button onClick={() => setModal1(true)}>지도모달</Button>
       <Button onClick={() => setModal2(true)}>주소검색</Button>
     </div>
+  );
+};
+
+export default ModalPage;
   );
 };
 

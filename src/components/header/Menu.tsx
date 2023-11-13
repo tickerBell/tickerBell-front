@@ -11,8 +11,8 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const Menu = () => {
-  // console.log('권한: ', getRole && getRole, 'rtk : ', getCookie('rtk'), 'atk: ', getAtk)
   const getRole = useRecoilValue(userSelector("role"));
+  const setRole = useSetRecoilState(userSelector("role"));
   const setIsLogin = useSetRecoilState(userSelector("isLogin"));
   const getIsLogin = useRecoilValue(userSelector("isLogin"));
   const [atk, setAtk] = useState("");
@@ -20,13 +20,12 @@ const Menu = () => {
 
   useEffect(() => {
     setAtk(getCookie("ticket-atk"));
-    // setIsLogin(getCookie("ticket-atk") !== null ? true : false);
+    setIsLogin(getCookie("ticket-atk") === undefined ? false : true);
     userInfoApi(getCookie("ticket-atk")).then((res) =>
-      console.log("re정보: ", res)
+      setRole(res?.data.role)
     );
-  }, []);
+  }, [atk]);
 
-  // console.log("cc", getIsLogin, atk, getCookie("ticket-atk"));
   const handleMyPageClick = (e: any) => {
     if (!atk) {
       e.preventDefault();
@@ -36,15 +35,17 @@ const Menu = () => {
   };
 
   const auth = () => {
-    if (atk) {
+    if (getIsLogin) {
       removeCookie('ticket-atk');
       removeCookie('ticket-rtk');
-      // setIsLogin(false);
+      setIsLogin(false);
       router.push("/");
     } else {
       router.push("/login");
     }
   }
+
+  // console.log('로그인상태? : ', getIsLogin, getCookie("ticket-atk"))
 
   return (
     <div className="flex gap-6 text-[14px]">
@@ -55,9 +56,9 @@ const Menu = () => {
         <Link href="/event_regist">이벤트 등록</Link>
       )}
       {/* {!atk && <Link href="/login">로그인</Link>} */}
-      <div onClick={auth} className="cursor-pointer">{atk ? '로그아웃' : '로그인'}</div>
+      <div onClick={auth} className="cursor-pointer">{getIsLogin ? '로그아웃' : '로그인'}</div>
       <Link href="/regist">회원가입</Link>
-      <Link href="/mypage" onClick={handleMyPageClick}>
+      <Link href="/mypage/reserve" onClick={handleMyPageClick}>
         마이페이지
       </Link>
       <Link href="/reserve" onClick={handleMyPageClick}>

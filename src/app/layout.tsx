@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
 
   return (
-    <html lang="en">
+    <html lang="ko">
       <head>
         {/* 아임포트 결제를 위한 script */}
         <Script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" />
