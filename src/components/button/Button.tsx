@@ -26,6 +26,7 @@ type ButtonProps = {
   className?: string;
   full?: boolean;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 };
 
 const Button = forwardRef(
