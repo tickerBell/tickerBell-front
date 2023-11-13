@@ -62,7 +62,7 @@ export const Images = () => {
     }
   };
 
-  //    const fileUrl = URL.createObjectURL(acceptedFiles[0]);
+  //   const fileUrl = URL.createObjectURL(acceptedFiles[0]);
   //   URL.createObjectURL 메서드는 이미지 임시보관 미리보기용도
 
   return (
