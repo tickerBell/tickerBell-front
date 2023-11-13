@@ -5,7 +5,7 @@ import { imageUrlsState, thumbnailUrlState } from "@/recoil/event";
 import { getCookie } from "@/util/authCookie";
 import dayjs from "dayjs";
 import weekDay from "dayjs/plugin/weekday";
-import { useEffect, useState, KeyboardEvent } from "react";
+import React, { useEffect, useState, KeyboardEvent } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
@@ -35,12 +35,19 @@ const Event = () => {
   // dayjs 초기화
   dayjs.extend(weekDay);
   const [atk, setAtk] = useState("");
-  const thumbnailUrl = useRecoilValue(thumbnailUrlState);
-  const imageUrls = useRecoilValue(imageUrlsState);
   const [mapOnModal, setMapOnModal] = useState(false);
+  const [thumbnailUrl, setThumbnailUrl] = useState("");
+  const [imageUrls, setImageUrls] = useState([]);
   const [enroll_company, setEnroll_company] = useState({
     address: "",
   });
+  const imageHandlers = {
+    thumbnailUrl,
+    setThumbnailUrl,
+    imageUrls,
+    setImageUrls,
+  };
+
   const {
     fields: tagsFields,
     append: appendTag,
@@ -588,7 +595,7 @@ const Event = () => {
                 />
               </div>
             </div>
-            <Images />
+            <Images {...imageHandlers} />
             <Button
               className="mt-20 bg-blue-700 hover:bg-blue-800"
               type="submit"

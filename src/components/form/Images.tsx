@@ -1,19 +1,28 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { postEventImageApi } from "@/api/events";
 import { getCookie } from "@/util/authCookie";
 import { useDropzone } from "react-dropzone";
 import Button from "../button/Button";
-import { useRecoilState } from "recoil";
-import { imageUrlsState, thumbnailUrlState } from "@/recoil/event";
+import Image from "next/image";
 
-export const Images = () => {
+type Image = {
+  thumbnailUrl: string;
+  setThumbnailUrl: (url: string) => void;
+  imageUrls: string[];
+  setImageUrls: (urls: string[]) => void;
+};
+
+export const Images = ({
+  thumbnailUrl,
+  setThumbnailUrl,
+  imageUrls,
+  setImageUrls,
+}: Image) => {
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [images, setImages] = useState<File[]>([]);
   const [uploading, setUploading] = useState<boolean>(false);
-  const [thumbnailUrl, setThumbnailUrl] = useRecoilState(thumbnailUrlState);
-  const [imageUrls, setImageUrls] = useRecoilState(imageUrlsState);
 
   const [atk, setAtk] = useState("");
 
@@ -78,7 +87,9 @@ export const Images = () => {
       <Button type="button" onClick={uploadFiles} disabled={uploading}>
         {uploading ? "업로드 중..." : "이미지 업로드"}
       </Button>
-      {thumbnailUrl}
+      <div>
+        <Image src={thumbnailUrl} alt="thumbnailUrl" />
+      </div>
       {thumbnail && <p>선택된 썸네일: {thumbnail.name}</p>}
       <ul>
         {images.map((file, index) => (

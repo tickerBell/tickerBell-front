@@ -4,7 +4,6 @@ import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { getCookie, removeCookie, setCookie } from "./authCookie";
 import { useRouter } from "next/navigation";
-import { useRouter } from "next/navigation";
 
 const apiInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
