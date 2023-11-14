@@ -7,6 +7,8 @@ import QueryProviders from '@/util/queryProvider';
 import RecoilRootProvider from '@/util/recoilRootProvider';
 import CookiesRootProvider from '@/util/cookieProvider';
 import ApolloProviders from '@/util/apolloProvider';
+import Location from '@/components/location/Location';
+import LoginCheck from '@/components/loginCheck/LoginCheck';
 // const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -43,6 +45,8 @@ export default function RootLayout({
             <RecoilRootProvider>
               <ApolloProviders>
                 {children}
+                <LoginCheck />
+                <Location />
               </ApolloProviders>
             </RecoilRootProvider>
           </CookiesRootProvider>

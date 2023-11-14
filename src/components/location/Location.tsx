@@ -1,6 +1,7 @@
 'use client';
 
 import { useGeoLocation } from "@/hooks/useGeoLocation";
+import { locationSelector } from "@/recoil/locate";
 import { userSelector, userState } from '@/recoil/user';
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
@@ -14,16 +15,15 @@ const geolocationOptions = {
 const Location = () => {
   const { location, error } = useGeoLocation(geolocationOptions);
   // set
-  const setLocation = useSetRecoilState(userSelector('location'));
+  const setLocation = useSetRecoilState(locationSelector);
   // get
-  const getLocation = useRecoilValue(userSelector('location'));
+  // const getLocation = useRecoilValue(userSelector('location'));
 
   useEffect(() => {
     if (location) {
       setLocation(location);
     }
   }, [location, setLocation])
-
   // console.log('location', location);
   // console.log('저장됨? ', getLocation);
 

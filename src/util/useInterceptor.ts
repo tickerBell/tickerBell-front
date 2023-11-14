@@ -12,11 +12,10 @@ const apiInstance = axios.create({
 
 apiInstance.interceptors.request.use(
   async (config) => {
-    if (getCookie("ticket-atk")) {
-      config.headers["Authorization"] = `Bearer ${getCookie("ticket-atk")}`;
-
-      return config;
-    }
+    // if (getCookie("ticket-atk")) {
+    //   config.headers["Authorization"] = `Bearer ${getCookie("ticket-atk")}`;
+    //   return config;
+    // }
     if (
       getCookie("ticket-atk") == undefined &&
       getCookie("ticket-trk") != undefined
@@ -24,7 +23,7 @@ apiInstance.interceptors.request.use(
       return config;
     }
     if (getCookie("ticket-atk") == undefined) {
-      removeCookie("ticket-atk");
+      // removeCookie("ticket-atk");
       return config;
     }
     return config;
@@ -49,7 +48,7 @@ apiInstance.interceptors.response.use(
 
     // atk 만료 or인증실패
     if (err.response && err.response.status === 401) {
-      removeCookie("ticket-atk");
+      // removeCookie("ticket-atk");
       // 토큰 재발급 요청, apiInstance가 아닌 axios로 요청하기
       // removeCookie('ticket-atk');
       if (getCookie("ticket-trk") !== "undefined") {
@@ -89,7 +88,7 @@ apiInstance.interceptors.response.use(
 
     // atk가 undefined일때 500
     if (err.response && err.response.status === 500) {
-      removeCookie("ticket-atk");
+      // removeCookie("ticket-atk");
     }
   }
 );

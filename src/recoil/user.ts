@@ -1,24 +1,39 @@
-import { atom, selector, selectorFamily } from "recoil";
+import { atom, selectorFamily } from "recoil";
 
-// UserState 타입 정의
+// 로컬스토리지용
+// const ssrCompletedState = atom({
+//   key: "SsrCompleted",
+//   default: false,
+// });
+
+// export const useSsrComplectedState = () => {
+//   const setSsrCompleted = useSetRecoilState(ssrCompletedState);
+//   return () => setSsrCompleted(true);
+// };
+
+// const { persistAtom } = recoilPersist();
+
+// export const persistAtomEffect = <T>(param: Parameters<AtomEffect<T>>[0]) => {
+//   param.getPromise(ssrCompletedState).then(() => persistAtom(param));
+// };
+
 type UserState = {
   isLogin: boolean;
   role: string;
-  locationState: {
-    latitude: number;
-    longitude: number;
+  nonMember: {
+    name?: string;
+    phone?: number;
   };
 };
 
-// userState 아톰
 export const userState = atom<UserState>({
   key: "userState",
   default: {
     isLogin: false,
     role: "",
-    locationState: {
-      latitude: 0,
-      longitude: 0,
+    nonMember: {
+      name: "", // 비회원용
+      phone: 0, // 비회원용
     },
   },
 });
@@ -33,10 +48,10 @@ export const userSelector = selectorFamily({
       switch (property) {
         case "isLogin":
           return user && user.isLogin;
-        case "location":
-          return user && user.locationState;
         case "role":
           return user && user.role;
+        case "nonMember":
+          return user && user.nonMember;
         default:
           return null;
       }
@@ -48,17 +63,16 @@ export const userSelector = selectorFamily({
         switch (property) {
           case "isLogin":
             return { ...prevUserState, isLogin: newValue };
-          case "location":
-            console.log(newValue.latitude);
-            return {
-              ...prevUserState,
-              locationState: {
-                latitude: newValue.latitude,
-                longitude: newValue.longitude,
-              },
-            };
           case "role":
             return { ...prevUserState, role: newValue };
+          case "nonMember":
+            return {
+              ...prevUserState,
+              nonMember: {
+                name: newValue.name,
+                phone: newValue.phone,
+              },
+            };
           default:
             return prevUserState;
         }
