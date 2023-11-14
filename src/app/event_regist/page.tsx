@@ -3,7 +3,7 @@
 import Event from "@/components/form/Event";
 import EventForm from "@/components/form/EventForm";
 import FileUpload from "@/components/form/File";
-import { Images } from "@/components/form/images";
+import { Images } from "@/components/form/ImageUpload";
 import Header from "@/components/header/Header";
 import NavTab from "@/components/NavTab/NavTab";
 import React, { useState } from "react";

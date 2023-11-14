@@ -9,9 +9,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useFieldArray, useForm } from "react-hook-form";
 import Button from "../button/Button";
 import SearchMapModal from "../portalModal/mapModal/SearchMapModal";
-import FileUpload from "./FIleUpload";
 import FRInput from "./FRInput";
-import { Images } from "./images";
+import { ImageUpload } from "./ImageUpload";
 import { Text } from "./Input";
 import { InputField } from "./InputField";
 import { OnDatePicker } from "./OnDatePicker";
@@ -35,16 +34,10 @@ const Event = () => {
   const [atk, setAtk] = useState("");
   const [mapOnModal, setMapOnModal] = useState(false);
   const [thumbnailUrl, setThumbnailUrl] = useState("");
-  const [imageUrls, setImageUrls] = useState([]);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [enroll_company, setEnroll_company] = useState({
     address: "",
   });
-  const imageHandlers = {
-    thumbnailUrl,
-    setThumbnailUrl,
-    imageUrls,
-    setImageUrls,
-  };
 
   const {
     fields: tagsFields,
@@ -410,8 +403,10 @@ const Event = () => {
                 type="checkbox"
               />
             </div>
-            <Images {...imageHandlers} />
-            {/* <FileUpload /> */}
+            <ImageUpload
+              setThumbnailUrl={setThumbnailUrl}
+              setImageUrls={setImageUrls}
+            />
             <Button
               className="mt-20 bg-blue-700 hover:bg-blue-800"
               type="submit"

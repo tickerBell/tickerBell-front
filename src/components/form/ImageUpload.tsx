@@ -6,10 +6,11 @@ import { useDropzone } from "react-dropzone";
 import { IoTrash } from "react-icons/io5";
 import { getCookie } from "../../util/authCookie";
 import Button from "../button/Button";
+import Image from "next/image";
 
 type Image = {
   setThumbnailUrl: (url: string) => void;
-  setImageUrls: (urls: string[]) => void;
+  setImageUrls: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 interface FileWithPreview extends File {
@@ -21,11 +22,7 @@ type Preview = {
   size: number;
 };
 
-export const Images = ({
-  setThumbnailUrl,
-
-  setImageUrls,
-}: Image) => {
+export const ImageUpload = ({ setThumbnailUrl, setImageUrls }: Image) => {
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [thumbnailPreview, setThumbnailPreview] = useState<Preview | null>(
     null
@@ -57,11 +54,17 @@ export const Images = ({
     setImages((prevImages) => [...prevImages, ...acceptedFiles]);
   }, []);
 
-  const removeFile = (fileToRemove: FileWithPreview) => {
-    setImagesPreview((prevFiles) =>
-      prevFiles.filter((file) => file !== fileToRemove)
-    );
-    URL.revokeObjectURL(fileToRemove.preview);
+  const removeFile = (fileToRemove: FileWithPreview | Preview) => {
+    if ("preview" in fileToRemove && imagesPreview) {
+      setImagesPreview((prevFiles) =>
+        prevFiles.filter((file) => file.preview !== fileToRemove.preview)
+      );
+      URL.revokeObjectURL(fileToRemove.preview);
+    } else if (thumbnailPreview && "url" in fileToRemove) {
+      setThumbnailPreview(null);
+      setThumbnail(null);
+      URL.revokeObjectURL(fileToRemove.url);
+    }
   };
 
   const {
@@ -102,26 +105,47 @@ export const Images = ({
   };
 
   return (
-    <div>
-      <div {...getThumbnailRootProps()} className="dropzone">
-        <input {...getThumbnailInputProps()} />
+    <div className="flex flex-col  gap-22">
+      <div
+        {...getThumbnailRootProps()}
+        className=" flex flex-col items-center justify-center border-2 border-dashed border-gray-400 py-12 dropzone cursor-pointer"
+      >
         <p>썸네일 이미지를 드래그하거나 클릭하여 선택하세요.</p>
+        <input
+          id="hidden-file-input"
+          type="file"
+          className="hidden"
+          {...getThumbnailInputProps()}
+        />
       </div>
       <div className="w-1/2 sm:w-1/3 md:w-1/4 p-1">
-        <div className="relative border rounded-md p-2 group  w-92 h-92">
-          <img
-            src={thumbnailPreview?.url}
-            alt="썸네일 이미지"
-            className="object-cover w-72 h-72"
-          />
-          <span className="text-xs break-words">
-            {thumbnailPreview
-              ? `${thumbnailPreview.name} (${thumbnailPreview.size} bytes)`
-              : "이미지가 없습니다."}
-          </span>
-        </div>
+        {thumbnailPreview && (
+          <div className="relative border rounded-md p-2 group  w-92 h-92">
+            <Image
+              src={thumbnailPreview.url}
+              alt="썸네일 이미지"
+              width={368}
+              height={368}
+              className="object-cover"
+            />
+            <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col justify-between p-2 text-transparent hover:text-white group-hover:bg-black group-hover:bg-opacity-50">
+              <span className="text-xs break-words">
+                {`${thumbnailPreview.name} (${thumbnailPreview.size} bytes)`}
+              </span>
+              <button
+                className="absolute bottom-0 right-0 p-1 rounded-md hover:bg-red-600 bg-opacity-75"
+                onClick={() => removeFile(thumbnailPreview)}
+              >
+                <IoTrash />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-      <div {...getImagesRootProps()} className="dropzone">
+      <div
+        {...getImagesRootProps()}
+        className="flex flex-col items-center justify-center border-2 border-dashed border-gray-400 py-12 dropzone cursor-pointer"
+      >
         <input {...getImagesInputProps()} />
         <p>업로드할 이미지 파일들을 드래그하거나 클릭하여 선택하세요.</p>
       </div>
@@ -129,10 +153,12 @@ export const Images = ({
         {imagesPreview.map((file, index) => (
           <li key={index} className="w-1/2 sm:w-1/3 md:w-1/4 p-1">
             <div className="relative border rounded-md p-2 group  w-92 h-92">
-              <img
+              <Image
                 src={file.preview}
                 alt={file.name}
-                className="object-cover w-72 h-72"
+                width={368}
+                height={368}
+                className="object-cover"
               />
               <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col justify-between p-2 text-transparent hover:text-white group-hover:bg-black group-hover:bg-opacity-50">
                 <span className="text-xs break-words">{file.name}</span>
@@ -140,7 +166,7 @@ export const Images = ({
                   {(file.size / 1024).toFixed(2)} KB
                 </span>
                 <button
-                  className="absolute top-0 right-0 p-1 rounded-md hover:bg-red-600 bg-opacity-75"
+                  className="absolute bottom-0 right-0 p-1 rounded-md hover:bg-red-600 bg-opacity-75"
                   onClick={() => removeFile(file)}
                 >
                   <IoTrash />
