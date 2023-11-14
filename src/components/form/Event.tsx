@@ -6,12 +6,13 @@ import dayjs from "dayjs";
 import weekDay from "dayjs/plugin/weekday";
 import { KeyboardEvent, useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import Button from "../button/Button";
 import SearchMapModal from "../portalModal/mapModal/SearchMapModal";
+import FileUpload from "./FIleUpload";
 import FRInput from "./FRInput";
 import { Images } from "./images";
-import { Radio } from "./Input";
+import { Text } from "./Input";
 import { InputField } from "./InputField";
 import { OnDatePicker } from "./OnDatePicker";
 
@@ -21,7 +22,6 @@ const Event = () => {
     control,
     handleSubmit,
     watch,
-
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
@@ -305,8 +305,8 @@ const Event = () => {
                     검색
                   </Button>
                 </div>
-                <input
-                  className="w-full p-16 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 "
+                <Text
+                  className="w-full p-16 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg "
                   type="text"
                   id="place"
                   maxLength={5}
@@ -322,35 +322,27 @@ const Event = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-col ">
+            <div className="flex flex-row ">
               <label>성인여부</label>
               <div className="flex flex-row gap-12">
-                <Controller
-                  control={control}
-                  name="isAdult"
-                  render={({ field }) => (
-                    <>
-                      <Radio
-                        key="adult"
-                        name={field.name}
-                        id="adult"
-                        value="성인"
-                        label="성인"
-                        onChange={() => field.onChange(true)}
-                        checked={field.value === true}
-                      />
-                      <Radio
-                        key="non-adult"
-                        name={field.name}
-                        id="non-adult"
-                        value="미성년"
-                        label="미성년"
-                        onChange={() => field.onChange(false)}
-                        checked={field.value === false}
-                      />
-                    </>
-                  )}
-                />
+                <label>
+                  <FRInput
+                    {...register("isAdult")}
+                    type="radio"
+                    value="true"
+                    id="adult"
+                  />
+                  성인
+                </label>
+                <label>
+                  <FRInput
+                    {...register("isAdult")}
+                    type="radio"
+                    value="false"
+                    id="non-adult"
+                  />
+                  미성년
+                </label>
               </div>
             </div>
             <div className="flex flex-col">
@@ -363,7 +355,6 @@ const Event = () => {
                     const borderClass = isSelected
                       ? "border-blue-500"
                       : "border-gray-200";
-
                     return (
                       <label
                         key={category}
@@ -420,6 +411,7 @@ const Event = () => {
               />
             </div>
             <Images {...imageHandlers} />
+            {/* <FileUpload /> */}
             <Button
               className="mt-20 bg-blue-700 hover:bg-blue-800"
               type="submit"
