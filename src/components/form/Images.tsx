@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
 import { postEventImageApi } from "@/api/events";
-import { getCookie } from "@/util/authCookie";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { getCookie } from "../../util/authCookie";
 import Button from "../button/Button";
-import Image from "next/image";
 
 type Image = {
   thumbnailUrl: string;
@@ -87,10 +86,7 @@ export const Images = ({
       <Button type="button" onClick={uploadFiles} disabled={uploading}>
         {uploading ? "업로드 중..." : "이미지 업로드"}
       </Button>
-      <div>
-        <Image src={thumbnailUrl} alt="thumbnailUrl" />
-      </div>
-      {thumbnail && <p>선택된 썸네일: {thumbnail.name}</p>}
+      {thumbnail && <p>선택 썸네일: {thumbnail.name}</p>}
       <ul>
         {images.map((file, index) => (
           <li key={index}>{file.name}</li>

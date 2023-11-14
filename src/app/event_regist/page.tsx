@@ -6,7 +6,8 @@ import FileUpload from "@/components/form/File";
 import { Images } from "@/components/form/images";
 import Header from "@/components/header/Header";
 import NavTab from "@/components/NavTab/NavTab";
-import { useState } from "react";
+import React, { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 
 type EventItem = {
   category: string;
@@ -16,6 +17,7 @@ type EventItem = {
 type DataType = EventItem[];
 
 const Index = () => {
+  const methods = useForm();
   const [data, setData] = useState<DataType | null>(null);
 
   return (
@@ -24,7 +26,9 @@ const Index = () => {
       <NavTab />
       <div className="flex mt-96 h-screen w-full max-w-1000 m-auto flex-row justify-center items-center">
         {/* <EventForm registType="event" /> */}
-        <Event />
+        <FormProvider {...methods}>
+          <Event />
+        </FormProvider>
       </div>
     </div>
   );
