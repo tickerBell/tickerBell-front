@@ -7,6 +7,8 @@ import QueryProviders from '@/util/queryProvider';
 import RecoilRootProvider from '@/util/recoilRootProvider';
 import CookiesRootProvider from '@/util/cookieProvider';
 import ApolloProviders from '@/util/apolloProvider';
+import Location from '@/components/location/Location';
+import LoginCheck from '@/components/loginCheck/LoginCheck';
 // const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -23,8 +25,6 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
-        {/* 배포 후 This request has been blocked; the content must be served over HTTPS. 에러 해결 코드 */}
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"></meta>
         {/* 아임포트 결제를 위한 script */}
         <Script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" />
         <Script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js" />
@@ -45,6 +45,8 @@ export default function RootLayout({
             <RecoilRootProvider>
               <ApolloProviders>
                 {children}
+                <LoginCheck />
+                <Location />
               </ApolloProviders>
             </RecoilRootProvider>
           </CookiesRootProvider>

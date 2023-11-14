@@ -41,11 +41,20 @@ const Index = () => {
           <Button
             theme="border"
             onClick={() => setTab(1)}
-            className={classNames("border-primary", {
+            className={classNames("border-primary hover:bg-primary hover:text-white", {
               "bg-primary text-white": tab === 1,
             })}
           >
             일반 회원 로그인
+          </Button>
+          <Button
+            theme="border"
+            onClick={() => setTab(2)}
+            className={classNames("border-primary hover:bg-primary hover:text-white", {
+              "bg-primary text-white": tab === 2,
+            })}
+          >
+            비 회원 로그인
           </Button>
         </nav>
         <LoginForm tab={tab} setTab={setTab} />

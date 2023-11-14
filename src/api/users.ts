@@ -56,7 +56,7 @@ type pagingType = {
   size?: number
 }
 
-// 예매 내역 or 등록 내역 조회
+// 회원: 예매 내역 or 등록 내역 조회
 export async function userReserveApi(atk: string, page: number) {
   const res = await apiInstance.get("/api/member/my", {
     headers: {
@@ -67,13 +67,20 @@ export async function userReserveApi(atk: string, page: number) {
   return res;
 }
 
+// 비회원: 예매 내역 
+export async function noneUserReserveApi(name: string, phone: number) {
+  const res = await apiInstance.get("/ticketing-nonMember", {
+    params: { name: name, phone: phone },
+  });
+  return res;
+}
+
 // 예매 내역 or 등록 내역 삭제
-// export async function userDeleteReserveIdApi(atk: string, id: number) {
-export async function userDeleteReserveIdApi(id: number) {
+export async function userDeleteReserveIdApi(atk: string, id: number) {
   const res = await apiInstance.delete(`/ticketing/${id}`, {
-    // headers: {
-    //   Authorization: `Bearer ${atk}`,
-    // },
+    headers: {
+      Authorization: `Bearer ${atk}`,
+    },
   });
   return res;
 }

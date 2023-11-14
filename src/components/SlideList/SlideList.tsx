@@ -18,11 +18,11 @@ const SlideList = () => {
     <div className="mt-60">
       {!isError && isSuccess &&
         <>
-          <div className="flex gap-8 justify-center">
-            <div onClick={() => setTab('rankingMusicalEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
+          <div className="flex justify-center gap-8">
+            <div onClick={() => setTab('rankingMusicalEventList')} className={cls("inline-flex hover:border hover:border-1 hover:border-primary px-12 py-4 rounded-full cursor-pointer text-sm", {
               "bg-primary text-white": tab === 'rankingMusicalEventList'
             })}>뮤지컬</div>
-            <div onClick={() => setTab('rankingConcertEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
+          <div onClick={() => setTab('rankingConcertEventList')} className={cls("inline-flex hover:border hover:border-1 hover:border-primary px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
               "bg-primary text-white": tab === 'rankingConcertEventList'
             })}>콘서트</div>
             <div onClick={() => setTab('rankingPlayEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
@@ -35,7 +35,7 @@ const SlideList = () => {
               "bg-primary text-white": tab === 'rankingSportsEventList'
             })}>스포츠</div>
           </div>
-        <Slide data={data?.data[tab]} title="랭킹" viewCount={data?.data[tab].length}/>
+          <Slide data={data?.data[tab]} title="랭킹" viewCount={data?.data[tab].length} />
           <Slide data={data?.data['saleEventList']} title="세일" autoplay />
           <Slide data={data?.data['deadLineEventList']} title="마감임박" />
           <Slide data={data?.data['recommendEventList']} title="추천!" />

@@ -1,4 +1,5 @@
 interface IEventHistoryTableType {
+  eventId?: number;
   eventName: string;
   casting: string;
   startEvent: string;

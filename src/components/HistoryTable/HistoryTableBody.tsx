@@ -20,28 +20,27 @@ interface HistoryTableBodyProps {
 export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
   row
 }) => {
-  const { startEvent, eventName, casting, place, isCancelled, ticketHolderCounts } = row;
+  const { startEvent, eventName, casting, place, isCancelled, ticketHolderCounts, eventId } = row;
   const queryClient = useQueryClient();
   const getRole = useRecoilValue(userSelector("role"));
   const [onModal, setOnModal] = useState(false);
   const date = new Date;
 
-  const mutation = useMutation({
-    mutationFn: () => userDeleteReserveIdApi(1),
+  const deleteReserveMutation = useMutation({
+    mutationFn: (id: number) => userDeleteReserveIdApi(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] })
+      queryClient.invalidateQueries({ queryKey: ['event-reservelist'] })
     }
   })
 
-  const cancleEvent = () => {
+  const cancleEvent = (id: any) => {
     if (!confirm(`이벤트 ${getRole === "ROLE_REGISTRANT" ? '등록을' : '예매를'} 취소할까요?`)) {
       // 아니오
     } else {
       // 예
+      deleteReserveMutation.mutate(id);
     }
   }
-
-  // console.log('row', row);
 
   return (
     <>
@@ -67,7 +66,7 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
         <td className="px-6 py-4 whitespace-nowrap">{day(startEvent)}</td>
         <td className="px-6 py-4 whitespace-nowrap">{place}</td>
         <td className="px-6 py-4 whitespace-nowrap">
-          {isCancelled ? '취소됨' ? dayCompare(date, startEvent) : '진행됨': '진행예정'}
+          {isCancelled ? '취소됨' ? dayCompare(date, startEvent) : '진행됨' : '진행예정'}
         </td>
         {
           ticketHolderCounts !== null && <td className="px-6 py-4 whitespace-nowrap">{ticketHolderCounts}명</td>
@@ -75,7 +74,7 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
         <td className="px-6 py-4 whitespace-nowrap">
           <Button className="border" onClick={(e: any) => {
             e.stopPropagation();
-            cancleEvent()
+            cancleEvent(eventId)
           }} >{getRole === "ROLE_REGISTRANT" ? '등록' : '예매'} 취소</Button>
         </td>
       </tr>

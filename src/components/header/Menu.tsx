@@ -1,36 +1,25 @@
 "use client";
 
-import { userInfoApi, userReserveApi } from "@/api/users";
-import { getSession } from "@/hooks/useSeection";
 import { userSelector } from "@/recoil/user";
-import { getCookie, removeCookie } from "@/util/authCookie";
+import { removeCookie } from "@/util/authCookie";
 import { isDev } from "@/util/util";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const Menu = () => {
   const getRole = useRecoilValue(userSelector("role"));
-  const setRole = useSetRecoilState(userSelector("role"));
+  
   const setIsLogin = useSetRecoilState(userSelector("isLogin"));
   const getIsLogin = useRecoilValue(userSelector("isLogin"));
-  const [atk, setAtk] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
-    setAtk(getCookie("ticket-atk"));
-    setIsLogin(getCookie("ticket-atk") === undefined ? false : true);
-    userInfoApi(getCookie("ticket-atk")).then((res) =>
-      setRole(res?.data.role)
-    );
-  }, [atk]);
 
   const handleMyPageClick = (e: any) => {
-    if (!atk) {
+    if (!getIsLogin) {
       e.preventDefault();
       alert("로그인 후 이용해주세요");
-      router.push("/login");
     }
   };
 
@@ -57,13 +46,19 @@ const Menu = () => {
       )}
       {/* {!atk && <Link href="/login">로그인</Link>} */}
       <div onClick={auth} className="cursor-pointer">{getIsLogin ? '로그아웃' : '로그인'}</div>
-      <Link href="/regist">회원가입</Link>
+      {
+        !getIsLogin &&
+        <Link href="/regist">회원가입</Link>
+      }
       <Link href="/mypage/reserve" onClick={handleMyPageClick}>
         마이페이지
       </Link>
-      <Link href="/reserve" onClick={handleMyPageClick}>
-        예약확인/취소
-      </Link>
+      {/* {
+        !getIsLogin &&
+        <Link href="/reserve">
+          예약확인/취소
+        </Link>
+      } */}
     </div>
   );
 };

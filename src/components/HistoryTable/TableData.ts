@@ -1,5 +1,5 @@
 // 예매자
-export const UserColumns: IEventHistoryTableType[] = [
+export const UserColumns = [
   {
     eventName: "이벤트명",
     casting: "캐스팅",
@@ -9,7 +9,7 @@ export const UserColumns: IEventHistoryTableType[] = [
 ];
 
 // 등록자
-export const EventColumns: IEventHistoryTableReserverType[] = [
+export const EventColumns = [
   {
     eventName: "이벤트명",
     casting: "캐스팅",
