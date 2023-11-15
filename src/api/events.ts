@@ -1,5 +1,4 @@
 import apiInstance from "@/util/useInterceptor";
-import axios from "axios";
 
 // 메인 이벤트 슬라이드
 export async function eventSlideApi() {
@@ -83,7 +82,7 @@ export async function getEventCategoryApi(
   }
 }
 
-// 이벤트 취소 
+// 이벤트 취소
 export async function deleteEventApi(id: number) {
   try {
     const res = await apiInstance.delete(`/ticketing/${id}`, {});

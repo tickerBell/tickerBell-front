@@ -2,6 +2,7 @@
 
 import { postEventApi } from "@/api/events";
 import { getCookie } from "@/util/authCookie";
+import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import weekDay from "dayjs/plugin/weekday";
 import { KeyboardEvent, useEffect, useState } from "react";
@@ -11,7 +12,6 @@ import Button from "../button/Button";
 import SearchMapModal from "../portalModal/mapModal/SearchMapModal";
 import FRInput from "./FRInput";
 import { ImageUpload } from "./ImageUpload";
-import { Text } from "./Input";
 import { InputField } from "./InputField";
 import { OnDatePicker } from "./OnDatePicker";
 
@@ -33,7 +33,7 @@ const Event = () => {
   dayjs.extend(weekDay);
   const [atk, setAtk] = useState("");
   const [mapOnModal, setMapOnModal] = useState(false);
-  const [thumbnailUrl, setThumbnailUrl] = useState("");
+  const [thumbNailUrl, setThumbNailUrl] = useState("");
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [enroll_company, setEnroll_company] = useState({
     address: "",
@@ -106,6 +106,7 @@ const Event = () => {
     const hostNames = onData.hosts.map((host) => host.name);
 
     const payload = {
+      name: onData.name,
       startEvent: formatDate(onData.startEvent),
       endEvent: formatDate(onData.endEvent),
       availablePurchaseTime: formatDate(onData.availablePurchaseTime),
@@ -121,7 +122,7 @@ const Event = () => {
       isSpecialA: onData.isSpecialA,
       isSpecialB: onData.isSpecialB,
       isSpecialC: onData.isSpecialC,
-      thumbnailUrl: thumbnailUrl,
+      thumbNailUrl: thumbNailUrl,
       imageUrls: imageUrls,
     };
     console.log("dd", payload);
@@ -178,7 +179,7 @@ const Event = () => {
                 type="text"
                 id="name"
                 placeholder="입력해주세요"
-                maxLength={5}
+                maxLength={20}
                 {...register("name", {
                   required: "이벤트명은 필수 입력입니다.",
                   minLength: {
@@ -298,7 +299,7 @@ const Event = () => {
                     검색
                   </Button>
                 </div>
-                <Text
+                <input
                   className="w-full p-16 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg "
                   type="text"
                   id="place"
@@ -404,7 +405,7 @@ const Event = () => {
               />
             </div>
             <ImageUpload
-              setThumbnailUrl={setThumbnailUrl}
+              setThumbNailUrl={setThumbNailUrl}
               setImageUrls={setImageUrls}
             />
             <Button

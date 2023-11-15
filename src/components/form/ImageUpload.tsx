@@ -9,8 +9,8 @@ import Button from "../button/Button";
 import Image from "next/image";
 
 type Image = {
-  setThumbnailUrl: (url: string) => void;
-  setImageUrls: React.Dispatch<React.SetStateAction<string[]>>;
+  setThumbNailUrl: (url: string) => void;
+  setImageUrls: (urls: string[]) => void;
 };
 
 interface FileWithPreview extends File {
@@ -22,7 +22,7 @@ type Preview = {
   size: number;
 };
 
-export const ImageUpload = ({ setThumbnailUrl, setImageUrls }: Image) => {
+export const ImageUpload = ({ setThumbNailUrl, setImageUrls }: Image) => {
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [thumbnailPreview, setThumbnailPreview] = useState<Preview | null>(
     null
@@ -96,7 +96,7 @@ export const ImageUpload = ({ setThumbnailUrl, setImageUrls }: Image) => {
       }
       setUploading(true);
       const response = await postEventImageApi(atk, thumbnail, images);
-      setThumbnailUrl(response.data.thumbNailImageUrl);
+      setThumbNailUrl(response.data.thumbNailImageUrl);
       setImageUrls(response.data.imageUrls);
       setUploading(false);
     } catch (error) {

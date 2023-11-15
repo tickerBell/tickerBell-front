@@ -1,4 +1,5 @@
 import React from "react";
+import { IoCloseSharp } from "react-icons/io5";
 
 type TagField = {
   id: string;
@@ -48,7 +49,7 @@ export const InputField = ({
                 onClick={() => remove(index)}
                 className="text-black bg-red-500 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 text-center"
               >
-                x
+                <IoCloseSharp />
               </button>
             </div>
           </div>
