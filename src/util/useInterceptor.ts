@@ -16,10 +16,7 @@ apiInstance.interceptors.request.use(
     //   config.headers["Authorization"] = `Bearer ${getCookie("ticket-atk")}`;
     //   return config;
     // }
-    if (
-      getCookie("ticket-atk") == undefined &&
-      getCookie("ticket-trk") != undefined
-    ) {
+    if (getCookie("ticket-atk") == undefined && getCookie("ticket-trk") != undefined) {
       return config;
     }
     if (getCookie("ticket-atk") == undefined) {
@@ -52,21 +49,14 @@ apiInstance.interceptors.response.use(
       // 토큰 재발급 요청, apiInstance가 아닌 axios로 요청하기
       // removeCookie('ticket-atk');
       if (getCookie("ticket-trk") !== "undefined") {
-        console.log(
-          "cc",
-          process.env.NEXT_PUBLIC_API_URL,
-          getCookie("ticket-rtk")
-        );
-        const data = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/reissue`,
-          {
-            refreshToken: `${getCookie("ticket-rtk")}`,
-            headers: {
-              accept: "*/*",
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        console.log("cc", process.env.NEXT_PUBLIC_API_URL, getCookie("ticket-rtk"));
+        const data = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/reissue`, {
+          refreshToken: `${getCookie("ticket-rtk")}`,
+          headers: {
+            accept: "*/*",
+            "Content-Type": "application/json",
+          },
+        });
         console.log("갱신", data);
         //  갱신
 
@@ -89,6 +79,11 @@ apiInstance.interceptors.response.use(
     // atk가 undefined일때 500
     if (err.response && err.response.status === 500) {
       // removeCookie("ticket-atk");
+    }
+    if (err.response && err.response.status === 404) {
+      console.log("err", err.response.data.data);
+      // return err.response.data.data;
+      return Promise.reject(err);
     }
   }
 );

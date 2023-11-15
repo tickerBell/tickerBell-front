@@ -17,7 +17,7 @@ const Location = () => {
   // set
   const setLocation = useSetRecoilState(locationSelector);
   // get
-  // const getLocation = useRecoilValue(userSelector('location'));
+  // const getLocation = useRecoilValue(locationSelector);
 
   useEffect(() => {
     if (location) {

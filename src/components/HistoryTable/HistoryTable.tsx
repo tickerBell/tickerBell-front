@@ -14,8 +14,8 @@ export const HistoryTable = () => {
   const getRole = useRecoilValue(userSelector("role"));
   const getIsLogin = useRecoilValue(userSelector("isLogin"));
   const getnonMemberatom = useRecoilValue(userSelector("nonMember"));
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [tabnumber, setTabnumber] = useState(0);
 
   const columns = getRole === "ROLE_REGISTRANT" ? EventColumns : UserColumns;
 
@@ -25,17 +25,19 @@ export const HistoryTable = () => {
 
   // 회원 - 등록자, 예약자
   const { data: memberData, isSuccess: memberDataSuccess } = useQuery({
-    queryKey: ["event-reservelist"],
+    queryKey: ["event-reservelist", currentPage],
     queryFn: () => userReserveApi(getCookie('ticket-atk'), 0),
     enabled: typeof getCookie('ticket-atk') === 'string'
   });
 
   // 비회원
   const { data: nonmemberData, isSuccess: nonmemberDataSuccess, isError, error } = useQuery({
-    queryKey: ["event-reservelist"],
+    queryKey: ["event-reservelist", currentPage],
     queryFn: () => noneUserReserveApi(getCookie('ticket-atk')?.name, getCookie('ticket-atk')?.phone),
     enabled: typeof getCookie('ticket-atk') === 'object'
   });
+
+  const data = typeof getCookie('ticket-atk') === 'string' ? memberData : nonmemberData
 
   // const tablerows = data?.data.myPageResponse;
   console.log('예약 내역', getnonMemberatom, nonmemberData);
@@ -46,7 +48,7 @@ export const HistoryTable = () => {
       {
         getIsLogin &&
         <>
-          <Tab tabName={"historyTable"} className="mb-20" />
+          <Tab tabName={"historyTable"} className="mb-20" tabNumber={setTabnumber} />
           <div className="flex flex-col">
             <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
               <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
@@ -57,7 +59,7 @@ export const HistoryTable = () => {
                     ))}
                   </thead>
                   <tbody>
-                    {/* {memberData && memberData?.data.myPageResponse.map((row: any, key: any) => (
+                    {/* {data && data?.data.myPageResponse.map((row: any, key: any) => (
                       <HistoryTableBody
                         key={key}
                         row={row}
@@ -68,7 +70,7 @@ export const HistoryTable = () => {
               </div>
             </div>
             {/* <Pagination
-              pageCount={Math.ceil(memberData?.data.myPageResponse.length / itemsPerPage)}
+                            pageCount={data?.data.totalCount / 10}
               handlePageChange={handlePageChange}
             /> */}
           </div>

@@ -20,9 +20,10 @@ const TabItemTheme: tabThemeType = {
 type tabType = {
   tabName: 'main' | 'historyTable';
   className?: string;
+  tabNumber: (value: number) => void;
 };
 
-const Tab = ({ tabName, className }: tabType) => {
+const Tab = ({ tabName, className, tabNumber }: tabType) => {
   const [select, setSelect] = useState(-1);
   const mainThemeObject: any = TabData?.find(item => item.theme === tabName);
   const menuNameOfMainTheme = mainThemeObject ? mainThemeObject.menuName : [];
@@ -35,7 +36,10 @@ const Tab = ({ tabName, className }: tabType) => {
         <div key={index} className={classNames(twMerge(
           `${TabItemTheme[tabName + `TabItem`]}`
         ), { 'bg-primary text-white': select === index })}
-          onClick={() => setSelect(index)}
+          onClick={() => {
+            setSelect(index);
+            tabNumber(index);
+          }}
         >{item}</div>
       ))}
     </div>

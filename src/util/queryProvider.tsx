@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { QueryClientProvider, QueryClient, QueryCache } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
 
@@ -12,6 +12,13 @@ function QueryProviders({ children }: React.PropsWithChildren) {
         // refetchOnWindowFocus: false,
       },
     },
+    // queryCache: new QueryCache({
+    //   onError: (error, query) => {
+    //     console.log('query', query, error);
+    //     if (query?.meta?.errorMessage) {
+    //     }
+    //   },
+    // }),
   });
 
   return (
