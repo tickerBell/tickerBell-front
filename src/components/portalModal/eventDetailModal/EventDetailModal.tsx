@@ -4,6 +4,7 @@ import Button from "@/components/button/Button";
 import { ArrayGenerator } from "@/hooks/ArrayGenerator";
 import classNames from "classnames";
 import { Modal } from "../Modal";
+import { onClickPayment } from "@/hooks/Payment";
 
 type BasicModalType = {
   setOnModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,6 +13,12 @@ type BasicModalType = {
   isDim?: boolean;
   onClose?: boolean;
   className?: string;
+  normalPrice: number;
+  numberOfPeople: number;
+  selectedSeats: string[];
+  setSelectedSeats: React.Dispatch<React.SetStateAction<string[]>>;
+  name: string;
+  place: string;
 };
 
 const EventDetailModal = ({
@@ -20,20 +27,33 @@ const EventDetailModal = ({
   dimClick,
   isDim = true,
   className,
+  normalPrice,
+  numberOfPeople,
+  selectedSeats,
+  setSelectedSeats,
+  name,
+  place,
 }: BasicModalType) => {
   const [grade, setGrade] = useState(1);
   const [select, setSelect] = useState<string[]>([]);
+
+  const selectSeat = (seat: string) => {
+    if (selectedSeats.includes(seat)) {
+      setSelectedSeats(selectedSeats.filter((s) => s !== seat));
+    } else if (selectedSeats.length < numberOfPeople) {
+      setSelectedSeats([...selectedSeats, seat]);
+    }
+  };
+  const totalCost = selectedSeats.length * normalPrice;
+
+  console.log("normalPrice", normalPrice);
 
   const itemsA = ArrayGenerator(1, 20, "a-");
   const itemsB = ArrayGenerator(1, 20, "b-");
   const itemsC = ArrayGenerator(1, 20, "c-");
 
-  const selectSheet = (val: string) => {
-    if (select.includes(val)) {
-      setSelect(select.filter((item) => item !== val));
-    } else if (select.length <= 1) {
-      setSelect([...select, val]);
-    }
+  const handlePayment = () => {
+    onClickPayment(totalCost, name, place);
   };
 
   console.log("cc", select);
@@ -54,11 +74,11 @@ const EventDetailModal = ({
             {itemsA.map((item, index: any) => (
               <div
                 key={index}
-                onClick={() => selectSheet(item)}
+                onClick={() => selectSeat(item)}
                 className={classNames(
                   "cursor-pointer border hover:border-primary p-2 text-center",
                   {
-                    "border-red border-2": select.includes(item),
+                    "border-red border-2": selectedSeats.includes(item),
                   }
                 )}
               >
@@ -71,11 +91,11 @@ const EventDetailModal = ({
             {itemsB.map((item, index: any) => (
               <div
                 key={index}
-                onClick={() => selectSheet(item)}
+                onClick={() => selectSeat(item)}
                 className={classNames(
                   "cursor-pointer border hover:border-primary p-2 text-center",
                   {
-                    "border-red border-2": select.includes(item),
+                    "border-red border-2": selectedSeats.includes(item),
                   }
                 )}
               >
@@ -88,11 +108,11 @@ const EventDetailModal = ({
             {itemsC.map((item, index: any) => (
               <div
                 key={index}
-                onClick={() => selectSheet(item)}
+                onClick={() => selectSeat(item)}
                 className={classNames(
                   "cursor-pointer border hover:border-primary p-2 text-center",
                   {
-                    "border-red border-2": select.includes(item),
+                    "border-red border-2": selectedSeats.includes(item),
                   }
                 )}
               >
@@ -106,15 +126,11 @@ const EventDetailModal = ({
       <Modal.Buttons>
         <div className="flex gap-12">
           <ul>
-            <li>선택한 좌석 : a-1</li>
-            <li>가격 : 10000</li>
-          </ul>
-          <ul>
-            <li>선택한 좌석 : a-1</li>
-            <li>가격 : 10000</li>
+            <p>선택한 좌석: {selectedSeats.join(", ")}</p>
+            <p>총 가격: {totalCost}원</p>
           </ul>
         </div>
-        <Button className="ml-auto w-100" size="medium">
+        <Button className="ml-auto w-100" size="medium" onClick={handlePayment}>
           결제하기
         </Button>
       </Modal.Buttons>

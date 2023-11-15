@@ -149,9 +149,12 @@ export const ImageUpload = ({ setThumbNailUrl, setImageUrls }: Image) => {
         <input {...getImagesInputProps()} />
         <p>업로드할 이미지 파일들을 드래그하거나 클릭하여 선택하세요.</p>
       </div>
-      <ul>
+      <ul className="flex flex-row">
         {imagesPreview.map((file, index) => (
-          <li key={index} className="w-1/2 sm:w-1/3 md:w-1/4 p-1">
+          <li
+            key={index}
+            className="w-1/2 sm:w-1/3 md:w-1/4 p-1 flex flex-row "
+          >
             <div className="relative border rounded-md p-2 group  w-92 h-92">
               <Image
                 src={file.preview}

@@ -15,6 +15,12 @@ const Index = () => {
   const params = useParams();
   const [modal, setModal] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
+  const [numberOfPeople, setNumberOfPeople] = useState<number>(1);
+  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+
+  const handlePeopleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNumberOfPeople(Number(e.target.value));
+  };
 
   const { data, isSuccess, isError, error } = useQuery({
     queryKey: ["event-id", params.id],
@@ -47,8 +53,14 @@ const Index = () => {
     <div>
       {modal && (
         <EventDetailModal
-          className="w-400"
+          place={place}
+          name={name}
+          normalPrice={normalPrice}
+          className="w-1/2"
           dimClick={false}
+          numberOfPeople={numberOfPeople}
+          selectedSeats={selectedSeats}
+          setSelectedSeats={setSelectedSeats}
           setOnModal={() => setModal(false)}
         />
       )}
@@ -81,19 +93,31 @@ const Index = () => {
             </ul>
           </div>
         </div>
-        <div className="lg:w-1/4 md:w-8/12 w-full shadow h-full flex flex-col lg:h-screen lg:px-8 md:px-7 px-4 lg:py-20 md:py-10 py-6">
+        <div className="lg:w-1/4 md:w-8/12 w-full shadow h-full flex flex-col lg:h-screen lg:px-8 md:px-7 px-4 lg:py-20 md:py-10 py-6 gap-20">
           <p className="lg:text-4xl text-3xl font-black leading-9 text-gray-800">
             {name}
           </p>
-          <DatePicker
-            selected={startDate}
-            onChange={(date: Date) => setStartDate(date)}
-            dateFormat="yyyy년 MM월 dd일"
-          />
-          <p className="text-2xl leading-normal text-gray-800">총액</p>
-          <p className="text-2xl font-bold leading-normal text-right text-gray-800">
-            {normalPrice}원
-          </p>
+          <div className="mx-auto">
+            <DatePicker
+              selected={startDate}
+              onChange={(date: Date) => setStartDate(date)}
+              dateFormat="yyyy년 MM월 dd일"
+              inline
+            />
+          </div>
+          <div>
+            <input
+              type="number"
+              value={numberOfPeople}
+              onChange={handlePeopleChange}
+              min="1"
+              max="10"
+            />
+            <p className="text-2xl leading-normal text-gray-800">총액</p>
+            <p className="text-2xl font-bold leading-normal text-right text-gray-800">
+              {normalPrice}원
+            </p>
+          </div>
           <Button className="w-full" onClick={() => setModal(true)}>
             예약하기
           </Button>
