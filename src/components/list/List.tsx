@@ -5,12 +5,15 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import React, { useEffect } from 'react'
 import { useInView } from "react-intersection-observer";
 import Card from '../item/Card';
+import Spinner from '../spinner/Spinner';
 
 type ListType = {
   category: string;
+  type?: string;
+  className?: string;
 }
 
-const List = ({ category }: ListType) => {
+const List = ({ category, type, className }: ListType) => {
   const [ref, isView] = useInView();
   // 받은 카테고리가 있다면 카테고리. 없다면 전체 
 
@@ -23,7 +26,7 @@ const List = ({ category }: ListType) => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ['projects'],
+    queryKey: ['event-all-list'],
     queryFn: ({ pageParam }) => getEventAllApi(category, pageParam),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) =>
@@ -40,22 +43,22 @@ const List = ({ category }: ListType) => {
     if (isView && hasNextPage) fetchNextPage();
   }, [isView]);
 
-  console.log('data', data, status);
+  // console.log('data', data, status);
   // const listData =  data?.pages[0]
 
   return (
-    <div>
+    <div className={className}>
       {!category && (
         <>
           {status === "pending" && (
             <div>
-              불러오는 중 ...
+              <Spinner/>
             </div>
           )}
           {status === "success" && (
-            <div className="grid grid-cols-6 gap-36 place-items-center mt-60">
+            <div className="grid grid-cols-6 gap-x-16 gap-y-36 place-items-center mt-60">
               {data.pages[0].data.content.map((item: any, index: any) => (
-                <Card key={index} data={item} />
+                <Card key={index} data={item} type={type}/>
               ))}
               <div ref={ref} />
             </div>

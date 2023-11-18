@@ -3,26 +3,39 @@ import { price } from '@/util/price';
 import Image from 'next/image'
 import Link from 'next/link';
 import React from 'react'
+import s from './card.module.scss';
 
 type cardType = {
   data: any;
+  type?: string;
 }
 
-const Card = ({ data }: cardType) => {
+const Card = ({ data, type }: cardType) => {
   // console.log('data', data);
   return (
-    <div className='w-full'>
+    <div className='relative w-full'>
       <Link href={`/detail/${data.eventId}`}>
-        <Image src="https://i.postimg.cc/pTm02zHV/00.png" alt="" width={200} height={300} />
-        <div>{data.eventName}</div>
-        <div>스피커</div>
-        <div>장소</div>
-        <div>{day(data.startEvent)}</div>
-        <div>{price(data.normalPrice)}원</div>
         {
-          data.afterSalePrice && 
-          <div>{price(data.afterSalePrice)}원</div>
+          data.isAdult &&
+          <span className={s.adult_tag}>18</span>
         }
+        <div className={s.img_wrap}>
+          <Image src={data.thumbNailUrl} alt={data.name} layout='fill'
+            objectFit='cover' />
+        </div>
+        <div className='mt-10'>{data.eventName}</div>
+        {data.castings &&
+          <div>{data.castings.map((item: any, i: any) => (
+            <span key={i}>{item}</span>
+          ))}</div>
+        }
+        <div>{data.place}</div>
+        <div className='mt-6 mb-6'>{day(data.startEvent)}</div>
+        {
+          data.discountNormalPrice &&
+          <del className='size-[14px]'>{price(data.discountNormalPrice)}원</del>
+        }
+        <div>{price(data.normalPrice)}원</div>
       </Link>
     </div>
   )

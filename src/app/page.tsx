@@ -10,7 +10,7 @@ export default function Home() {
       <div className="pt-10 m-auto max-w-1280">
         <NavTab />
         <SlideList />
-        <List category=""/>
+        <List category="" type="main" className="mb-80"/>
       </div>
     </main>
   )

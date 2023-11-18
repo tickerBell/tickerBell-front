@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
 import { day } from "@/util/day";
+import Image from "next/image";
 
 type sliderProps = {
   title?: string;
@@ -38,6 +39,8 @@ const Slide = ({
     [autoplay, loop, speed]
   );
 
+  console.log('slidedata', data);
+
   return (
     <div className="mt-40">
       {data && data.length > 0 ? (
@@ -47,11 +50,16 @@ const Slide = ({
             <Slider {...settings}>
               {data?.map((item: any, index: any) => (
                 <Link href={`/detail/${item.eventId}`} key={index}>
-                  <picture>
-                    <img src={item.item} alt={item.name} />
-                  </picture>
-                  {item.eventName}
-                  {day(item.startEvent)}
+                  <div className="relative m-auto w-100 h-150 border border-1 border-[#eee]">
+                    <Image src={item.thumbNailUrl} alt={item.name} layout='fill'
+                      objectFit='contain' />
+                  </div>
+                  <div>
+                    {item.name}
+                  </div>
+                  <div>
+                    {day(item.startEvent)}
+                  </div>
                 </Link>
               ))}
             </Slider>

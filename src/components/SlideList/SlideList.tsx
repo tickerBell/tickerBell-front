@@ -19,10 +19,10 @@ const SlideList = () => {
       {!isError && isSuccess &&
         <>
           <div className="flex justify-center gap-8">
-            <div onClick={() => setTab('rankingMusicalEventList')} className={cls("inline-flex hover:border hover:border-1 hover:border-primary px-12 py-4 rounded-full cursor-pointer text-sm", {
+            <div onClick={() => setTab('rankingMusicalEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
               "bg-primary text-white": tab === 'rankingMusicalEventList'
             })}>뮤지컬</div>
-          <div onClick={() => setTab('rankingConcertEventList')} className={cls("inline-flex hover:border hover:border-1 hover:border-primary px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
+            <div onClick={() => setTab('rankingConcertEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
               "bg-primary text-white": tab === 'rankingConcertEventList'
             })}>콘서트</div>
             <div onClick={() => setTab('rankingPlayEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
