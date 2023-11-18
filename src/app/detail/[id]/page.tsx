@@ -49,10 +49,13 @@ const Index = () => {
     thumbNailUrl,
   } = data?.data || {};
 
+  const totalCost = numberOfPeople * normalPrice;
+
   return (
     <div>
       {modal && (
         <EventDetailModal
+          totalCost={totalCost}
           place={place}
           name={name}
           normalPrice={normalPrice}
@@ -104,6 +107,8 @@ const Index = () => {
               dateFormat="yyyy년 MM월 dd일"
               inline
             />
+
+            {/* 이전날짜는 막기 공연기간동안만 예약이 되게  */}
           </div>
           <div>
             <input
@@ -115,7 +120,7 @@ const Index = () => {
             />
             <p className="text-2xl leading-normal text-gray-800">총액</p>
             <p className="text-2xl font-bold leading-normal text-right text-gray-800">
-              {normalPrice}원
+              {totalCost}원
             </p>
           </div>
           <Button className="w-full" onClick={() => setModal(true)}>

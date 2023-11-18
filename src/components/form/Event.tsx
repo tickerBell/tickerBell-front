@@ -104,6 +104,7 @@ const Event = () => {
     const tagNames = onData.tags.map((tag) => tag.name);
     const castingNames = onData.castings.map((casting) => casting.name);
     const hostNames = onData.hosts.map((host) => host.name);
+    const updatedImageUrls = [thumbNailUrl, ...imageUrls];
 
     const payload = {
       name: onData.name,
@@ -122,8 +123,7 @@ const Event = () => {
       isSpecialA: onData.isSpecialA,
       isSpecialB: onData.isSpecialB,
       isSpecialC: onData.isSpecialC,
-      thumbNailUrl: thumbNailUrl,
-      imageUrls: imageUrls,
+      imageUrls: updatedImageUrls,
     };
     console.log("dd", payload);
 

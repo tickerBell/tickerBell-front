@@ -16,6 +16,7 @@ type BasicModalType = {
   normalPrice: number;
   numberOfPeople: number;
   selectedSeats: string[];
+  totalCost: number;
   setSelectedSeats: React.Dispatch<React.SetStateAction<string[]>>;
   name: string;
   place: string;

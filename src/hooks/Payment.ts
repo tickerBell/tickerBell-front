@@ -21,7 +21,7 @@ export const onClickPayment = (
     buyer_name: name, // 구매자 이름
     buyer_tel: "01012341234", // 구매자 전화번호
     buyer_email: "example@example.com", // 구매자 이메일
-    buyer_addr: place, // 구매자 주소
+    buyer_addr: "신사동 661-16", // 구매자 주소
     buyer_postcode: "06018", // 구매자 우편번호
   };
 
