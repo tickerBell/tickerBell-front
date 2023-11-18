@@ -15,54 +15,114 @@ const Index = () => {
   const params = useParams();
   const [modal, setModal] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
+  const [numberOfPeople, setNumberOfPeople] = useState<number>(1);
+  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+
+  const handlePeopleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNumberOfPeople(Number(e.target.value));
+  };
 
   const { data, isSuccess, isError, error } = useQuery({
     queryKey: ["event-id", params.id],
     queryFn: () => getEventIdApi(params.id),
   });
 
-  console.log('data', data);
+  console.log("data", data?.data);
+
+  const {
+    castings,
+    category,
+    discountNormalPrice,
+    discountPremiumPrice,
+    endEvent,
+    hosts,
+    imageUrls,
+    isAdult,
+    isSpecialSeatA,
+    isSpecialSeatB,
+    isSpecialSeatC,
+    name,
+    normalPrice,
+    place,
+    premiumPrice,
+    startEvent,
+    thumbNailUrl,
+  } = data?.data || {};
+
+  const totalCost = numberOfPeople * normalPrice;
 
   return (
     <div>
       {modal && (
         <EventDetailModal
-          className="w-400"
+          totalCost={totalCost}
+          place={place}
+          name={name}
+          normalPrice={normalPrice}
+          className="w-1/2"
           dimClick={false}
+          numberOfPeople={numberOfPeople}
+          selectedSeats={selectedSeats}
+          setSelectedSeats={setSelectedSeats}
           setOnModal={() => setModal(false)}
         />
       )}
       <Header />
       <div className="flex lg:flex-row flex-col justify-center">
-        <div className="flex flex-col lg:w-1/2 md:w-8/12 w-full lg:px-8 lg:py-14 py-8 md:py-10 border-t bg-white lg:h-screen h-auto">
-          <p className="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3">
-            제목영역
-          </p>
-          <picture>
-            <img
-              src="http://placehold.it/800x600/ffff00"
-              alt=""
-              className="w-3/4 object-center object-cover"
-            />
-          </picture>
-          <p>제목</p>
-          <p>장소</p>
-          <p>공연시간</p>
-          <p>관람연령</p>
+        <div className="flex lg:flex-row flex-col lg:w-1/2 md:w-8/12 w-full lg:px-8 lg:py-14 py-8 md:py-10 border-t bg-white lg:h-screen h-auto">
+          <div className="w-2/4">
+            <picture>
+              <img
+                src={imageUrls}
+                alt=""
+                className="w-full object-center object-cover"
+              />
+            </picture>
+          </div>
+          <div className="w-2/4">
+            <ul className="p-12 grid grid-cols-2 gap-12">
+              <li className="font-bold">이벤트명</li>
+              <li>{name}</li>
+              <li className="font-bold">장소</li>
+              <li>{place}</li>
+              <li className="font-bold">배우명</li>
+              <li>{castings}</li>
+              <li className="font-bold">관람연령</li>
+              <li>{isAdult ? <p>성인관람</p> : <p>전체관람</p>}</li>
+              <li className="font-bold">가격</li>
+              <li className="font-bold">{normalPrice}</li>
+              <li></li>
+              <li className="font-bold">{premiumPrice}</li>
+            </ul>
+          </div>
         </div>
-        <div className="lg:w-1/4 md:w-8/12 w-full shadow h-full flex flex-col lg:h-screen lg:px-8 md:px-7 px-4 lg:py-20 md:py-10 py-6">
+        <div className="lg:w-1/4 md:w-8/12 w-full shadow h-full flex flex-col lg:h-screen lg:px-8 md:px-7 px-4 lg:py-20 md:py-10 py-6 gap-20">
           <p className="lg:text-4xl text-3xl font-black leading-9 text-gray-800">
-            구매제목
+            {name}
           </p>
-          <DatePicker
-            selected={startDate}
-            onChange={(date: Date) => setStartDate(date)}
-            dateFormat="yyyy년 MM월 dd일"
-          />
-          <p className="text-2xl leading-normal text-gray-800">총액</p>
-          <p className="text-2xl font-bold leading-normal text-right text-gray-800">
-            1000,000원
-          </p>
+          <div className="mx-auto">
+            <DatePicker
+              selected={startDate}
+              onChange={(date: Date) => setStartDate(date)}
+              dateFormat="yyyy년 MM월 dd일"
+              inline
+            />
+
+            {/* 이전날짜는 막기 공연기간동안만 예약이 되게  */}
+          </div>
+          <div>
+            <input
+              type="number"
+              value={numberOfPeople}
+              onChange={handlePeopleChange}
+              min="1"
+              max="10"
+            />
+            <p className="text-2xl leading-normal text-gray-800">총액</p>
+            <p className="text-2xl font-bold leading-normal text-right text-gray-800">
+              {totalCost}원
+            </p>
+          </div>
           <Button className="w-full" onClick={() => setModal(true)}>
             예약하기
           </Button>

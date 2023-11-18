@@ -1,5 +1,4 @@
 import apiInstance from "@/util/useInterceptor";
-import axios from "axios";
 
 // type allEventType = {
 //   category: string;
