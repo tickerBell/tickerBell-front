@@ -1,6 +1,35 @@
 import apiInstance from "@/util/useInterceptor";
 import axios from "axios";
 
+// type allEventType = {
+//   category: string;
+//   pageParam: number;
+// };
+
+// 이벤트 리스트
+export async function getEventAllApi(category: string, pageParam: number) {
+  if (category) {
+    try {
+      const res = await apiInstance.get(`/api/events/${category}`, {
+        params: { page: pageParam, size: 18, sort: category },
+      });
+      return res;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  } else {
+    try {
+      const res = await apiInstance.get("/api/events", {
+        params: { page: pageParam, size: 18 },
+      });
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  }
+}
+
 // 메인 이벤트 슬라이드
 export async function eventSlideApi() {
   try {
@@ -28,11 +57,7 @@ export async function postEventApi(atk: string, data: any) {
 }
 
 // 이벤트 이미지 등록
-export async function postEventImageApi(
-  atk: string,
-  thumbNailImage: File,
-  eventImages: File[]
-) {
+export async function postEventImageApi(atk: string, thumbNailImage: File, eventImages: File[]) {
   try {
     const formData = new FormData();
     formData.append("thumbNailImage", thumbNailImage);
@@ -67,11 +92,7 @@ export async function getEventIdApi(id: any) {
 }
 
 // 카테고리별 보여주기
-export async function getEventCategoryApi(
-  currentPage: number,
-  category: any,
-  selectText: string
-) {
+export async function getEventCategoryApi(currentPage: number, category: any, selectText: string) {
   try {
     const res = await apiInstance.get(`/api/events/${category}`, {
       params: { page: currentPage - 1, size: 10, sort: category },
@@ -83,7 +104,7 @@ export async function getEventCategoryApi(
   }
 }
 
-// 이벤트 취소 
+// 이벤트 취소
 export async function deleteEventApi(id: number) {
   try {
     const res = await apiInstance.delete(`/ticketing/${id}`, {});

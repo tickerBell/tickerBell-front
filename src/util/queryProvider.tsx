@@ -9,16 +9,17 @@ function QueryProviders({ children }: React.PropsWithChildren) {
   const client = new QueryClient({
     defaultOptions: {
       queries: {
-        // refetchOnWindowFocus: false,
+        refetchOnWindowFocus: false,
+        throwOnError: true,
       },
     },
-    // queryCache: new QueryCache({
-    //   onError: (error, query) => {
-    //     console.log('query', query, error);
-    //     if (query?.meta?.errorMessage) {
-    //     }
-    //   },
-    // }),
+    queryCache: new QueryCache({
+      onError: (error, query) => {
+        console.log('query', query, error);
+        // if (query?.meta?.errorMessage) {
+        // }
+      },
+    }),
   });
 
   return (

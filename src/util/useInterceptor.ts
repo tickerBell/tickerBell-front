@@ -1,6 +1,6 @@
 import { getSession } from "@/hooks/useSeection";
 import { userSelector } from "@/recoil/user";
-import axios from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { useSetRecoilState } from "recoil";
 import { getCookie, removeCookie, setCookie } from "./authCookie";
 import { useRouter } from "next/navigation";
@@ -39,8 +39,8 @@ apiInstance.interceptors.response.use(
     console.log("err", err);
     // atk 만료
     if (err.response && err.response.status === 400) {
-      const router = useRouter();
-      router.push("/");
+      // const router = useRouter();
+      // router.push("/");
     }
 
     // atk 만료 or인증실패
@@ -81,9 +81,11 @@ apiInstance.interceptors.response.use(
       // removeCookie("ticket-atk");
     }
     if (err.response && err.response.status === 404) {
-      console.log("err", err.response.data.data);
-      // return err.response.data.data;
-      return Promise.reject(err);
+        // console.log("err", err.response.data.data);
+      //  return Promise.reject(new Error("요청 데이터가 없습니다"));
+      // return Promise.reject(err);
+      return Promise.resolve();
+      // return;
     }
   }
 );
