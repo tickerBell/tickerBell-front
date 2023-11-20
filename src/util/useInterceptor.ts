@@ -12,10 +12,10 @@ const apiInstance = axios.create({
 
 apiInstance.interceptors.request.use(
   async (config) => {
-    // if (getCookie("ticket-atk")) {
-    //   config.headers["Authorization"] = `Bearer ${getCookie("ticket-atk")}`;
-    //   return config;
-    // }
+    if (getCookie("ticket-atk") === 'string') {
+      config.headers["Authorization"] = `Bearer ${getCookie("ticket-atk")}`;
+      return config;
+    }
     if (getCookie("ticket-atk") == undefined && getCookie("ticket-trk") != undefined) {
       return config;
     }

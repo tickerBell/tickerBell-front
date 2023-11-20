@@ -1,11 +1,12 @@
 'use client';
 
 import { getEventAllApi } from '@/api/events';
-import { useInfiniteQuery } from '@tanstack/react-query';
 import React, { useEffect } from 'react'
 import { useInView } from "react-intersection-observer";
 import Card from '../item/Card';
 import Spinner from '../spinner/Spinner';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import Item from '../item/Item';
 
 type ListType = {
   category: string;
@@ -27,14 +28,10 @@ const List = ({ category, type, className }: ListType) => {
     status,
   } = useInfiniteQuery({
     queryKey: ['event-all-list'],
-    queryFn: ({ pageParam }) => getEventAllApi(category, pageParam),
+    queryFn: ({ pageParam = 0 }) => getEventAllApi({ category, pageParam }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) =>
-    // { return allPages.length + 1 }
-    {
-      const { next }: any = lastPage;
-      if (!next) return undefined;
-      return Number(new URL(next).searchParams.get("offset"));
+    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
+      return allPages.length + 1;
     }
   })
 
@@ -44,27 +41,24 @@ const List = ({ category, type, className }: ListType) => {
   }, [isView]);
 
   // console.log('data', data, status);
-  // const listData =  data?.pages[0]
 
   return (
     <div className={className}>
-      {!category && (
-        <>
-          {status === "pending" && (
-            <div>
-              <Spinner/>
-            </div>
-          )}
-          {status === "success" && (
-            <div className="grid grid-cols-6 gap-x-16 gap-y-36 place-items-center mt-60">
-              {data.pages[0].data.content.map((item: any, index: any) => (
-                <Card key={index} data={item} type={type}/>
-              ))}
-              <div ref={ref} />
-            </div>
-          )}
-        </>
-      )}
+      <>
+        {status === "pending" && (
+          <div>
+            <Spinner />
+          </div>
+        )}
+        {status === "success" && (
+          <div className="grid grid-cols-6 gap-x-16 gap-y-36 place-items-center mt-60">
+            {data && data?.pages.map((item: any, index: any) => (
+              <Item key={index} data={item.content} type={type} />
+            ))}
+            <div ref={ref} />
+          </div>
+        )}
+      </>
     </div>
   )
 }

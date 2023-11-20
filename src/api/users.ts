@@ -76,11 +76,11 @@ export async function noneUserReserveApi(name: string, phone: number) {
 }
 
 // 예매 내역 or 등록 내역 삭제
-export async function userDeleteReserveIdApi(atk: string, id: number) {
+export async function userDeleteReserveIdApi(id: number) {
   const res = await apiInstance.delete(`/ticketing/${id}`, {
-    headers: {
-      Authorization: `Bearer ${atk}`,
-    },
+    // headers: {
+    //   Authorization: `Bearer ${atk}`,
+    // },
   });
   return res;
 }
