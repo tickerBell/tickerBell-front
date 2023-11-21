@@ -10,6 +10,8 @@ const Index = () => {
   const searchParams = useSearchParams();
   const keyword = searchParams.get('keyword')
 
+  // console.log('ek', keyword);
+
   // useEffect(() => {
   //   console.log('url', searchTerm)
   // }, [searchTerm])
@@ -56,25 +58,30 @@ const Index = () => {
     variables: { keyword: keyword || '' },
   });
 
-  console.log('data', data);
+  // console.log('data', data);
 
   return (
     <div>
+      aa
       {
-        data?.getEventByName.length === 0 && data?.getEventByPlace.length === 0 &&
+        keyword !== null && data?.getEventByName.length === 0 && data?.getEventByPlace.length === 0 &&
         <>검색 결과가 없습니다.</>
       }
       <div className="grid grid-cols-6 gap-x-16 gap-y-36 place-items-center mt-60">
-        {data?.getEventByName.length > 0 &&
+        {keyword !== null && data?.getEventByName.length > 0 &&
           data.getEventByName.map((item: any, index: any) => (
             <Card data={item} key={index} />
           ))
         }
-        {data?.getEventByPlace.length > 0 &&
+        {keyword !== null && data?.getEventByPlace.length > 0 &&
           data.getEventByPlace.map((item: any, index: any) => (
             <Card data={item} key={index} />
           ))
         }
+        {keyword === null && data?.getEventByName.length > 0 &&
+          data.getEventByName.map((item: any, index: any) => (
+            <Card data={item} key={index} />
+          ))}
       </div>
     </div>
   )

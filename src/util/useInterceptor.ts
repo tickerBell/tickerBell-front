@@ -49,7 +49,9 @@ apiInstance.interceptors.response.use(
       // 토큰 재발급 요청, apiInstance가 아닌 axios로 요청하기
       // removeCookie('ticket-atk');
       if (getCookie("ticket-trk") !== "undefined") {
-        console.log("cc", process.env.NEXT_PUBLIC_API_URL, getCookie("ticket-rtk"));
+        console.log("cc", process.env.NEXT_PUBLIC_API_URL);
+        console.log("atk: ", getCookie("ticket-atk"));
+        console.log("rtk: ", getCookie("ticket-rtk"));
         const data = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/reissue`, {
           refreshToken: `${getCookie("ticket-rtk")}`,
           headers: {

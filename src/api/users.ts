@@ -51,10 +51,18 @@ export async function userInfoApi(atk: string | undefined) {
   }
 }
 
-type pagingType = {
-  page: number,
-  size?: number
+// 회원 비밀번호 확인
+export async function userGetPassWordApi(password: string) {
+  const res = await apiInstance.post(`/api/member/password`, {
+    password: password,
+  });
+  return res;
 }
+
+type pagingType = {
+  page: number;
+  size?: number;
+};
 
 // 회원: 예매 내역 or 등록 내역 조회
 export async function userReserveApi(atk: string, page: number) {
@@ -67,7 +75,7 @@ export async function userReserveApi(atk: string, page: number) {
   return res;
 }
 
-// 비회원: 예매 내역 
+// 비회원: 예매 내역
 export async function noneUserReserveApi(name: string, phone: number) {
   const res = await apiInstance.get("/ticketing-nonMember", {
     params: { name: name, phone: phone },

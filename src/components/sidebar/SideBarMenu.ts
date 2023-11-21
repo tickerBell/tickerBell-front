@@ -14,7 +14,7 @@ export const sideData = {
       submenu: [
         {
           title: "정보수정",
-          route: "/mypage",
+          route: "/mypage/modify",
         },
       ],
     },
@@ -34,7 +34,7 @@ export const sideData = {
       submenu: [
         {
           title: "정보수정",
-          route: "/mypage",
+          route: "/mypage/modify",
         },
       ],
     },

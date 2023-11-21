@@ -20,7 +20,11 @@ const SearchBar = () => {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setValue('');
-    router.push(`/search?keyword=${value}`)
+    if(value) {
+      router.push(`/search?keyword=${value}`)
+    } else {
+      router.push(`/search`)
+    }
   };
 
 
