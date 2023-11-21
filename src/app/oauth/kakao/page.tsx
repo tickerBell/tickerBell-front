@@ -4,11 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { atom, useRecoilState } from 'recoil';
 import { userState } from '@/recoil/user';
+import { setCookie } from '@/util/authCookie';
 
 const Index = () => {
   const [valid, setValid] = useState(false);
   const router = useRouter();
-  const [atk, setAtk] = useRecoilState(userState);
 
   useEffect(() => {
     // code 추출부분
@@ -24,12 +24,10 @@ const Index = () => {
         console.log('응답', response);
 
         // 회원가입 유무 판단
-        // const checkUser = response.data.isMember
-
         // 이미 있는 계정이라면 서버에서 액세스 토큰 받고 홈으로 이동한다.
         if (response.data.isMember == true) {
           try {
-            setAtk(response.data.accessToken);
+            setCookie("ticket-atk", response.data.accessToken);
             router.push('/')
             // toast.success('로그인되었습니다!')
           } catch (e: any) {

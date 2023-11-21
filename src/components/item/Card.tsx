@@ -11,35 +11,39 @@ type cardType = {
 };
 
 const Card = ({ data, type }: cardType) => {
-  // console.log('data', data);
   return (
-    <div className="relative w-full">
-      <Link href={`/detail/${data.eventId}`}>
-        {data.isAdult && <span className={s.adult_tag}>18</span>}
-        <div className={s.img_wrap}>
-          <Image
-            src={data.thumbNailUrl}
-            alt={data.name}
-            layout="fill"
-            objectFit="cover"
-          />
-        </div>
-        <div className="mt-10">{data.eventName}</div>
-        {data.castings && (
-          <div>
-            {data.castings.map((item: any, i: any) => (
-              <span key={i}>{item}</span>
-            ))}
+    <>
+      <div className="relative w-full">
+        <Link href={`/detail/${data.eventId}`}>
+          {data.isAdult && <span className={s.adult_tag}>18</span>}
+          <div className={s.img_wrap}>
+            {
+              !!data.thumbNailUrl &&
+              <Image
+                src={data.thumbNailUrl}
+                alt={data.name}
+                layout="fill"
+                objectFit="cover"
+              />
+            }
           </div>
-        )}
-        <div>{data.place}</div>
-        <div className="mt-6 mb-6">{day(data.startEvent)}</div>
-        {data.discountNormalPrice && (
-          <del className="size-[14px]">{price(data.discountNormalPrice)}원</del>
-        )}
-        <div>{price(data.normalPrice)}원</div>
-      </Link>
-    </div>
+          <div className="mt-10">{data.name}</div>
+          {data.castings && (
+            <div>
+              {data.castings.map((item: any, i: any) => (
+                <span key={i}>{item}</span>
+              ))}
+            </div>
+          )}
+          <div>{data.place}</div>
+          <div className="mt-6 mb-6">{day(data.startEvent)}</div>
+          {data.discountNormalPrice && (
+            <del className="size-[14px]">{price(data.discountNormalPrice)}원</del>
+          )}
+          <div>{price(data.normalPrice)}원</div>
+        </Link>
+      </div>
+    </>
   );
 };
 

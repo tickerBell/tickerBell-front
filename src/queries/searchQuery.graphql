@@ -1,0 +1,19 @@
+query Search($keyword: String!) {
+  getEventByName(name: $keyword) {
+    id
+    name
+    startEvent
+    endEvent
+    availablePurchaseTime
+    normalPrice
+    premiumPrice
+    saleDegree
+    totalSeat
+    remainSeat
+    place
+    isAdult
+    viewCount
+    isCancelled
+    category
+  }
+}

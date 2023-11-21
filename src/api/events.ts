@@ -1,16 +1,17 @@
 import apiInstance from "@/util/useInterceptor";
 
-// type allEventType = {
-//   category: string;
-//   pageParam: number;
-// };
+type allEventType = {
+  category: string;
+  pageParam: number;
+  offset?: number;
+};
 
 // 이벤트 리스트
-export async function getEventAllApi(category: string, pageParam: number) {
-  if (category) {
+export async function getEventAllApi({ category, pageParam = 0, offset = 18 }: allEventType) {
+  if (category !== "") {
     try {
       const res = await apiInstance.get(`/api/events/${category}`, {
-        params: { page: pageParam, size: 18, sort: category },
+        params: { page: pageParam, size: offset },
       });
       return res;
     } catch (error) {
@@ -18,14 +19,19 @@ export async function getEventAllApi(category: string, pageParam: number) {
       throw error;
     }
   } else {
-    try {
-      const res = await apiInstance.get("/api/events", {
+    // NOTE: try catch 사용시 useInfiniteQuery 기능 불가.
+    // try {
+    // } catch (error) {
+    //   throw error;
+    // }
+    const res = await apiInstance
+      .get("/api/events", {
         params: { page: pageParam, size: 18 },
-      });
-      return res;
-    } catch (error) {
-      throw error;
-    }
+      })
+      .then((response) => response.data)
+      .then((item) => item)
+      .catch((err) => console.log("err", err));
+    return res;
   }
 }
 

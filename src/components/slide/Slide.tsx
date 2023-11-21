@@ -39,7 +39,7 @@ const Slide = ({
     [autoplay, loop, speed]
   );
 
-  console.log('slidedata', data);
+  // console.log('slidedata', data);
 
   return (
     <div className="mt-40">
@@ -50,7 +50,10 @@ const Slide = ({
             <Slider {...settings}>
               {data?.map((item: any, index: any) => (
                 <Link href={`/detail/${item.eventId}`} key={index}>
-                  <div className="relative m-auto w-100 h-150 border border-1 border-[#eee]">
+                  {
+                  title === '랭킹' && <div>{index + 1}</div>
+                  }
+                  <div className="relative m-auto w-200 h-250 border border-1 border-[#eee]">
                     <Image src={item.thumbNailUrl} alt={item.name} layout='fill'
                       objectFit='contain' />
                   </div>

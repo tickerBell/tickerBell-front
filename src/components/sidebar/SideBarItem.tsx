@@ -1,5 +1,8 @@
+'use client';
+
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type SubmenuItem = {
   title: string;
@@ -16,6 +19,10 @@ type SideBarItemProps = {
 };
 
 export const SideBarItem = ({ route }: SideBarItemProps) => {
+  const router = useRouter();
+  console.log('사이드메뉴', router);
+
+
   return (
     <li>
       <h3>{route.title}</h3>

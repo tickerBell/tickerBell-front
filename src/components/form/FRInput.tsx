@@ -10,8 +10,8 @@ const FRInput = forwardRef<HTMLInputElement, InputType>(
     return (
       <div>
         <label htmlFor={attr.id} className={className}>
-          <span>{label}</span>
           <input type={type} ref={ref} {...attr} />
+          <span>{label}</span>
         </label>
       </div>
     );
