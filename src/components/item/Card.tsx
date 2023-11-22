@@ -11,6 +11,9 @@ type cardType = {
 };
 
 const Card = ({ data, type }: cardType) => {
+
+  // console.log('carddata', data);
+
   return (
     <>
       <div className="relative w-full">

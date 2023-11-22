@@ -52,8 +52,10 @@ const List = ({ category, type, className }: ListType) => {
         )}
         {status === "success" && (
           <div className="grid grid-cols-6 gap-x-16 gap-y-36 place-items-center mt-60">
-            {data && data?.pages.map((item: any, index: any) => (
-              <Item key={index} data={item.content} type={type} />
+            {data && data?.pages.map((item: any) => (
+              item.content.map((data:any, index: any) => (
+                <Card key={index} data={data} type={type} />
+                ))
             ))}
             <div ref={ref} />
           </div>

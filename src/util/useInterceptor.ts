@@ -59,9 +59,9 @@ apiInstance.interceptors.response.use(
             "Content-Type": "application/json",
           },
         });
-        console.log("갱신", data);
+        console.log("갱신", data.data.accessToken);
         //  갱신
-
+        removeCookie('ticket-atk');
         setCookie("ticket-atk", `${data.data.accessToken}`);
 
         // 헤더에 담긴 토큰 값 변경
