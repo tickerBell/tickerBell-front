@@ -56,8 +56,9 @@ export async function postEventApi(atk: string, data: any) {
 }
 
 // 이벤트 이미지 등록
-export async function postEventImageApi(atk: string, thumbNailImage: File, eventImages: File[]) {
+export async function postEventImageApi(formDataValues: ImageFormSubmitValue) {
   try {
+    const { atk, thumbNailImage, eventImages } = formDataValues;
     const formData = new FormData();
     formData.append("thumbNailImage", thumbNailImage);
 
@@ -91,7 +92,11 @@ export async function getEventIdApi(id: any) {
 }
 
 // 카테고리별 보여주기
-export async function getEventCategoryApi(currentPage: number, category: any, selectText: string) {
+export async function getEventCategoryApi(
+  currentPage: number,
+  category: any,
+  selectText: string
+) {
   try {
     const res = await apiInstance.get(`/api/events/${category}`, {
       params: { page: currentPage - 1, size: 10, sort: category },

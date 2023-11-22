@@ -1,6 +1,4 @@
-import { userSelector } from "@/recoil/user";
 import apiInstance from "@/util/useInterceptor";
-import { useRecoilValue } from "recoil";
 
 // 회원가입시 문자 인증
 export async function vertifySMSApi(number: string) {
@@ -52,9 +50,9 @@ export async function userInfoApi(atk: string | undefined) {
 }
 
 type pagingType = {
-  page: number,
-  size?: number
-}
+  page: number;
+  size?: number;
+};
 
 // 회원: 예매 내역 or 등록 내역 조회
 export async function userReserveApi(atk: string, page: number) {
@@ -67,7 +65,7 @@ export async function userReserveApi(atk: string, page: number) {
   return res;
 }
 
-// 비회원: 예매 내역 
+// 비회원: 예매 내역
 export async function noneUserReserveApi(name: string, phone: number) {
   const res = await apiInstance.get("/ticketing-nonMember", {
     params: { name: name, phone: phone },

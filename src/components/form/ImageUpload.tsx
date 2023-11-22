@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { IoTrash } from "react-icons/io5";
 import { getCookie } from "../../util/authCookie";
-import Button from "../button/Button";
+import Button from "../../components/button/Button";
 import Image from "next/image";
 
 type Image = {
