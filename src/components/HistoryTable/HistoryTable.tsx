@@ -1,6 +1,5 @@
 "use client";
 
-import { noneUserReserveApi, userReserveApi } from "@/api/users";
 import { userSelector } from "@/recoil/user";
 import { getCookie } from "@/util/authCookie";
 import { useQuery } from "@tanstack/react-query";
@@ -11,6 +10,7 @@ import Tab from "../tab/Tab";
 import { HistoryTableBody } from "./HistoryTableBody";
 import { HistoryTableHeader } from "./HistoryTableHeader";
 import { EventColumns, UserColumns } from "./TableData";
+import { noneUserReserveListApi, userReserveListApi } from "@/api/ticketing";
 
 export const HistoryTable = () => {
   const getRole = useRecoilValue(userSelector("role"));
@@ -27,18 +27,19 @@ export const HistoryTable = () => {
   // 회원 - 등록자, 예약자
   const { data: memberData, isSuccess: memberDataSuccess } = useQuery({
     queryKey: ["event-reservelist", currentPage],
-    queryFn: () => userReserveApi(getCookie('ticket-atk'), currentPage),
+    queryFn: () => userReserveListApi(getCookie('ticket-atk'), currentPage),
     enabled: typeof getCookie('ticket-atk') === 'string'
   });
 
   // 비회원
   const { data: nonmemberData, isSuccess: nonmemberDataSuccess, isError, error, isFetched } = useQuery({
     queryKey: ["event-reservelist", currentPage],
-    queryFn: () => noneUserReserveApi(getCookie('ticket-atk')?.name, getCookie('ticket-atk')?.phone),
+    queryFn: () => noneUserReserveListApi(getCookie('ticket-atk')?.name, getCookie('ticket-atk')?.phone),
     enabled: typeof getCookie('ticket-atk') === 'object',
   });
 
   const data = typeof getCookie('ticket-atk') === 'string' ? memberData : nonmemberData
+  const userType = typeof getCookie('ticket-atk') === 'string' ? 'myPageResponse' : 'content'
 
   // console.log('예약 내역', getnonMemberatom, nonmemberData);
   console.log('rq error : ', data, isFetched);
@@ -59,7 +60,7 @@ export const HistoryTable = () => {
                       ))}
                     </thead>
                     <tbody>
-                      {data && data?.data.myPageResponse.map((row: any, key: any) => (
+                      {data && data?.data['content'].map((row: any, key: any) => (
                         <HistoryTableBody
                           key={key}
                           row={row}

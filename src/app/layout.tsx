@@ -9,6 +9,8 @@ import CookiesRootProvider from '@/util/cookieProvider';
 import ApolloProviders from '@/util/apolloProvider';
 import Location from '@/components/location/Location';
 import LoginCheck from '@/components/loginCheck/LoginCheck';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -47,6 +49,17 @@ export default function RootLayout({
                 {children}
                 <LoginCheck />
                 <Location />
+                <ToastContainer
+                  position="top-center"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme="light" />
               </ApolloProviders>
             </RecoilRootProvider>
           </CookiesRootProvider>

@@ -30,7 +30,11 @@ const List = ({ category, type, className }: ListType) => {
     queryKey: ['event-all-list'],
     queryFn: ({ pageParam = 0 }) => getEventAllApi({ category, pageParam }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
+    getNextPageParam: (lastPage:any, allPages:any, lastPageParam:any, allPageParams:any) => {
+      // console.log('lastPage: ', lastPage);
+      // console.log('allPages: ', allPages);
+      // console.log('lastPageParam: ', lastPageParam);
+      // console.log('allPageParams: ', allPageParams);
       return allPages.length + 1;
     }
   })
@@ -53,7 +57,7 @@ const List = ({ category, type, className }: ListType) => {
         {status === "success" && (
           <div className="grid grid-cols-6 gap-x-16 gap-y-36 place-items-center mt-60">
             {data && data?.pages.map((item: any) => (
-              item.content.map((data:any, index: any) => (
+              item && item?.content.map((data:any, index: any) => (
                 <Card key={index} data={data} type={type} />
                 ))
             ))}

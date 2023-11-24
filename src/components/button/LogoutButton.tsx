@@ -14,8 +14,8 @@ const LogoutButton = () => {
     removeCookie('ticket-atk');
     removeCookie('ticket-rtk');
     setIsLogin(false);
-    router.push("/");
     console.log('로그아웃 클릭');
+    router.push("/");
   }
   return (
     <Button onClick={logout}>
