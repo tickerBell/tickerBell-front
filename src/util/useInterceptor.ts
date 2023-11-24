@@ -1,9 +1,13 @@
+"use client";
+
 import { getSession } from "@/hooks/useSeection";
 import { userSelector } from "@/recoil/user";
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { useSetRecoilState } from "recoil";
 import { getCookie, removeCookie, setCookie } from "./authCookie";
 import { useRouter } from "next/navigation";
+import { parseJwt } from "@/hooks/useParseJwt";
+import { epochConvert } from "./epochConverter";
 
 const apiInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -12,9 +16,15 @@ const apiInstance = axios.create({
 
 apiInstance.interceptors.request.use(
   async (config) => {
-    if (getCookie("ticket-atk") === 'string') {
-      config.headers["Authorization"] = `Bearer ${getCookie("ticket-atk")}`;
-      return config;
+    if (typeof getCookie("ticket-atk") === "string") {
+      if (epochConvert(parseJwt(getCookie("ticket-atk").exp))) {
+        removeCookie("ticket-rtk");
+        removeCookie("ticket-atk");
+        // window.location.href = '/'
+      } else {
+        config.headers["Authorization"] = `Bearer ${getCookie("ticket-atk")}`;
+        return config;
+      }
     }
     if (getCookie("ticket-atk") == undefined && getCookie("ticket-trk") != undefined) {
       return config;
@@ -37,10 +47,11 @@ apiInstance.interceptors.response.use(
   },
   async function (err) {
     console.log("err", err);
-    // atk 만료
+
     if (err.response && err.response.status === 400) {
-      const router = useRouter();
-      router.push("/");
+      // const router = useRouter();
+      // router.push("/");
+      return err.response.data;
     }
 
     // atk 만료 or인증실패
@@ -49,9 +60,9 @@ apiInstance.interceptors.response.use(
       // 토큰 재발급 요청, apiInstance가 아닌 axios로 요청하기
       // removeCookie('ticket-atk');
       if (getCookie("ticket-trk") !== "undefined") {
-        console.log("cc", process.env.NEXT_PUBLIC_API_URL);
-        console.log("atk: ", getCookie("ticket-atk"));
-        console.log("rtk: ", getCookie("ticket-rtk"));
+        // console.log("cc", process.env.NEXT_PUBLIC_API_URL);
+        // console.log("atk: ", getCookie("ticket-atk"));
+        // console.log("rtk: ", getCookie("ticket-rtk"));
         const data = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/reissue`, {
           refreshToken: `${getCookie("ticket-rtk")}`,
           headers: {
@@ -59,9 +70,9 @@ apiInstance.interceptors.response.use(
             "Content-Type": "application/json",
           },
         });
-        console.log("갱신", data);
+        console.log("갱신", data.data.accessToken);
         //  갱신
-
+        removeCookie("ticket-atk");
         setCookie("ticket-atk", `${data.data.accessToken}`);
 
         // 헤더에 담긴 토큰 값 변경
@@ -83,7 +94,7 @@ apiInstance.interceptors.response.use(
       // removeCookie("ticket-atk");
     }
     if (err.response && err.response.status === 404) {
-        // console.log("err", err.response.data.data);
+      // console.log("err", err.response.data.data);
       //  return Promise.reject(new Error("요청 데이터가 없습니다"));
       // return Promise.reject(err);
       return Promise.resolve();

@@ -33,14 +33,22 @@ const LoginCheck = () => {
 
   useEffect(() => {
     function chk() {
+      userInfoApi(getCookie("ticket-atk")).then((res) =>
+        setRole(res?.data.role)
+      );
       if (getCookie("ticket-atk")) {
         setIsLogin(getCookie("ticket-atk") === undefined ? false : true);
+        // if (getCookie("ticket-atk") === undefined) 
       }
       if (getCookie('ticket-rtk')) {
         // console.log('현재 날짜가 만료시간보다 이전임 : ',
         //   epochConvert(parseJwt(getCookie('ticket-rtk').exp))
         // )
-        if (!epochConvert(parseJwt(getCookie('ticket-rtk').exp))) {
+        if (getCookie("ticket-atk") === 'undefined') {
+          setIsLogin(false);
+          removeCookie('ticket-atk');
+        }
+        if (epochConvert(parseJwt(getCookie('ticket-rtk').exp))) {
           removeCookie('ticket-rtk');
           removeCookie('ticket-atk');
           router.push('/');

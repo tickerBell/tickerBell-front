@@ -2,7 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import classNames from "classnames";
 
 type SubmenuItem = {
   title: string;
@@ -19,9 +20,7 @@ type SideBarItemProps = {
 };
 
 export const SideBarItem = ({ route }: SideBarItemProps) => {
-  const router = useRouter();
-  console.log('사이드메뉴', router);
-
+  const pathname = usePathname();
 
   return (
     <li>
@@ -29,7 +28,9 @@ export const SideBarItem = ({ route }: SideBarItemProps) => {
       <ul>
         {route.submenu.map((item, index) => (
           <li key={index} className="mb-10">
-            <Link href={item.route} className="hover-text">
+            <Link href={item.route} className={classNames('hover-text', {
+              'text-primary': item.route === pathname
+            })}>
               <span>- {item.title}</span>
             </Link>
           </li>

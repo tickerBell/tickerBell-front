@@ -2,7 +2,7 @@
 "use client";
 
 import { userSelector } from "@/recoil/user";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import Button from "../button/Button";
 import ReserveModal from "../portalModal/reserveModal/ReserveModal";
@@ -10,8 +10,7 @@ import { day, dayCompare, today } from "@/util/day";
 import { epochConvertReverse } from "@/util/epochConverter";
 import dayjs from "dayjs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteEventApi } from "@/api/events";
-import { userDeleteReserveIdApi } from "@/api/users";
+import { userDeleteReserverIdApi, userDeleteResigsterIdApi } from "@/api/ticketing";
 
 interface HistoryTableBodyProps {
   row: IEventHistoryTableReserverType;
@@ -25,10 +24,31 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
   const getRole = useRecoilValue(userSelector("role"));
   const [onModal, setOnModal] = useState(false);
   const date = new Date;
+  const [role, setRole] = useState('');
 
-  const deleteReserveMutation = useMutation({
-    mutationFn: (id: number) => userDeleteReserveIdApi(id),
+  useEffect(() => {
+    // switch (getRole) {
+    //   case 'ROLE_REGISTRANT':
+
+    //     break;
+
+    //   default:
+    //     break;
+    // }
+  }, [getRole])
+
+  const deleteReserverMutation = useMutation({
+    mutationFn: (id: number) => userDeleteReserverIdApi(id),
     onSuccess: () => {
+      console.log('취소됨');
+      queryClient.invalidateQueries({ queryKey: ['event-reservelist'] })
+    }
+  })
+
+  const deleteResisterMutation = useMutation({
+    mutationFn: (id: number) => userDeleteResigsterIdApi(id),
+    onSuccess: () => {
+      console.log('취소됨');
       queryClient.invalidateQueries({ queryKey: ['event-reservelist'] })
     }
   })
@@ -38,7 +58,16 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
       // 아니오
     } else {
       // 예
-      deleteReserveMutation.mutate(id);
+      if (getRole === "ROLE_REGISTRANT") {
+        console.log('예약자 일때')
+        deleteResisterMutation.mutate(id);
+      }
+      else if (getRole === '회원') {
+        deleteReserverMutation.mutate(id);
+      }
+      else {
+        // 비회원 예매 취소
+      }
     }
   }
 

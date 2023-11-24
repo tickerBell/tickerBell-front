@@ -3,7 +3,6 @@ import ModalFrame from "../ModalFrame";
 import ModalContent from "../modalItem/ModalContent";
 import ModalTitle from "../modalItem/ModalTitle";
 import { useQuery } from "@tanstack/react-query";
-import { deleteEventApi } from "@/api/events";
 
 type ReserveModalType = {
   setOnModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,10 +21,6 @@ const ReserveModal = ({
   eventId
 }: ReserveModalType) => {
 
-  const { data, isSuccess, isError, error } = useQuery({
-    queryKey: ["event-delete"],
-    queryFn: () => deleteEventApi(eventId.id),
-  });
 
   return (
     <ModalFrame

@@ -4,18 +4,10 @@ import { useParams, useSearchParams } from 'next/navigation';
 import React, { useEffect } from 'react'
 import { useQuery, gql, useMutation } from "@apollo/client";
 import Card from '@/components/item/Card';
-// import Menu from '../../../queries/sear';
 
 const Index = () => {
   const searchParams = useSearchParams();
   const keyword = searchParams.get('keyword')
-
-  // console.log('ek', keyword);
-
-  // useEffect(() => {
-  //   console.log('url', searchTerm)
-  // }, [searchTerm])
-  // console.log('url2', keyword)
 
   const SEARCH = gql`
     query Search($keyword: String!) {
@@ -62,7 +54,6 @@ const Index = () => {
 
   return (
     <div>
-      aa
       {
         keyword !== null && data?.getEventByName.length === 0 && data?.getEventByPlace.length === 0 &&
         <>검색 결과가 없습니다.</>

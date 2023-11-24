@@ -59,36 +59,10 @@ export async function userGetPassWordApi(password: string) {
   return res;
 }
 
-type pagingType = {
-  page: number;
-  size?: number;
-};
-
-// 회원: 예매 내역 or 등록 내역 조회
-export async function userReserveApi(atk: string, page: number) {
-  const res = await apiInstance.get("/api/member/my", {
-    headers: {
-      Authorization: `Bearer ${atk}`,
-    },
-    params: { page: page, size: 10 },
-  });
-  return res;
-}
-
-// 비회원: 예매 내역
-export async function noneUserReserveApi(name: string, phone: number) {
-  const res = await apiInstance.get("/ticketing-nonMember", {
-    params: { name: name, phone: phone },
-  });
-  return res;
-}
-
-// 예매 내역 or 등록 내역 삭제
-export async function userDeleteReserveIdApi(id: number) {
-  const res = await apiInstance.delete(`/ticketing/${id}`, {
-    // headers: {
-    //   Authorization: `Bearer ${atk}`,
-    // },
+// 회원 비밀번호 변경
+export async function userChangePassWordApi(password: string) {
+  const res = await apiInstance.put(`/api/member/password`, {
+    password: password,
   });
   return res;
 }
