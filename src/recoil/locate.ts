@@ -23,10 +23,10 @@ export const locationSelector = selector({
     const locateStateValue = get(locateState);
     return locateStateValue.locationState;
   },
-  set: ({ set }, newLocationState: any) => {
+  set: ({ set }, newState: any) => {
     set(locateState, (prevLocateState) => ({
       ...prevLocateState,
-      locationState: newLocationState,
+      locationState: newState,
     }));
   },
 });

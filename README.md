@@ -6,6 +6,9 @@
 - 회원 : 로그인시 atk 와 rtk 는 cookie에 저장.
 - 비회원 : 로그인시 name과 phone을 내부 상태로 저장.
 
+## 설계
+- mutataion의 onSuccess시 리스트를 invalidateQueries를 이용해서 가져올때, 동적으로 바뀌는 변수(페이징)가 있다면 같이 넣어줘야 해서 전역으로 사용하기 위해 페이징넘버를 atom으로 지정.
+
 ### 사용기술
 
 

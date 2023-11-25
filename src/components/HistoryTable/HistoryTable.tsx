@@ -11,30 +11,27 @@ import { HistoryTableBody } from "./HistoryTableBody";
 import { HistoryTableHeader } from "./HistoryTableHeader";
 import { EventColumns, UserColumns } from "./TableData";
 import { noneUserReserveListApi, userReserveListApi } from "@/api/ticketing";
+import { paginateSelector } from "@/recoil/paginate";
+import './historytable.scss';
 
 export const HistoryTable = () => {
   const getRole = useRecoilValue(userSelector("role"));
-  const getIsLogin = useRecoilValue(userSelector("isLogin"));
-  const [currentPage, setCurrentPage] = useState(0);
   const [tabnumber, setTabnumber] = useState(0);
+  const getPaging = useRecoilValue(paginateSelector);
 
   const columns = getRole === "ROLE_REGISTRANT" ? EventColumns : UserColumns;
 
-  const handlePageChange = (selectedPage: any) => {
-    setCurrentPage(selectedPage);
-  };
-
   // 회원 - 등록자, 예약자
   const { data: memberData, isSuccess: memberDataSuccess } = useQuery({
-    queryKey: ["event-reservelist", currentPage],
-    queryFn: () => userReserveListApi(getCookie('ticket-atk'), currentPage),
+    queryKey: ["event-reservelist", getPaging],
+    queryFn: () => userReserveListApi(getCookie('ticket-atk'), getPaging),
     enabled: typeof getCookie('ticket-atk') === 'string'
   });
 
   // 비회원
   const { data: nonmemberData, isSuccess: nonmemberDataSuccess, isError, error, isFetched } = useQuery({
-    queryKey: ["event-reservelist", currentPage],
-    queryFn: () => noneUserReserveListApi(getCookie('ticket-atk')?.name, getCookie('ticket-atk')?.phone),
+    queryKey: ["event-reservelist", getPaging],
+    queryFn: () => noneUserReserveListApi(getCookie('ticket-atk')?.name, getCookie('ticket-atk')?.phone, getPaging),
     enabled: typeof getCookie('ticket-atk') === 'object',
   });
 
@@ -47,32 +44,31 @@ export const HistoryTable = () => {
   return (
     <>
       {
-        data ?
+        data && data?.data.totalCount > 0 ?
           <>
             <Tab tabName={"historyTable"} className="mb-20" tabNumber={setTabnumber} />
-            <div className="flex flex-col">
-              <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
-                <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                  <table className="min-w-full">
-                    <thead className="bg-gray-200 border-b">
-                      {columns.map((column, key) => (
-                        <HistoryTableHeader key={key} column={column} />
-                      ))}
-                    </thead>
-                    <tbody>
-                      {data && data?.data['content'].map((row: any, key: any) => (
-                        <HistoryTableBody
-                          key={key}
-                          row={row}
-                        />
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+            <div className="historytable">
+              <div className="m-h-460">
+                <table>
+                  <thead className="bg-gray-200 border-b">
+                    {columns.map((column, key) => (
+                      <HistoryTableHeader key={key} column={column} />
+                    ))}
+                  </thead>
+                  <tbody>
+                    {data && data?.data.myPageResponse.map((row: any, key: any) => (
+                      <HistoryTableBody
+                        key={key}
+                        row={row}
+                      />
+                    ))}
+                  </tbody>
+                </table>
               </div>
               <Pagination
-                pageCount={data && data?.data.totalCount / 10}
-                handlePageChange={handlePageChange}
+                pageCount={Math.ceil(data && data?.data.totalCount / 10)}
+              // handlePageChange={handlePageChange}
+              // paginatekey="historyTable"
               />
             </div>
           </> : "내역이 없습니다"
