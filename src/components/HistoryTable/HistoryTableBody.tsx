@@ -11,6 +11,8 @@ import { epochConvertReverse } from "@/util/epochConverter";
 import dayjs from "dayjs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { userDeleteReserverIdApi, userDeleteResigsterIdApi } from "@/api/ticketing";
+import './historytable.scss';
+import { paginateSelector } from "@/recoil/paginate";
 
 interface HistoryTableBodyProps {
   row: IEventHistoryTableReserverType;
@@ -22,6 +24,7 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
   const { startEvent, eventName, casting, place, isCancelled, ticketHolderCounts, eventId } = row;
   const queryClient = useQueryClient();
   const getRole = useRecoilValue(userSelector("role"));
+  const getPaging = useRecoilValue(paginateSelector);
   const [onModal, setOnModal] = useState(false);
   const date = new Date;
   const [role, setRole] = useState('');
@@ -40,16 +43,14 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
   const deleteReserverMutation = useMutation({
     mutationFn: (id: number) => userDeleteReserverIdApi(id),
     onSuccess: () => {
-      console.log('취소됨');
-      queryClient.invalidateQueries({ queryKey: ['event-reservelist'] })
+      queryClient.invalidateQueries({ queryKey: ['event-reservelist', getPaging] })
     }
   })
 
   const deleteResisterMutation = useMutation({
     mutationFn: (id: number) => userDeleteResigsterIdApi(id),
     onSuccess: () => {
-      console.log('취소됨');
-      queryClient.invalidateQueries({ queryKey: ['event-reservelist'] })
+      queryClient.invalidateQueries({ queryKey: ['event-reservelist', getPaging] })
     }
   })
 
@@ -75,10 +76,10 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
     <>
       {onModal && (
         <ReserveModal
-          className="w-400"
+          className="w-800 m-h-600"
           dimClick={true}
           setOnModal={() => setOnModal(false)}
-          eventId={row}
+          eventId={row.eventId}
         />
       )}
       <tr
@@ -93,9 +94,10 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
         </td>
         <td className="px-6 py-4 whitespace-nowrap">{casting}</td>
         <td className="px-6 py-4 whitespace-nowrap">{day(startEvent)}</td>
-        <td className="px-6 py-4 whitespace-nowrap">{place}</td>
-        <td className="px-6 py-4 whitespace-nowrap">
-          {isCancelled ? '취소됨' ? dayCompare(date, startEvent) : '진행됨' : '진행예정'}
+        <td className="px-6 py-4 whitespace-nowrap max-w-400 truncate">{place}</td>
+        <td className="px-6 py-4 whitespace-nowrap w-60">
+          {isCancelled ? dayCompare(date, startEvent) ? '취소됨' : '진행됨' : '진행예정'}
+          {/* {!isCancelled && dayCompare(date, startEvent) ? '진행됨' : '진행예정'} */}
         </td>
         {
           ticketHolderCounts !== null && <td className="px-6 py-4 whitespace-nowrap">{ticketHolderCounts}명</td>

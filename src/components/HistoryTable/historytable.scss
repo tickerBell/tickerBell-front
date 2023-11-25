@@ -1,0 +1,11 @@
+// @import url('@/assets/style/functions.scss');
+@import '../../assets/style/functions.scss';
+
+.historytable {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  thead {
+    background: rgba(gray, 0.6);
+  }
+}

@@ -1,26 +1,36 @@
+import { paginateSelector } from "@/recoil/paginate";
 import React from "react";
 import ReactPaginate from "react-paginate";
+import { useSetRecoilState } from "recoil";
+import './pagination.scss';
+// import {}
 
 type PaginationProps = {
   pageCount: number;
-  handlePageChange: (selectedPage: number) => void;
+  handlePageChange?: (selectedPage: number) => void;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
   pageCount = 10,
-  handlePageChange,
+  handlePageChange
 }) => {
+
+  const setPaging = useSetRecoilState(paginateSelector);
+
   return (
     <ReactPaginate
       pageCount={pageCount}
       pageRangeDisplayed={10}
       marginPagesDisplayed={2}
-      onPageChange={({ selected }) => handlePageChange(selected)}
+      onPageChange={({ selected }) => {
+        // handlePageChange(selected)
+        setPaging(selected)
+      }}
       containerClassName={
-        "pagination flex justify-center mt-7 px-5 mx-1 space-x-8"
+        "pagination"
       }
       activeClassName={
-        "active bg-pink-500 px-5 mx-1 flex items-center justify-center text-white rounded-full border border-blue-gray-100"
+        "is_active"
       }
       previousLabel={"<"}
       nextLabel={">"}

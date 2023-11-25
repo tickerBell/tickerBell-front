@@ -1,4 +1,3 @@
-import NavTab from "@/components/NavTab/NavTab"
 import Header from "@/components/header/Header"
 import { SideBar } from "@/components/sidebar/SideBar"
 
