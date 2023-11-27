@@ -11,6 +11,7 @@ import Location from '@/components/location/Location';
 import LoginCheck from '@/components/loginCheck/LoginCheck';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Sse from '@/components/sse/Sse';
 // const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -49,6 +50,7 @@ export default function RootLayout({
                 {children}
                 <LoginCheck />
                 <Location />
+                <Sse />
                 <ToastContainer
                   position="top-center"
                   autoClose={5000}
