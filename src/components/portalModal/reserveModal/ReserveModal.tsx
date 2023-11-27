@@ -25,7 +25,6 @@ const ReserveModal = ({
   eventId
 }: ReserveModalType) => {
 
-  console.log('모달', eventId);
   const { data, isSuccess, isError, error, isFetched } = useQuery({
     queryKey: ["event-reservelist-id", eventId],
     queryFn: () => getEventIdApi(eventId),
@@ -51,8 +50,11 @@ const ReserveModal = ({
       <ModalContent>
         <div className="flex flex-row">
           <div className="w-300 relative overflow-hidden">
-            <Image src={data?.data.thumbNailUrl} alt={data?.data.name} layout="fill"
-              objectFit="cover" />
+            {
+              data?.data.thumbNailUrl &&
+              <Image src={data?.data.thumbNailUrl} alt={data?.data.name} layout="fill"
+                objectFit="cover" />
+            }
           </div>
           <div>공연기간 {day(data?.data.startEvent)}</div>
           <div>관람연령 {data?.data.isAAdult ? '성인' : '미성년'}</div>
@@ -61,7 +63,7 @@ const ReserveModal = ({
               <span key={index}>{item}</span>
             ))}
           </div>
-          <div>장소 <PlaceButton>{data?.data.place}</PlaceButton></div>
+          <div>장소 <PlaceButton locate={data?.data.place}>{data?.data.place}</PlaceButton></div>
         </div>
       </ModalContent>
     </ModalFrame>

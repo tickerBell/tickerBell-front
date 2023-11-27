@@ -43,7 +43,7 @@ const Slide = ({
 
   return (
     <div className="mt-40">
-      {data && data.length > 0 ? (
+      {data && data !== null ? (
         <>
           {title && <h4 className="text-center">{title}</h4>}
           <div className={className}>
@@ -51,10 +51,10 @@ const Slide = ({
               {data?.map((item: any, index: any) => (
                 <Link href={`/detail/${item.eventId}`} key={index}>
                   {
-                  title === '랭킹' && <div>{index + 1}</div>
+                    title === '랭킹' && <div>{index + 1}</div>
                   }
                   <div className="relative m-auto w-200 h-250 border border-1 border-[#eee]">
-                    <Image src={item.thumbNailUrl} alt={item.name} layout='fill'
+                    <Image src={item.thumbNailUrl} alt={item.name} fill
                       objectFit='contain' />
                   </div>
                   <div>

@@ -9,6 +9,7 @@ interface IEventHistoryTableType {
 interface IEventHistoryTableReserverType extends IEventHistoryTableType {
   ticketHolderCounts?: number | string;
   isCancelled?: boolean | string;
+  ticketingId?: number;
 }
 
 interface IUserData {

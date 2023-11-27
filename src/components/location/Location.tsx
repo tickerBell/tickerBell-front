@@ -20,11 +20,11 @@ const Location = () => {
   // const getLocation = useRecoilValue(locationSelector);
 
   useEffect(() => {
+    console.log('location', location);
     if (location) {
       setLocation(location);
     }
   }, [location, setLocation])
-  // console.log('location', location);
   // console.log('저장됨? ', getLocation);
 
   return null;
