@@ -48,9 +48,11 @@ apiInstance.interceptors.response.use(
   async function (err) {
     console.log("err", err);
 
+    // 유효하지 않은 토큰
     if (err.response && err.response.status === 400) {
       // const router = useRouter();
       // router.push("/");
+      
       return err.response.data;
     }
 
@@ -58,11 +60,11 @@ apiInstance.interceptors.response.use(
     if (err.response && err.response.status === 401) {
       // removeCookie("ticket-atk");
       // 토큰 재발급 요청, apiInstance가 아닌 axios로 요청하기
-      // removeCookie('ticket-atk');
+      removeCookie('ticket-atk');
       if (getCookie("ticket-trk") !== "undefined") {
-        // console.log("cc", process.env.NEXT_PUBLIC_API_URL);
-        // console.log("atk: ", getCookie("ticket-atk"));
-        // console.log("rtk: ", getCookie("ticket-rtk"));
+        console.log("cc", process.env.NEXT_PUBLIC_API_URL);
+        console.log("atk: ", getCookie("ticket-atk"));
+        console.log("rtk: ", getCookie("ticket-rtk"));
         const data = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/reissue`, {
           refreshToken: `${getCookie("ticket-rtk")}`,
           headers: {

@@ -6,6 +6,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import ModalFrame from "../ModalFrame";
+import { locationSelector } from "@/recoil/locate";
 
 type MapModalType = {
   setOnModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,6 +14,7 @@ type MapModalType = {
   isDim?: boolean;
   onClose?: boolean;
   className?: string;
+  locate?: string;
 };
 
 const MapModal = ({
@@ -20,26 +22,34 @@ const MapModal = ({
   dimClick,
   isDim = true,
   className,
+  locate
 }: MapModalType) => {
-  const getLocation = useRecoilValue(userSelector("location"));
+  const getLocation = useRecoilValue(locationSelector);
   const [route, setRoute] = useState([]);
+  const [errorText, setErrorText] = useState('');
 
-  console.log("user 스토어", getLocation);
+  console.log("user 스토어", getLocation.latitude, getLocation.longitude, locate);
 
   // NOTE: 임시조치 - next.config.js의 배포와 충돌
   // api 폴더의 dynamic 옵션끄기
   useEffect(() => {
     // 주소로 위도 경도 찾기 - 목적지
     axios
-      .post("http://3.37.206.141:8080/naver-api/path", {
-          query: "서울 관악구 관악로 1",
-        start: `${getLocation.longitude},${getLocation.latitude}`
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/naver-api/path`, {
+        // query: `서울 관악구 관악로 1`,
+        query: `${locate} || 서울 관악구 관악로 1`,
+        start: `${getLocation.latitude},${getLocation.longitude}`
       })
       // 경로 탐색
       .then((response) => {
         // console.log('res', response.data.data.route.tracomfort[0].path)
-        setRoute(response.data.data.route.tracomfort[0].path);
+        console.log('길찾기', response.data.data.code );
+        if (response.data.data.code === 2) {
+          setErrorText(response.data.data.message);
+        }
+        // setRoute(response.data.data.route.tracomfort[0].path);
       })
+      .catch((err) => console.log('err', err));
 
   }, [getLocation])
 
@@ -96,7 +106,8 @@ const MapModal = ({
       className={className}
     >
       지도
-      {route.length <= 0 && <div>경로 탐색중입니다..</div>}
+      {route.length <= 0 && errorText === '' && <div>경로 탐색중입니다..</div>}
+      {errorText != '' && <div>{errorText}</div>}
       {/* <button onClick={test}> 주소 입력시 위도 경도 가져오기</button> */}
       <div id="map" style={{ width: "100%", height: "500px" }}></div>
     </ModalFrame>

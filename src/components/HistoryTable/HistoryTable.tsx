@@ -48,7 +48,7 @@ export const HistoryTable = () => {
           <>
             <Tab tabName={"historyTable"} className="mb-20" tabNumber={setTabnumber} />
             <div className="historytable">
-              <div className="m-h-460">
+              <div className="min-h-460">
                 <table>
                   <thead className="bg-gray-200 border-b">
                     {columns.map((column, key) => (

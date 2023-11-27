@@ -21,7 +21,7 @@ interface HistoryTableBodyProps {
 export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
   row
 }) => {
-  const { startEvent, eventName, casting, place, isCancelled, ticketHolderCounts, eventId } = row;
+  const { startEvent, eventName, casting, place, isCancelled, ticketHolderCounts, eventId, ticketingId } = row;
   const queryClient = useQueryClient();
   const getRole = useRecoilValue(userSelector("role"));
   const getPaging = useRecoilValue(paginateSelector);
@@ -54,7 +54,7 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
     }
   })
 
-  const cancleEvent = (id: any) => {
+  const cancleEvent = (id: any, ticketingId: any) => {
     if (!confirm(`이벤트 ${getRole === "ROLE_REGISTRANT" ? '등록을' : '예매를'} 취소할까요?`)) {
       // 아니오
     } else {
@@ -63,14 +63,17 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
         console.log('예약자 일때')
         deleteResisterMutation.mutate(id);
       }
-      else if (getRole === '회원') {
-        deleteReserverMutation.mutate(id);
+      else if (getRole === 'ROLE_USER') {
+        console.log('회원');
+        deleteReserverMutation.mutate(ticketingId);
       }
       else {
         // 비회원 예매 취소
       }
     }
   }
+
+  console.log('r', row);
 
   return (
     <>
@@ -89,23 +92,23 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
           setOnModal(true)
         }}
       >
-        <td className="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
+        <td className="px-6 py-4 max-w-200 min-w-200 truncate">
           {eventName}
         </td>
         <td className="px-6 py-4 whitespace-nowrap">{casting}</td>
         <td className="px-6 py-4 whitespace-nowrap">{day(startEvent)}</td>
-        <td className="px-6 py-4 whitespace-nowrap max-w-400 truncate">{place}</td>
+        <td className="px-6 py-4 whitespace-nowrap max-w-400 min-w-400 truncate">{place}</td>
         <td className="px-6 py-4 whitespace-nowrap w-60">
           {isCancelled ? dayCompare(date, startEvent) ? '취소됨' : '진행됨' : '진행예정'}
           {/* {!isCancelled && dayCompare(date, startEvent) ? '진행됨' : '진행예정'} */}
         </td>
         {
-          ticketHolderCounts !== null && <td className="px-6 py-4 whitespace-nowrap">{ticketHolderCounts}명</td>
+          ticketHolderCounts !== null && <td className="px-6 py-4 min-w-100">{ticketHolderCounts}명</td>
         }
         <td className="px-6 py-4 whitespace-nowrap">
           <Button className="border" onClick={(e: any) => {
             e.stopPropagation();
-            cancleEvent(eventId)
+            cancleEvent(eventId, ticketingId)
           }} >{getRole === "ROLE_REGISTRANT" ? '등록' : '예매'} 취소</Button>
         </td>
       </tr>

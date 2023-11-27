@@ -8,6 +8,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import Button from "../button/Button";
+import axios from "axios";
 
 type formPropsType = {
   tab: number;
@@ -56,6 +57,16 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
           });
           setUserInfo("isRegistrationTrue" ? "ROLE_REGISTRANT" : "ROLE_USER");
           router.push("/");
+          axios
+            .get(`${process.env.NEXT_PUBLIC_API_URL}/api/emitter/subscribe`, {
+              headers: {
+                "Authorization": `Bearer ${res.data.accessToken}`,
+                "Content-Type": "text/event-stream",
+                Connection: "keep-alive",
+                // "Cache-Control": "no-cache",
+              },
+            })
+            .then((res) => console.log("sse test: ", res));
         })
         .catch((err) => console.log('err', err));
     }

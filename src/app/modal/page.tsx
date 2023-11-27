@@ -22,25 +22,25 @@ const ModalPage = () => {
   // const [user] = useRecoilState(userState);
   // console.log('user 스토어', user);
   // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ graphql 테스트
-  interface Country {
-    code: string;
-    emoji: string;
-    name: string;
-  }
+  // interface Country {
+  //   code: string;
+  //   emoji: string;
+  //   name: string;
+  // }
 
-  interface CountryData {
-    countries: Country[];
-  }
+  // interface CountryData {
+  //   countries: Country[];
+  // }
 
-  const GET_COUNTRIES = gql`
-    query Countries($filter: CountryFilterInput) {
-      countries(filter: $filter) {
-        code
-        name
-        emoji
-      }
-    }
-  `;
+  // const GET_COUNTRIES = gql`
+  //   query Countries($filter: CountryFilterInput) {
+  //     countries(filter: $filter) {
+  //       code
+  //       name
+  //       emoji
+  //     }
+  //   }
+  // `;
   //   query Countries($filter: CountryFilterInput) {
   //     countries(filter: $filter) {
   //       code
@@ -50,27 +50,25 @@ const ModalPage = () => {
   //   }
   // `;
 
-  const { data, loading, error } = useQuery<CountryData>(GET_COUNTRIES, {
-    variables: {
-      filter: {
-        code: {
-          eq: "AD",
-        },
-      },
-    },
-  });
+  // const { data, loading, error } = useQuery<CountryData>(GET_COUNTRIES, {
+  //   variables: {
+  //     filter: {
+  //       code: {
+  //         eq: "AD",
+  //       },
+  //     },
+  //   },
+  // });
 
-  if (loading) {
-    return <h2>로딩중</h2>;
-  }
+  // if (loading) {
+  //   return <h2>로딩중</h2>;
+  // }
 
-  if (error) {
-    return <h1>에러 발생</h1>;
-  }
+  // if (error) {
+  //   return <h1>에러 발생</h1>;
+  // }
 
-  const countries = data?.countries.slice(0, 4);
-
-  console.log("gql : ", countries);
+  // const countries = data?.countries.slice(0, 4);
 
   return (
     <div>

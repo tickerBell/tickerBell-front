@@ -5,6 +5,7 @@ export const UserColumns = [
     casting: "캐스팅",
     startEvent: "일시",
     place: "장소",
+    isCancelled: "상태",
   },
 ];
 

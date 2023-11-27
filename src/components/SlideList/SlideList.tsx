@@ -22,31 +22,31 @@ const SlideList = () => {
         <div className="mt-60">
           <div className="flex justify-center gap-8">
             {
-              data?.data['rankingMusicalEventList'].length > 0 &&
+              data?.data['rankingMusicalEventList'] !== null &&
               <div onClick={() => setTab('rankingMusicalEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
                 "bg-primary text-white": tab === 'rankingMusicalEventList'
               })}>뮤지컬</div>
             }
             {
-              data?.data['rankingConcertEventList'].length > 0 &&
+              data?.data['rankingConcertEventList']  !== null &&
               <div onClick={() => setTab('rankingConcertEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
                 "bg-primary text-white": tab === 'rankingConcertEventList'
               })}>콘서트</div>
             }
             {
-              data?.data['rankingPlayEventList'].length > 0 &&
+              data?.data['rankingPlayEventList'] !== null &&
               <div onClick={() => setTab('rankingPlayEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
                 "bg-primary text-white": tab === 'rankingPlayEventList'
               })}>여가</div>
             }
             {
-              data?.data['rankingClassicEventList'].length > 0 &&
+              data?.data['rankingClassicEventList'] !== null &&
               <div onClick={() => setTab('rankingClassicEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
                 "bg-primary text-white": tab === 'rankingClassicEventList'
               })}>클래식</div>
             }
             {
-              data?.data['rankingSportsEventList'].length > 0 &&
+              data?.data['rankingSportsEventList'] !== null &&
               <div onClick={() => setTab('rankingSportsEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
                 "bg-primary text-white": tab === 'rankingSportsEventList'
               })}>스포츠</div>
