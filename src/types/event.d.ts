@@ -7,7 +7,7 @@ interface FormData {
   hosts: { name: string }[];
   place: string;
   category: string;
-  isAdult: boolean;
+  isAdult: string;
   availablePurchaseTime: string;
   normalPrice: number;
   premiumPrice: number;
@@ -17,4 +17,10 @@ interface FormData {
   isSpecialC: boolean;
   thumbnailUrl: string;
   imageUrls: string[];
+}
+
+interface ImageFormSubmitValue {
+  atk: string;
+  thumbNailImage: File;
+  eventImages: File[];
 }

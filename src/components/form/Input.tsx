@@ -9,7 +9,7 @@ export const Radio = ({ label, ...attr }: InputType) => {
     <div>
       <label
         htmlFor={attr.id}
-        className="cursor-pointer flex items-center gap-4"
+        className="flex items-center gap-4 cursor-pointer"
       >
         <span>{label}</span>
         <input type="radio" {...attr} className="cursor-pointe " />

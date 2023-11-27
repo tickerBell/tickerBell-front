@@ -8,6 +8,7 @@ interface Props {
   name: string;
   minDate?: Date | null;
   maxDate?: Date | null;
+  rules?: any;
 }
 
 export const OnDatePicker = ({
@@ -15,12 +16,14 @@ export const OnDatePicker = ({
   name,
   minDate,
   maxDate,
+  rules,
   ...rest
 }: Props) => {
   return (
     <Controller
       control={control}
       name={name}
+      // rules={rules}
       render={({ field }) => (
         <DatePicker
           {...field}

@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import { getEventAllApi } from '@/api/events';
-import React, { useEffect } from 'react'
+import { getEventAllApi } from "@/api/events";
+import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import Card from '../item/Card';
-import Spinner from '../spinner/Spinner';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import Item from '../item/Item';
+import Card from "../item/Card";
+import Spinner from "../spinner/Spinner";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import Item from "../item/Item";
 
 type ListType = {
   category: string;
   type?: string;
   className?: string;
-}
+};
 
 const List = ({ category, type, className }: ListType) => {
   const [ref, isView] = useInView();
-  // 받은 카테고리가 있다면 카테고리. 없다면 전체 
+  // 받은 카테고리가 있다면 카테고리. 없다면 전체
 
   const {
     data,
@@ -27,17 +27,22 @@ const List = ({ category, type, className }: ListType) => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ['event-all-list'],
+    queryKey: ["event-all-list"],
     queryFn: ({ pageParam = 0 }) => getEventAllApi({ category, pageParam }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage:any, allPages:any, lastPageParam:any, allPageParams:any) => {
+    getNextPageParam: (
+      lastPage: any,
+      allPages: any,
+      lastPageParam: any,
+      allPageParams: any
+    ) => {
       // console.log('lastPage: ', lastPage);
       // console.log('allPages: ', allPages);
       // console.log('lastPageParam: ', lastPageParam);
       // console.log('allPageParams: ', allPageParams);
       return allPages.length + 1;
-    }
-  })
+    },
+  });
 
   // 무한 스크롤
   useEffect(() => {
@@ -56,17 +61,18 @@ const List = ({ category, type, className }: ListType) => {
         )}
         {status === "success" && (
           <div className="grid grid-cols-6 gap-x-16 gap-y-36 place-items-center mt-60">
-            {data && data?.pages.map((item: any) => (
-              item && item?.content.map((data:any, index: any) => (
-                <Card key={index} data={data} type={type} />
-                ))
-            ))}
+            {data &&
+              data?.pages.map(
+                (item: any) =>
+                  item &&
+                  item?.content.map((data: any, index: any) => (
+                    <Card key={index} data={data} type={type} />
+                  ))
+              )}
             <div ref={ref} />
           </div>
         )}
       </>
     </div>
-  )
-}
-
-export default List
+  );
+};
