@@ -95,7 +95,14 @@ export const ImageUpload = ({ setThumbNailUrl, setImageUrls }: Image) => {
         return;
       }
       setUploading(true);
-      const response = await postEventImageApi(atk, thumbnail, images);
+
+      const formDataValues = {
+        atk: atk,
+        thumbNailImage: thumbnail,
+        eventImages: images,
+      };
+
+      const response = await postEventImageApi(formDataValues);
       setThumbNailUrl(response.data.thumbNailImageUrl);
       setImageUrls(response.data.imageUrls);
       setUploading(false);
@@ -144,17 +151,14 @@ export const ImageUpload = ({ setThumbNailUrl, setImageUrls }: Image) => {
       </div>
       <div
         {...getImagesRootProps()}
-        className="flex flex-col items-center justify-center border-2 border-dashed border-gray-400 py-12 dropzone cursor-pointer"
+        className="flex flex-col items-center justify-center border-2 border-dashed border-gray-400 py-5 dropzone cursor-pointer"
       >
         <input {...getImagesInputProps()} />
         <p>업로드할 이미지 파일들을 드래그하거나 클릭하여 선택하세요.</p>
       </div>
-      <ul className="flex flex-row">
+      <ul className="flex flex-row gap-12 ">
         {imagesPreview.map((file, index) => (
-          <li
-            key={index}
-            className="w-1/2 sm:w-1/3 md:w-1/4 p-1 flex flex-row "
-          >
+          <li key={index} className="p-1 flex flex-row ">
             <div className="relative border rounded-md p-2 group  w-92 h-92">
               <Image
                 src={file.preview}
