@@ -15,11 +15,13 @@ import './historytable.scss';
 import { paginateSelector } from "@/recoil/paginate";
 
 interface HistoryTableBodyProps {
-  row: IEventHistoryTableReserverType;
+  row: IEventRowsData;
+  openModal: () => void;
 }
 
 export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
-  row
+  row,
+  openModal,
 }) => {
   const { startEvent, eventName, casting, place, isCancelled, ticketHolderCounts, eventId, ticketingId } = row;
   const queryClient = useQueryClient();
@@ -86,18 +88,15 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
         />
       )}
       <tr
-        className="text-sm text-center text-gray-900 border-b cursor-pointer"
-        onClick={(e) => {
-          e.stopPropagation();
-          setOnModal(true)
-        }}
+        onClick={() => openModal()}
+        className="text-sm text-center text-gray-900 border-b"
       >
-        <td className="px-6 py-4 max-w-200 min-w-200 truncate">
+        <td className="px-6 py-4 truncate max-w-200 min-w-200">
           {eventName}
         </td>
         <td className="px-6 py-4 whitespace-nowrap">{casting}</td>
         <td className="px-6 py-4 whitespace-nowrap">{day(startEvent)}</td>
-        <td className="px-6 py-4 whitespace-nowrap max-w-400 min-w-400 truncate">{place}</td>
+        <td className="px-6 py-4 truncate whitespace-nowrap max-w-400 min-w-400">{place}</td>
         <td className="px-6 py-4 whitespace-nowrap w-60">
           {isCancelled ? dayCompare(date, startEvent) ? '취소됨' : '진행됨' : '진행예정'}
           {/* {!isCancelled && dayCompare(date, startEvent) ? '진행됨' : '진행예정'} */}
@@ -112,6 +111,6 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
           }} >{getRole === "ROLE_REGISTRANT" ? '등록' : '예매'} 취소</Button>
         </td>
       </tr>
-    </>
+    </tbody>
   );
 };

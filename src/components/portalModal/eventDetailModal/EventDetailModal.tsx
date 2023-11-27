@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import ModalFrame from "../ModalFrame";
 import Button from "@/components/button/Button";
 import { ArrayGenerator } from "@/hooks/ArrayGenerator";
-import classNames from "classnames";
-import { Modal } from "../Modal";
 import { onClickPayment } from "@/hooks/Payment";
+import classNames from "classnames";
+import React, { useState } from "react";
+import { Modal } from "../Modal";
+import ModalFrame from "../ModalFrame";
 
 type BasicModalType = {
   setOnModal: React.Dispatch<React.SetStateAction<boolean>>;
