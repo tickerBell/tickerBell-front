@@ -9,15 +9,11 @@ const Index = () => {
   const methods = useForm();
 
   return (
-    <div>
-      <Header />
-      <NavTab />
-      <div className="flex mt-96 h-screen w-full max-w-1000 m-auto flex-row justify-center items-center">
-        {/* <EventForm registType="event" /> */}
-        <FormProvider {...methods}>
-          <Event />
-        </FormProvider>
-      </div>
+    <div className="flex h-screen w-full max-w-1000 m-auto flex-row justify-center items-center">
+      {/* <EventForm registType="event" /> */}
+      <FormProvider {...methods}>
+        <Event />
+      </FormProvider>
     </div>
   );
 };

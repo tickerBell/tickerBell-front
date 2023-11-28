@@ -5,8 +5,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { IoTrash } from "react-icons/io5";
 import { getCookie } from "../../util/authCookie";
-import Button from "../../components/button/Button";
 import Image from "next/image";
+import Button from "../button/Button";
 
 type Image = {
   setThumbNailUrl: (url: string) => void;
@@ -30,12 +30,6 @@ export const ImageUpload = ({ setThumbNailUrl, setImageUrls }: Image) => {
   const [images, setImages] = useState<File[]>([]);
   const [imagesPreview, setImagesPreview] = useState<FileWithPreview[]>([]);
   const [uploading, setUploading] = useState<boolean>(false);
-
-  const [atk, setAtk] = useState("");
-
-  useEffect(() => {
-    setAtk(getCookie("ticket-atk"));
-  }, []);
 
   const onDropThumbnail = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -97,7 +91,6 @@ export const ImageUpload = ({ setThumbNailUrl, setImageUrls }: Image) => {
       setUploading(true);
 
       const formDataValues = {
-        atk: atk,
         thumbNailImage: thumbnail,
         eventImages: images,
       };
@@ -115,7 +108,7 @@ export const ImageUpload = ({ setThumbNailUrl, setImageUrls }: Image) => {
     <div className="flex flex-col  gap-22">
       <div
         {...getThumbnailRootProps()}
-        className=" flex flex-col items-center justify-center border-2 border-dashed border-gray-400 py-12 dropzone cursor-pointer"
+        className=" flex flex-col items-center justify-center border-2 border-dashed border-gray-400 py-5 cursor-pointer"
       >
         <p>썸네일 이미지를 드래그하거나 클릭하여 선택하세요.</p>
         <input
@@ -151,7 +144,7 @@ export const ImageUpload = ({ setThumbNailUrl, setImageUrls }: Image) => {
       </div>
       <div
         {...getImagesRootProps()}
-        className="flex flex-col items-center justify-center border-2 border-dashed border-gray-400 py-5 dropzone cursor-pointer"
+        className="flex flex-col items-center justify-center border-2 border-dashed border-gray-400 py-5 cursor-pointer"
       >
         <input {...getImagesInputProps()} />
         <p>업로드할 이미지 파일들을 드래그하거나 클릭하여 선택하세요.</p>

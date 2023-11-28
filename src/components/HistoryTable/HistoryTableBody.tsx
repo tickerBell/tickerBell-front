@@ -15,7 +15,7 @@ import './historytable.scss';
 import { paginateSelector } from "@/recoil/paginate";
 
 interface HistoryTableBodyProps {
-  row: IEventRowsData;
+  row: IEventHistoryTableReserverType;
   openModal: () => void;
 }
 
@@ -111,6 +111,6 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
           }} >{getRole === "ROLE_REGISTRANT" ? '등록' : '예매'} 취소</Button>
         </td>
       </tr>
-    </tbody>
+    </>
   );
 };

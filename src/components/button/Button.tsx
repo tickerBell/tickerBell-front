@@ -29,40 +29,27 @@ type ButtonProps = {
   disabled?: boolean;
 };
 
-const Button = forwardRef(
-  (
-    {
-      children,
-      size = "medium",
-      theme = "primary",
-      className,
-      full,
-      onClick,
-      ...attr
-    }: ButtonProps,
-    ref: Ref<HTMLButtonElement>
-  ) => {
-    return (
-      <button
-        ref={ref}
-        className={classNames(
-          twMerge(
-            `${buttonTheme[theme]} ${buttonSize[size]} px-10 py-4 box-border cursor-pointer whitespace-pre rounded-4
+const Button = forwardRef(({ children, size = "medium", theme = "primary", className, full, onClick, ...attr }: ButtonProps, ref: Ref<HTMLButtonElement>) => {
+  return (
+    <button
+      ref={ref}
+      className={classNames(
+        twMerge(
+          `${buttonTheme[theme]} ${buttonSize[size]} px-10 py-4 box-border cursor-pointer whitespace-pre rounded-4
       `,
-            className
-          ),
-          {
-            "w-full": full,
-          }
-        )}
-        onClick={onClick}
-        {...attr}
-      >
-        {children}
-      </button>
-    );
-  }
-);
+          className
+        ),
+        {
+          "w-full": full,
+        }
+      )}
+      onClick={onClick}
+      {...attr}
+    >
+      {children}
+    </button>
+  );
+});
 // forwardRef 의 react/display-name 에러 해제
 // https://stackoverflow.com/questions/67992894/component-definition-is-missing-display-name-for-forwardref
 Button.displayName = "Button";
