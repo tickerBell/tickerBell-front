@@ -16,12 +16,10 @@ import { paginateSelector } from "@/recoil/paginate";
 
 interface HistoryTableBodyProps {
   row: IEventHistoryTableReserverType;
-  openModal: () => void;
 }
 
 export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
   row,
-  openModal,
 }) => {
   const { startEvent, eventName, casting, place, isCancelled, ticketHolderCounts, eventId, ticketingId } = row;
   const queryClient = useQueryClient();
@@ -88,8 +86,11 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
         />
       )}
       <tr
-        onClick={() => openModal()}
         className="text-sm text-center text-gray-900 border-b"
+        onClick={(e) => {
+          e.stopPropagation();
+          setOnModal(true)
+        }}
       >
         <td className="px-6 py-4 truncate max-w-200 min-w-200">
           {eventName}
