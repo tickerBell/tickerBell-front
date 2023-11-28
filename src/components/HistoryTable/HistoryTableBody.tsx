@@ -15,13 +15,11 @@ import './historytable.scss';
 import { paginateSelector } from "@/recoil/paginate";
 
 interface HistoryTableBodyProps {
-  row: IEventRowsData;
-  openModal: () => void;
+  row: IEventHistoryTableReserverType;
 }
 
 export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
   row,
-  openModal,
 }) => {
   const { startEvent, eventName, casting, place, isCancelled, ticketHolderCounts, eventId, ticketingId } = row;
   const queryClient = useQueryClient();
@@ -88,8 +86,11 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
         />
       )}
       <tr
-        onClick={() => openModal()}
         className="text-sm text-center text-gray-900 border-b"
+        onClick={(e) => {
+          e.stopPropagation();
+          setOnModal(true)
+        }}
       >
         <td className="px-6 py-4 truncate max-w-200 min-w-200">
           {eventName}
@@ -111,6 +112,6 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
           }} >{getRole === "ROLE_REGISTRANT" ? '등록' : '예매'} 취소</Button>
         </td>
       </tr>
-    </tbody>
+    </>
   );
 };

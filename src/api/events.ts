@@ -46,13 +46,10 @@ export async function eventSlideApi() {
 }
 
 // 이벤트 등록
-export async function postEventApi(atk: string, data: any) {
+export async function postEventApi(data: any) {
+  console.log("등록", data);
   try {
-    const res = await apiInstance.post("/api/event", data, {
-      headers: {
-        Authorization: `Bearer ${atk}`,
-      },
-    });
+    const res = await apiInstance.post("/api/event", data, {});
     console.log("이벤트 등록성공:", res);
     return res;
   } catch (error) {
@@ -64,7 +61,7 @@ export async function postEventApi(atk: string, data: any) {
 // 이벤트 이미지 등록
 export async function postEventImageApi(formDataValues: ImageFormSubmitValue) {
   try {
-    const { atk, thumbNailImage, eventImages } = formDataValues;
+    const { thumbNailImage, eventImages } = formDataValues;
     const formData = new FormData();
     formData.append("thumbNailImage", thumbNailImage);
 
@@ -72,11 +69,7 @@ export async function postEventImageApi(formDataValues: ImageFormSubmitValue) {
       formData.append("eventImages", file);
     });
 
-    const response = await apiInstance.post("/api/image", formData, {
-      headers: {
-        Authorization: `Bearer ${atk}`,
-      },
-    });
+    const response = await apiInstance.post("/api/image", formData, {});
     console.log("업로드 성공:", response);
     return response;
   } catch (error) {
@@ -98,11 +91,7 @@ export async function getEventIdApi(id: any) {
 }
 
 // 카테고리별 보여주기
-export async function getEventCategoryApi(
-  currentPage: number,
-  category: any,
-  selectText: string
-) {
+export async function getEventCategoryApi(currentPage: number, category: any, selectText: string) {
   try {
     const res = await apiInstance.get(`/api/events/${category}`, {
       params: { page: currentPage - 1, size: 10, sort: category },

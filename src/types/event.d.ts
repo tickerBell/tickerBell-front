@@ -20,7 +20,6 @@ interface FormData {
 }
 
 interface ImageFormSubmitValue {
-  atk: string;
   thumbNailImage: File;
   eventImages: File[];
 }

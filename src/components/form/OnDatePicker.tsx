@@ -29,8 +29,7 @@ export const OnDatePicker = ({
           {...field}
           {...rest}
           className="w-full p-16 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 "
-          showTimeSelect
-          dateFormat="yy년 MM월 dd일 aa h시 mm분"
+          dateFormat="yy년 MM월 dd일"
           selected={field.value ? dayjs(field.value).toDate() : null}
           onChange={(date) => field.onChange(dayjs(date).toDate())}
           minDate={minDate ? new Date(minDate) : undefined}

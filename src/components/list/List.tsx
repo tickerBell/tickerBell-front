@@ -76,3 +76,5 @@ const List = ({ category, type, className }: ListType) => {
     </div>
   );
 };
+
+export default List;

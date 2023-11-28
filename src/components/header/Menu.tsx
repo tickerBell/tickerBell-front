@@ -42,7 +42,7 @@ const Menu = () => {
         <Link href="/modal">모달 임시</Link>
       }
       {getRole === "ROLE_REGISTRANT" && (
-        <Link href="/event_regist">이벤트 등록</Link>
+        <Link href="/event-regist">이벤트 등록</Link>
       )}
       {/* {!atk && <Link href="/login">로그인</Link>} */}
       <div onClick={auth} className="cursor-pointer">{getIsLogin ? '로그아웃' : '로그인'}</div>

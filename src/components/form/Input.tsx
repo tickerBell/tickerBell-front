@@ -1,4 +1,4 @@
-import React, { HTMLProps } from "react";
+import React, { HTMLProps, forwardRef, Ref } from "react";
 type InputType = {
   children?: React.ReactNode;
   label?: string;
@@ -17,6 +17,21 @@ export const Radio = ({ label, ...attr }: InputType) => {
     </div>
   );
 };
+
+export const CheckBox = forwardRef(({ label, ...attr }: InputType, ref: Ref<HTMLInputElement>) => {
+  return (
+    <div>
+      <label
+        htmlFor={attr.id}
+        className="flex items-center gap-4 cursor-pointer"
+      >
+        <input type="radio" ref={ref} className="cursor-pointe" {...attr} />
+        <span>{label}</span>
+      </label>
+    </div>
+  );
+});
+CheckBox.displayName = "CheckBox";
 
 export const Text = ({ label, ...attr }: InputType) => {
   return (
