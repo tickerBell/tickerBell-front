@@ -4,19 +4,20 @@ type InputType = {
   label?: string;
 } & HTMLProps<HTMLInputElement>;
 
-export const Radio = ({ label, ...attr }: InputType) => {
+export const Radio = forwardRef(({ label, ...attr }: InputType, ref: Ref<HTMLInputElement>) => {
   return (
     <div>
       <label
         htmlFor={attr.id}
         className="flex items-center gap-4 cursor-pointer"
       >
+        <input type="radio" ref={ref} className="cursor-pointer" {...attr} />
         <span>{label}</span>
-        <input type="radio" {...attr} className="cursor-pointe " />
       </label>
     </div>
   );
-};
+});
+Radio.displayName = "Radio";
 
 export const CheckBox = forwardRef(({ label, ...attr }: InputType, ref: Ref<HTMLInputElement>) => {
   return (
@@ -25,7 +26,7 @@ export const CheckBox = forwardRef(({ label, ...attr }: InputType, ref: Ref<HTML
         htmlFor={attr.id}
         className="flex items-center gap-4 cursor-pointer"
       >
-        <input type="radio" ref={ref} className="cursor-pointe" {...attr} />
+        <input type="checkbox" ref={ref} className="cursor-pointer" {...attr} />
         <span>{label}</span>
       </label>
     </div>
@@ -33,15 +34,16 @@ export const CheckBox = forwardRef(({ label, ...attr }: InputType, ref: Ref<HTML
 });
 CheckBox.displayName = "CheckBox";
 
-export const Text = ({ label, ...attr }: InputType) => {
+export const Input = forwardRef(({ label, ...attr }: InputType, ref: Ref<HTMLInputElement>) => {
   return (
-    <div className="flex">
+    <div className="flex flex-col">
       {label && (
         <label htmlFor={attr.id} className="m-w-80">
           {label}
         </label>
       )}
-      <input type="text" {...attr} className="h-26" />
+      <input type="text" ref={ref} className="h-26" {...attr} />
     </div>
   );
-};
+});
+Input.displayName = "Input";

@@ -2,19 +2,16 @@
 
 import { postEventApi } from "@/api/events";
 import { day, weekDay } from "@/util/day";
-import dayjs from "dayjs";
+import { useMutation } from "@tanstack/react-query";
 import { KeyboardEvent, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useFieldArray, useForm } from "react-hook-form";
 import Button from "../button/Button";
 import SearchMapModal from "../portalModal/mapModal/SearchMapModal";
-import FRInput from "./FRInput";
-import FRRadio from "./FRRadio";
 import { ImageUpload } from "./ImageUpload";
+import { CheckBox, Input, Radio } from "./Input";
 import { InputField } from "./InputField";
 import { OnDatePicker } from "./OnDatePicker";
-import { useMutation } from "@tanstack/react-query";
-import { CheckBox } from "./Input";
 
 const Event = () => {
   const {
@@ -31,7 +28,6 @@ const Event = () => {
     },
   });
 
-  const [atk, setAtk] = useState("");
   const [mapOnModal, setMapOnModal] = useState(false);
   const [thumbNailUrl, setThumbNailUrl] = useState("");
   const [imageUrls, setImageUrls] = useState<string[]>([]);
@@ -131,6 +127,7 @@ const Event = () => {
       category: onData.category,
       tags: tagNames,
       imageUrls: updatedImageUrls,
+      // description: onData.description
     };
     console.log("dd", payload);
 
@@ -142,7 +139,7 @@ const Event = () => {
   // 컴포넌트 반환
   return (
     <>
-      <div className="flex flex-col justify-center w-full mt-12 shadow sm:py-12 gap-52">
+      <div className="flex flex-col justify-center w-full mt-12 gap-52">
         <div className="w-2/3 mx-auto">
           <form onSubmit={handleSubmit(onSubmit)}>
             {mapOnModal && (
@@ -189,7 +186,7 @@ const Event = () => {
                 <small className="text-red-500">{errors.name.message}</small>
               )}
             </div>
-            <div className="flex flex-row gap-12">
+            <div className="flex flex-row gap-12 mb-10">
               {/* 시작일 선택 */}
               <div>
                 <div
@@ -201,10 +198,12 @@ const Event = () => {
                   control={control}
                   name="startEvent"
                   minDate={weekDay(2).toDate()}
-                  rules={{ required: true }}
+                  rules={{ required: '시작일은 필수입니다.' }}
                 />
+                {errors.startEvent && (
+                  <small role="alert">{errors.startEvent.message}</small>
+                )}
               </div>
-              {/* 종료일 선택 */}
               <div>
                 <div className="block mb-2 text-sm font-medium text-gray-900 ">
                   종료일
@@ -227,48 +226,70 @@ const Event = () => {
               </div>
               <div>
                 <div className="block mb-2 text-sm font-medium text-gray-900">상영 시간</div>
-                <input type="number" name="" id="" placeholder="단위 - 분" maxLength={1440} />
+                <input type="number" name="" id="" placeholder="단위 - 분" maxLength={1440} className="w-full p-16 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 " />
               </div>
             </div>
             {/* 이벤트 캐스팅 */}
             <div>
-              <InputField
-                id="tags"
-                name="tags"
-                label="이벤트태그"
-                placeholder="이벤트 태그를 입력하고 엔터를 누르세요"
-                onKeyDown={(e) => handleKeyDown(e, addTag)}
-                fields={tagsFields}
-                remove={removeTag}
-              />
-              <InputField
-                id="castings"
-                name="castings"
-                label="배우명"
-                placeholder="출연자 이름을 입력하고 엔터를 누르세요"
-                onKeyDown={(e) => handleKeyDown(e, addCasting)}
-                fields={castingsFields}
-                remove={removeCasting}
-              />
-              <InputField
-                id="hosts"
-                name="hosts"
-                label="주최자명"
-                placeholder="주최자 이름을 입력하고 엔터를 누르세요"
-                onKeyDown={(e) => handleKeyDown(e, addHost)}
-                fields={hostsFields}
-                remove={removeHost}
-              />
+              <div>
+                <InputField
+                  id="tags"
+                  name="tags"
+                  label="이벤트태그"
+                  placeholder="이벤트 태그를 입력하고 엔터를 누르세요"
+                  onKeyDown={(e) => handleKeyDown(e, addTag)}
+                  fields={tagsFields}
+                  remove={removeTag}
+                />
+              </div>
+              <div>
+                <InputField
+                  id="castings"
+                  label="배우명"
+                  // name="castings"
+                  placeholder="출연자 이름을 입력하고 엔터를 누르세요"
+                  onKeyDown={(e) => handleKeyDown(e, addCasting)}
+                  fields={castingsFields}
+                  remove={removeCasting}
+                  {...register("castings", { required: '캐스팅은 필수 입력입니다.' })}
+                />
+                {errors.castings && (
+                  <small role="alert">{errors.castings.message}</small>
+                )}
+              </div>
+              <div>
+                <InputField
+                  id="hosts"
+                  label="주최자명"
+                  placeholder="주최자 이름을 입력하고 엔터를 누르세요"
+                  onKeyDown={(e) => handleKeyDown(e, addHost)}
+                  fields={hostsFields}
+                  remove={removeHost}
+                  {...register('hosts', { required: '주최명은 필수 입력입니다.' })}
+                />
+                {errors.hosts && (
+                  <small role="alert">{errors.hosts.message}</small>
+                )}
+              </div>
             </div>
             <div className="mb-10">
-              <label
-                htmlFor="place"
-                className="block mb-2 text-sm font-medium text-gray-900 "
-              >
-                주소
-              </label>
-              <div className="flex flex-row gap-12 mb-10 ">
-                <div className="mb-10">
+              <div>
+                <label htmlFor="place" className="block mb-2 text-sm font-medium text-gray-900 "
+                > 주소 </label>
+                <div className="flex flex-row gap-12">
+                  <input
+                    className="w-full p-16 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 "
+                    type="text"
+                    id="place"
+                    maxLength={5}
+                    value={enroll_company.address}
+                    readOnly
+                    {...register("place", { required: '이벤트 주소는 필수 입력입니다.' })}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setMapOnModal(true);
+                    }}
+                  />
                   <Button
                     type="button"
                     onClick={(e) => {
@@ -279,22 +300,12 @@ const Event = () => {
                     검색
                   </Button>
                 </div>
-                <input
-                  className="w-full p-16 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 "
-                  type="text"
-                  id="place"
-                  maxLength={5}
-                  {...register("place", { required: true })}
-                  value={enroll_company.address}
-                  readOnly
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setMapOnModal(true);
-                  }}
-                />
               </div>
+              {errors.place && (
+                <small role="alert">{errors.place.message}</small>
+              )}
             </div>
-            <div className="flex flex-row ">
+            {/* <div className="flex flex-row ">
               <label>성인여부</label>
               <div className="flex flex-row gap-12">
                 <label>
@@ -310,82 +321,87 @@ const Event = () => {
                   미성년
                 </label>
               </div>
-            </div>
-            <div className="flex flex-col">
-              <span>카테고리</span>
-              <div className="flex flex-row gap-12">
-                {["MUSICAL", "CONCERT", "PLAY", "CLASSIC", "SPORTS"].map(
-                  (category) => {
-                    const selectedCategory = watch("category");
-                    const borderClass =
-                      selectedCategory === category
-                        ? "border-blue-500"
-                        : "border-gray-200";
+            </div> */}
+            <div className="flex flex-col mb-10">
+              <div className="flex flex-row">
+                <div className="mr-10">카테고리</div>
+                <div className="flex flex-row gap-12">
+                  {["MUSICAL", "CONCERT", "PLAY", "CLASSIC", "SPORTS"].map(
+                    (category, key) => {
+                      const selectedCategory = watch("category");
+                      const borderClass =
+                        selectedCategory === category
+                          ? "border-blue-500"
+                          : "border-gray-200";
 
-                    return (
-                      <label key={category}>
-                        <FRRadio
-                          {...register("category", { required: true })}
-                          label={category}
-                          id={category}
-                          type="radio"
-                          value={category}
-                          className={borderClass}
-                        />
-                      </label>
-                    );
-                  }
+                      return (
+                        <>
+                          <Radio
+                            key={key}
+                            label={category}
+                            id={category}
+                            type="radio"
+                            value={category}
+                            className={borderClass}
+                            {...register("category", { required: "카테고리를 선택해주세요" })}
+                          />
+                        </>
+                      );
+                    }
+                  )}
+                </div>
+              </div>
+              <div>
+                {errors.category && (
+                  <small role="alert">{errors.category.message}</small>
                 )}
               </div>
             </div>
-            <div className="flex flex-row">
-              <label className="mr-4">성인여부</label>
-              <div className="flex flex-row gap-12">
-                {["adult", "none-adult"].map((value) => {
-                  const selectedAdult = watch("isAdult");
-                  const borderClass =
-                    selectedAdult
-                      ? "border-blue-500"
-                      : "border-gray-200";
-
-                  return (
-                    <label key={String(value)}>
-                      <FRRadio
-                        {...register("isAdult")}
-                        type="radio"
-                        value={value}
-                        id={value === 'adult' ? "adult" : "non-adult"}
-                        label={value === 'adult' ? "성인" : "미성년"}
-                        className={borderClass}
-                      />
-                    </label>
-                  );
-                })}
+            <div className="flex flex-col mb-10">
+              <div className="flex flex-row">
+                <div className="mr-10">성인여부</div>
+                <div className="flex flex-row gap-12">
+                  {["adult", "none-adult"].map((value, key) =>
+                  (
+                    <Radio
+                      key={key}
+                      label={value === 'adult' ? "성인" : "미성년"}
+                      id={"isAdult"}
+                      value={value}
+                      {...register("isAdult", { required: "성인여부를 체크해주세요" })}
+                    />
+                  )
+                  )}
+                </div>
               </div>
+              {errors.isAdult && (
+                <small role="alert">{errors.isAdult.message}</small>
+              )}
             </div>
-            <div className="flex flex-row gap-12">
+            <div className="flex flex-row gap-12 ">
               <div>
-                <FRInput
+                <Input
                   className=""
                   label="일반 가격"
                   id="normalPrice"
-                  type="text"
+                  type="number"
                   {...register("normalPrice", { required: '가격은 필수입력입니다.' })}
                 />
                 {errors.normalPrice && (
                   <small role="alert">{errors.normalPrice.message}</small>
                 )}
               </div>
-              <FRInput
+              <Input
                 {...register("premiumPrice")}
-                className=""
                 label="프리미엄 가격"
                 id="premiumPrice"
+                type="number"
               />
-              <FRInput
+              <Input
                 {...register("saleDegree")}
                 label="할인 금액"
                 id="saleDegree"
+                type="number"
               />
             </div>
 
@@ -401,13 +417,13 @@ const Event = () => {
                         id="isSpecialA"
                         type="checkbox"
                       />
-                      <FRInput
+                      <CheckBox
                         {...register("isSpecialB")}
                         label="특별 옵션 B"
                         id="isSpecialB"
                         type="checkbox"
                       />
-                      <FRInput
+                      <CheckBox
                         {...register("isSpecialC")}
                         label="특별 옵션 C"
                         id="isSpecialC"
@@ -423,6 +439,10 @@ const Event = () => {
               setThumbNailUrl={setThumbNailUrl}
               setImageUrls={setImageUrls}
             />
+
+            <div>
+                <textarea placeholder="상세 내용 입력" />
+            </div>
 
             <Button
               className="mt-20 bg-blue-700 hover:bg-blue-800"

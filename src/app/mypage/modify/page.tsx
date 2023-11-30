@@ -7,6 +7,10 @@ import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
 
+// type stepType = {
+//   step: 'confirm'| 'modify'
+// }
+
 const Page = () => {
   const [value, setValue] = useState('');
   const [step, setStep] = useState(0);

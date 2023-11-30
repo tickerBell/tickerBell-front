@@ -10,11 +10,12 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const Menu = () => {
   const getRole = useRecoilValue(userSelector("role"));
-  
+  const getName = useRecoilValue(userSelector("name"));
   const setIsLogin = useSetRecoilState(userSelector("isLogin"));
   const getIsLogin = useRecoilValue(userSelector("isLogin"));
   const router = useRouter();
-
+  
+  console.log('getname', getName);
 
   const handleMyPageClick = (e: any) => {
     if (!getIsLogin) {

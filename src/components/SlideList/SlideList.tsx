@@ -9,12 +9,12 @@ import cls from 'classnames';
 const SlideList = () => {
   const [tab, setTab] = useState('rankingMusicalEventList');
 
-  const { data, isSuccess, isError, error } = useQuery({
+  const { data, isSuccess, isError, error, isFetched, status, errorUpdatedAt } = useQuery({
     queryKey: ["main-slide"],
     queryFn: () => eventSlideApi(),
   });
 
-  console.log('data', data);
+  console.log(`${errorUpdatedAt}, ${status}, ${isFetched}, isError: ${isError}  error : ${error} data: ${data}`);
 
   return (
     <>
@@ -28,7 +28,7 @@ const SlideList = () => {
               })}>뮤지컬</div>
             }
             {
-              data?.data['rankingConcertEventList']  !== null &&
+              data?.data['rankingConcertEventList'] !== null &&
               <div onClick={() => setTab('rankingConcertEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {
                 "bg-primary text-white": tab === 'rankingConcertEventList'
               })}>콘서트</div>
