@@ -5,59 +5,45 @@ import classNames from "classnames";
 import React, { useState } from "react";
 import { Modal } from "../Modal";
 import ModalFrame from "../ModalFrame";
+import { useRecoilState } from "recoil";
+import { useQuery } from "@tanstack/react-query";
+import { getCookie } from "@/util/authCookie";
 
 type BasicModalType = {
-  setOnModal: React.Dispatch<React.SetStateAction<boolean>>;
-  children?: React.ReactNode;
-  dimClick?: boolean;
-  isDim?: boolean;
-  onClose?: boolean;
-  className?: string;
-  normalPrice: number;
-  numberOfPeople: number;
   selectedSeats: string[];
-  totalCost: number;
   setSelectedSeats: React.Dispatch<React.SetStateAction<string[]>>;
-  name: string;
-  place: string;
+  price?: number[];
 };
 
 const EventDetailModal = ({
   setOnModal,
-  children,
   dimClick,
   isDim = true,
   className,
-  normalPrice,
-  numberOfPeople,
   selectedSeats,
   setSelectedSeats,
-  name,
-  place,
-}: BasicModalType) => {
-  const [grade, setGrade] = useState(1);
-  const [select, setSelect] = useState<string[]>([]);
+  price
+}: BasicModalType & modalType) => {
 
   const selectSeat = (seat: string) => {
     if (selectedSeats.includes(seat)) {
       setSelectedSeats(selectedSeats.filter((s) => s !== seat));
-    } else if (selectedSeats.length < numberOfPeople) {
+    } else if (selectedSeats.length < 2) {
       setSelectedSeats([...selectedSeats, seat]);
     }
   };
-  const totalCost = selectedSeats.length * normalPrice;
-
-  console.log("normalPrice", normalPrice);
 
   const itemsA = ArrayGenerator(1, 20, "a-");
   const itemsB = ArrayGenerator(1, 20, "b-");
   const itemsC = ArrayGenerator(1, 20, "c-");
 
-  const handlePayment = () => {
-    onClickPayment(totalCost, name, place);
-  };
+  console.log('받은 배열', price);
 
-  console.log("cc", select);
+  // 쿠키가 string 이면 디코딩, 없다면 객체선택. 
+
+  const handlePayment = () => {
+    // onClickPayment(totalCost, name, place);
+  };
 
   return (
     <ModalFrame
@@ -79,7 +65,7 @@ const EventDetailModal = ({
                 className={classNames(
                   "cursor-pointer border hover:border-primary p-2 text-center",
                   {
-                    "border-red border-2": selectedSeats.includes(item),
+                    "border-red border-1": selectedSeats.includes(item),
                   }
                 )}
               >
@@ -96,7 +82,7 @@ const EventDetailModal = ({
                 className={classNames(
                   "cursor-pointer border hover:border-primary p-2 text-center",
                   {
-                    "border-red border-2": selectedSeats.includes(item),
+                    "border-red border-1": selectedSeats.includes(item),
                   }
                 )}
               >
@@ -113,7 +99,7 @@ const EventDetailModal = ({
                 className={classNames(
                   "cursor-pointer border hover:border-primary p-2 text-center",
                   {
-                    "border-red border-2": selectedSeats.includes(item),
+                    "border-red border-1": selectedSeats.includes(item),
                   }
                 )}
               >
@@ -127,8 +113,8 @@ const EventDetailModal = ({
       <Modal.Buttons>
         <div className="flex gap-12">
           <ul>
-            <p>선택한 좌석: {selectedSeats.join(", ")}</p>
-            <p>총 가격: {totalCost}원</p>
+            <li>선택한 좌석: {selectedSeats.join(", ")}</li>
+            <li>총 가격: 0원</li>
           </ul>
         </div>
         <Button className="ml-auto w-100" size="medium" onClick={handlePayment}>

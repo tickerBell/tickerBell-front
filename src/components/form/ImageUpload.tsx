@@ -84,8 +84,8 @@ export const ImageUpload = ({ setThumbNailUrl, setImageUrls }: Image) => {
   const uploadFiles = async (e: any) => {
     e.stopPropagation();
     try {
-      if (!thumbnail || images.length === 0) {
-        alert("썸네일과 이미지 파일을 모두 추가해주세요.");
+      if (!thumbnail) {
+        alert("썸네일을 추가해주세요.");
         return;
       }
       setUploading(true);

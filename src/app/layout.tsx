@@ -25,33 +25,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <head>
         {/* 아임포트 결제를 위한 script */}
-        <Script
-          type="text/javascript"
-          src="https://code.jquery.com/jquery-1.12.4.min.js"
-        />
-        <Script
-          type="text/javascript"
-          src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"
-        />
+        <Script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" />
+        <Script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js" />
         {/* 카카오 로그인을 위한 script */}
-        <Script
-          src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js"
-          integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH"
-          crossOrigin="anonymous"
-        />
+        <Script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossOrigin="anonymous" />
         <Script src="https://developers.kakao.com/sdk/js/kakao.js" />
         {/* 네이버 지도 */}
-        <Script
-          type="text/javascript"
-          src="http://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ugm16gkcw2"
-        />
-        <Script
-          type="text/javascript"
-          src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ugm16gkcw2&submodules=geocoder"
-        ></Script>
+        <Script type="text/javascript" src="http://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ugm16gkcw2" />
+        <Script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ugm16gkcw2&submodules=geocoder" />
       </head>
       <body>
         <QueryProviders>

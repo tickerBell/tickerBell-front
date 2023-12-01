@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import Button from "../button/Button";
 import axios from "axios";
+import { parseJwt } from "@/hooks/useParseJwt";
 
 type formPropsType = {
   tab: number;
@@ -19,7 +20,7 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
   // const [sms, setSms] = useState(0);
   const setIsLogin = useSetRecoilState(userSelector("isLogin"));
   const setUserInfo = useSetRecoilState(userSelector("role"));
-  const setNonMember = useSetRecoilState(userSelector('nonMember'));
+  const setName = useSetRecoilState(userSelector('name'));
 
 
   const router = useRouter();
@@ -40,6 +41,7 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
   // console.log('회원가입 폼 : ', watch(), isRegistration)
 
   const onSubmit = (data: any) => {
+    // 회원
     if (tab === 1) {
       userLoginApi(data.username, data.password)
         .then((res) => {
@@ -56,6 +58,7 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
             secure: "/",
           });
           setUserInfo("isRegistrationTrue" ? "ROLE_REGISTRANT" : "ROLE_USER");
+          setName(parseJwt(res.data.accessToken).username);
           router.push("/");
           axios
             .get(`${process.env.NEXT_PUBLIC_API_URL}/api/emitter/subscribe`, {
@@ -70,6 +73,7 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
         })
         .catch((err) => console.log('err', err));
     }
+    // 비회원
     if (tab === 2) {
       setIsLogin(true);
       setCookie("ticket-atk", { name: data.username, phone: data.phone }, {
@@ -77,7 +81,7 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
         secure: "/",
         expires: oneHourFromNow
       });
-      // setNonMember({ name: data.username, phone: data.phone });
+      setName(data.username);
       router.push("/");
     }
   };

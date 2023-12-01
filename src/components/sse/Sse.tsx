@@ -19,7 +19,7 @@ const Sse = () => {
           Connection: "keep-alive",
           // "Cache-control": 'no-cache'
         },
-        heartbeatTimeout: 21 * 60 * 1000, // NOTE: 백보단 시간 짧게
+        heartbeatTimeout: 10 * 60 * 1000, // NOTE: 백보단 시간 짧게
         withCredentials: true,
       });
 
