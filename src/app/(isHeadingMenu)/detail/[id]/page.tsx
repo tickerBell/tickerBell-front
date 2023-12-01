@@ -5,7 +5,6 @@ import Button from "@/components/button/Button";
 import Header from "@/components/header/Header";
 import EventDetailModal from "@/components/portalModal/eventDetailModal/EventDetailModal";
 import { seatPrice } from "@/hooks/useSeatPrice";
-import { calenderDateType, date } from "@/util/day";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";

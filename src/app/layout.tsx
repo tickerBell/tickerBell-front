@@ -36,6 +36,8 @@ export default function RootLayout({
         {/* 네이버 지도 */}
         <Script type="text/javascript" src="http://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ugm16gkcw2" />
         <Script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ugm16gkcw2&submodules=geocoder" />
+        {/* 정책 임시 */}
+        {/* <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests"></meta> */}
       </head>
       <body>
         <QueryProviders>

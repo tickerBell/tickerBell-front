@@ -105,54 +105,18 @@ export const ImageUpload = ({ setThumbNailUrl, setImageUrls }: Image) => {
   };
 
   return (
-    <div className="flex flex-col  gap-22">
-      <div
-        {...getThumbnailRootProps()}
-        className=" flex flex-col items-center justify-center border-2 border-dashed border-gray-400 py-5 cursor-pointer"
-      >
-        <p>썸네일 이미지를 드래그하거나 클릭하여 선택하세요.</p>
-        <input
-          id="hidden-file-input"
-          type="file"
-          className="hidden"
-          {...getThumbnailInputProps()}
-        />
-      </div>
-      <div className="w-1/2 sm:w-1/3 md:w-1/4 p-1">
-        {thumbnailPreview && (
-          <div className="relative border rounded-md p-2 group  w-92 h-92">
-            <Image
-              src={thumbnailPreview.url}
-              alt="썸네일 이미지"
-              width={368}
-              height={368}
-              className="object-cover"
-            />
-            <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col justify-between p-2 text-transparent hover:text-white group-hover:bg-black group-hover:bg-opacity-50">
-              <span className="text-xs break-words">
-                {`${thumbnailPreview.name} (${thumbnailPreview.size} bytes)`}
-              </span>
-              <button
-                className="absolute bottom-0 right-0 p-1 rounded-md hover:bg-red-600 bg-opacity-75"
-                onClick={() => removeFile(thumbnailPreview)}
-              >
-                <IoTrash />
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
+    <div className="flex flex-col gap-10">
       <div
         {...getImagesRootProps()}
-        className="flex flex-col items-center justify-center border-2 border-dashed border-gray-400 py-5 cursor-pointer"
+        className="flex flex-col items-center justify-center py-5 border-2 border-gray-400 border-dashed cursor-pointer"
       >
         <input {...getImagesInputProps()} />
         <p>업로드할 이미지 파일들을 드래그하거나 클릭하여 선택하세요.</p>
       </div>
       <ul className="flex flex-row gap-12 ">
         {imagesPreview.map((file, index) => (
-          <li key={index} className="p-1 flex flex-row ">
-            <div className="relative border rounded-md p-2 group  w-92 h-92">
+          <li key={index} className="flex flex-row p-1 ">
+            <div className="relative p-2 border rounded-md group w-92 h-92">
               <Image
                 src={file.preview}
                 alt={file.name}
@@ -160,13 +124,13 @@ export const ImageUpload = ({ setThumbNailUrl, setImageUrls }: Image) => {
                 height={368}
                 className="object-cover"
               />
-              <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col justify-between p-2 text-transparent hover:text-white group-hover:bg-black group-hover:bg-opacity-50">
+              <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col justify-between p-2 text-transparent hover:text-white group-hover:bg-black group-hover:bg-opacity-50">
                 <span className="text-xs break-words">{file.name}</span>
                 <span className="text-xs">
                   {(file.size / 1024).toFixed(2)} KB
                 </span>
                 <button
-                  className="absolute bottom-0 right-0 p-1 rounded-md hover:bg-red-600 bg-opacity-75"
+                  className="absolute bottom-0 right-0 p-1 bg-opacity-75 rounded-md hover:bg-red-600"
                   onClick={() => removeFile(file)}
                 >
                   <IoTrash />
@@ -176,6 +140,42 @@ export const ImageUpload = ({ setThumbNailUrl, setImageUrls }: Image) => {
           </li>
         ))}
       </ul>
+      <div
+        {...getThumbnailRootProps()}
+        className="flex flex-col items-center justify-center py-5 border-2 border-gray-400 border-dashed cursor-pointer "
+      >
+        <p>썸네일 이미지를 드래그하거나 클릭하여 선택하세요.</p>
+        <input
+          id="hidden-file-input"
+          type="file"
+          className="hidden"
+          {...getThumbnailInputProps()}
+        />
+      </div>
+      <div className="">
+        {thumbnailPreview && (
+          <div className="relative flex w-full h-100">
+            <Image
+              src={thumbnailPreview.url}
+              alt="썸네일 이미지"
+              fill
+              objectFit='contain'
+            />
+            <div className="flex flex-col justify-between">
+              <span className="text-xs break-words">
+                {`${thumbnailPreview.name} (${thumbnailPreview.size} bytes)`}
+              </span>
+              <button
+                className="absolute bottom-0 right-0 p-1 bg-opacity-75 rounded-md hover:bg-red-600"
+                onClick={() => removeFile(thumbnailPreview)}
+              >
+                <IoTrash />
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+  
       <Button type="button" onClick={uploadFiles} disabled={uploading}>
         {uploading ? "업로드 중..." : "이미지 업로드"}
       </Button>

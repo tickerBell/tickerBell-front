@@ -1,20 +1,23 @@
 interface FormData {
+  name: string;
   startEvent: string;
   endEvent: string;
-  name: string;
-  tags: { name: string }[];
-  castings: { name: string }[];
-  hosts: { name: string }[];
-  place: string;
-  category: string;
-  isAdult: string;
+  dailyStartEvent: string;
+  eventTime: number;
   availablePurchaseTime: string;
   normalPrice: number;
   premiumPrice: number;
   saleDegree: number;
+  castings: { name: string }[];
+  hosts: { name: string }[];
+  place: string;
+  description: string;
+  isAdult: string;
   isSpecialA: boolean;
   isSpecialB: boolean;
   isSpecialC: boolean;
+  category: string;
+  tags: { name: string }[];
   thumbnailUrl: string;
   imageUrls: string[];
 }

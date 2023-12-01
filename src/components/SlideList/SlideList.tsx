@@ -14,7 +14,7 @@ const SlideList = () => {
     queryFn: () => eventSlideApi(),
   });
 
-  console.log(`${errorUpdatedAt}, ${status}, ${isFetched}, isError: ${isError}  error : ${error} data: ${data}`);
+  // console.log(`${errorUpdatedAt}, ${status}, ${isFetched}, isError: ${isError}  error : ${error} data: ${data}`);
 
   return (
     <>

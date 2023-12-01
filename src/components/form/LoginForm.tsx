@@ -20,9 +20,6 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
   // const [sms, setSms] = useState(0);
   const setIsLogin = useSetRecoilState(userSelector("isLogin"));
   const setUserInfo = useSetRecoilState(userSelector("role"));
-  const setName = useSetRecoilState(userSelector('name'));
-
-
   const router = useRouter();
 
   const {
@@ -58,7 +55,7 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
             secure: "/",
           });
           setUserInfo("isRegistrationTrue" ? "ROLE_REGISTRANT" : "ROLE_USER");
-          setName(parseJwt(res.data.accessToken).username);
+         
           router.push("/");
           axios
             .get(`${process.env.NEXT_PUBLIC_API_URL}/api/emitter/subscribe`, {
@@ -81,7 +78,7 @@ const LoginForm = ({ tab, setTab }: formPropsType) => {
         secure: "/",
         expires: oneHourFromNow
       });
-      setName(data.username);
+    
       router.push("/");
     }
   };

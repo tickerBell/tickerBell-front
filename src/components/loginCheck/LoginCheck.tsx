@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 const LoginCheck = () => {
   const setIsLogin = useSetRecoilState(userSelector("isLogin"));
   const setRole = useSetRecoilState(userSelector("role"));
+  const setName = useSetRecoilState(userSelector('name'));
   const router = useRouter();
 
   // console.log('type', typeof getCookie("ticket-atk"), getCookie("ticket-atk")?.name)
@@ -39,6 +40,11 @@ const LoginCheck = () => {
       if (getCookie("ticket-atk")) {
         setIsLogin(getCookie("ticket-atk") === undefined ? false : true);
         // if (getCookie("ticket-atk") === undefined) 
+        if (typeof getCookie("ticket-atk") === 'string') {
+          setName(parseJwt(getCookie('ticket-atk')).username);
+        } else {
+          setName(getCookie('ticket-atk').username);
+        }
       }
       if (getCookie('ticket-rtk')) {
         // console.log('현재 날짜가 만료시간보다 이전임 : ',

@@ -10,7 +10,9 @@ type props = {
   label: string;
   onKeyDown: React.KeyboardEventHandler<HTMLInputElement>;
   fields: TagField[];
+  register: any;
   remove: (index: number) => void;
+  requiredText?: string;
 } & HTMLProps<HTMLInputElement>;
 
 export const InputField = ({
@@ -19,8 +21,13 @@ export const InputField = ({
   onKeyDown,
   fields,
   remove,
+  register,
+  requiredText,
   ...attr
 }: props) => {
+  // console.log('ddfields: ', fields?.[0]?.name)
+  // console.log('ddfields: ', attr.id)
+
   return (
     <div>
       <label
@@ -34,6 +41,8 @@ export const InputField = ({
         {...attr}
         className="w-full p-16 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 "
         onKeyDown={onKeyDown}
+        // {...register(fields?.[0]?.name, { required: `${requiredText}` })}
+        defaultValue=""
       />
       {
         fields &&
