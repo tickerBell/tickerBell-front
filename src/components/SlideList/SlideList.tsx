@@ -15,6 +15,7 @@ const SlideList = () => {
   });
 
   // console.log(`${errorUpdatedAt}, ${status}, ${isFetched}, isError: ${isError}  error : ${error} data: ${data}`);
+  console.log('slide: ', data);
 
   return (
     <>

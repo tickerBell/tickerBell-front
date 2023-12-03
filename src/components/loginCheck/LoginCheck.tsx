@@ -8,6 +8,7 @@ import { epochConvert } from '@/util/epochConverter';
 import React, { useEffect, useState } from 'react'
 import { useSetRecoilState } from 'recoil';
 import { useRouter } from "next/navigation";
+import Sse from '../sse/Sse';
 
 // 로그인 체크용 컴포넌트
 const LoginCheck = () => {
@@ -31,6 +32,8 @@ const LoginCheck = () => {
     //   );
     // }
   }, []);
+
+  Sse();
 
   useEffect(() => {
     function chk() {

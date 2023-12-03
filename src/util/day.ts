@@ -6,7 +6,7 @@ export const openDay = (date: any) => {
 };
 
 export const day = (date: any) => {
-  return dayjs(date).format("YY-MM-DD HH:mm");
+  return dayjs(date).format("YY-MM-DD");
 };
 
 export const date = (date: any) => {

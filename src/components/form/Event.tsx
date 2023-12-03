@@ -5,7 +5,7 @@ import { day, postEventDateType, weekDay } from "@/util/day";
 import { useMutation } from "@tanstack/react-query";
 import { KeyboardEvent, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm, SubmitHandler } from "react-hook-form";
 import Button from "../button/Button";
 import SearchMapModal from "../portalModal/mapModal/SearchMapModal";
 import { ImageUpload } from "./ImageUpload";
@@ -32,6 +32,7 @@ const Event = () => {
     },
   });
 
+  const today = new Date();
   const [mapOnModal, setMapOnModal] = useState(false);
   const [thumbNailUrl, setThumbNailUrl] = useState("");
   const [imageUrls, setImageUrls] = useState<string[]>([]);
@@ -100,45 +101,48 @@ const Event = () => {
   const createEventMutation = useMutation({
     mutationFn: (payload: any) => postEventApi(payload),
     onSuccess: (payload: any) => {
-      console.log('dd', payload);
+      
+      // console.log('dd', payload);
       // queryClient.invalidateQueries({ queryKey: ['event-reservelist', getPaging] })
     }
   })
 
-  const onSubmit = (onData: FormData) => {
-    const tagNames = onData.tags.map(tag => tag.name);
-    const castingNames = onData.castings.map(casting => casting.name);
-    const hostNames = onData.hosts.map(host => host.name);
+  const onSubmit: SubmitHandler<FormData> = async (onData: any) => {
+    const tagNames = onData?.tags?.map((tag:any) => tag.name);
+    const castingNames = onData?.castings?.map((casting:any) => casting.name);
+    const hostNames = onData?.hosts?.map((host:any) => host.name);
 
     const payload = {
       name: onData.name,
       startEvent: `${dayjs(onData.startEvent).format('YYYY-MM-DD')}T00:00:00Z`,
       endEvent: `${dayjs(onData.endEvent).format('YYYY-MM-DD')}T23:59:59Z`,
       dailyStartEvent: `${dayjs(onData.dailyStartEvent).format('HH:mm')}`,
-      eventTime: onData.eventTime,
+      eventTime: Number(onData.eventTime),
       availablePurchaseTime: `${dayjs(onData.availablePurchaseTime).format('YYYY-MM-DDTHH:mm:ss')}Z`,
-      normalPrice: onData.normalPrice,
-      premiumPrice: onData.premiumPrice,
-      saleDegree: onData.saleDegree,
+      normalPrice: Number(onData.normalPrice),
+      premiumPrice: Number(onData.premiumPrice),
+      saleDegree: Number(onData.saleDegree),
       castings: castingNames,
       hosts: hostNames,
       place: enroll_company.address,
       description: onData.description,
       isAdult: onData.isAdult === 'adult' ? true : false,
-      isSpecialA: onData.isSpecialA,
-      isSpecialB: onData.isSpecialB,
-      isSpecialC: onData.isSpecialC,
+      isSpecialA: onData.isSpecialA === undefined ? false : true,
+      isSpecialB: onData.isSpecialB === undefined ? false : true,
+      isSpecialC: onData.isSpecialC === undefined ? false : true,
       category: onData.category,
       tags: tagNames,
-      thumbnailUrl: thumbNailUrl,
+      thumbNailUrl: thumbNailUrl,
       imageUrls: imageUrls,
     };
-    console.log("데이터", payload);
+    // console.log('폼데이터', onData.name);
+    console.log("전송데이터", payload);
 
+    // TODO: 정보확인 창 추가
     createEventMutation.mutate(payload);
   };
 
-  console.log('watch', watch());
+  // console.log('watch', watch());
 
   return (
     <>
@@ -233,7 +237,7 @@ const Event = () => {
                         dateFormat="yy년 MM월 dd일"
                         selected={field.value ? dayjs(field.value).toDate() : null}
                         onChange={(date) => field.onChange(dayjs(date).toDate())}
-                        minDate={weekDay(2).toDate()}
+                        minDate={watch('startEvent') ? watch('startEvent') : weekDay(2).toDate()}
                       />
                     )}
                   />
@@ -288,6 +292,7 @@ const Event = () => {
                         onChange={(date) => field.onChange(dayjs(date).toDate())}
                         showTimeSelect
                         timeIntervals={15}
+                        minDate={weekDay(0).toDate()}
                       />
                     )}
                   />
@@ -365,7 +370,7 @@ const Event = () => {
                     // maxLength={5}
                     value={enroll_company.address}
                     readOnly
-                    {...register("place", { required: '이벤트 주소는 필수 입력입니다.' })}
+                    // {...register("place", { required: '이벤트 주소는 필수 입력입니다.' })}
                     // defaultValue=""
                     onClick={(e) => {
                       e.stopPropagation();
@@ -374,7 +379,7 @@ const Event = () => {
                   />
                   <Button
                     type="button"
-                    onClick={(e) => {
+                    onClick={(e: any) => {
                       e.stopPropagation();
                       setMapOnModal(true);
                     }}
@@ -519,6 +524,11 @@ const Event = () => {
               </div>
             </div>
 
+            <ImageUpload
+              setThumbNailUrl={setThumbNailUrl}
+              setImageUrls={setImageUrls}
+            />
+
             <div>
               <textarea
                 className="w-full p-6 mt-20 border resize-none"
@@ -527,14 +537,10 @@ const Event = () => {
               />
             </div>
 
-            <ImageUpload
-              setThumbNailUrl={setThumbNailUrl}
-              setImageUrls={setImageUrls}
-            />
-
             <Button
               className="mt-20 bg-blue-700 hover:bg-blue-800"
               type="submit"
+              onClick={onSubmit}
             >
               이벤트 생성
             </Button>

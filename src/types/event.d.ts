@@ -1,10 +1,10 @@
 interface FormData {
   name: string;
-  startEvent: string;
-  endEvent: string;
-  dailyStartEvent: string;
+  startEvent: Date;
+  endEvent: Date;
+  dailyStartEvent: Date;
   eventTime: number;
-  availablePurchaseTime: string;
+  availablePurchaseTime: Date;
   normalPrice: number;
   premiumPrice: number;
   saleDegree: number;

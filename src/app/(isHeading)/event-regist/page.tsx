@@ -9,9 +9,9 @@ const Index = () => {
   return (
     <div className="flex w-full max-w-1000 mx-auto mt-20 mb-60 flex-row justify-center items-center">
       {/* <EventForm registType="event" /> */}
-      <FormProvider {...methods}>
+      {/* <FormProvider {...methods}> */}
         <Event />
-      </FormProvider>
+      {/* </FormProvider> */}
     </div>
   );
 };

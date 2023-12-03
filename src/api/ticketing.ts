@@ -47,7 +47,7 @@ export async function userReserveApi(selectedSeat: [], selectedDate: string, eve
   return res;
 }
 
-// 회원: 예매 내역 or 등록 내역 조회
+// 회원: 예매자 - 예매 내역 or 등록자 - 등록 내역 조회
 export async function userReserveListApi(atk: string, page: number) {
   const res = await apiInstance.get("/api/member/my", {
     // headers: {
@@ -58,16 +58,21 @@ export async function userReserveListApi(atk: string, page: number) {
   return res;
 }
 
-// 예매 내역 삭제
+// 회원: 예매자 - 예매 취소
 export async function userDeleteReserverIdApi(id: number) {
   const res = await apiInstance.delete(`/ticketing/${id}`, {});
   return res;
 }
 
-// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-// 등록 내역 삭제
+// 회원: 등록자 - 등록 내역 삭제
 export async function userDeleteResigsterIdApi(id: number) {
   const res = await apiInstance.post(`/api/event/cancel/${id}`, {});
+  return res;
+}
+
+// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+// 예약된 좌석 데이터 반환
+export async function reserveEventSeatReturnApi(id: number) {
+  const res = await apiInstance.post(`/selectted-seat/${id}`, {});
   return res;
 }
