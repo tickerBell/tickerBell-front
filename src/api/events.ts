@@ -50,7 +50,7 @@ export async function postEventApi(data: any) {
   console.log("등록", data);
   try {
     const res = await apiInstance.post("/api/event", data, {});
-    console.log("이벤트 등록성공:", res);
+    console.log("이벤트 등록:", res);
     return res;
   } catch (error) {
     console.error(error);

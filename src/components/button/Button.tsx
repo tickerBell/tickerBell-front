@@ -22,7 +22,8 @@ type ButtonProps = {
   children: React.ReactNode;
   size?: "small" | "medium" | "large";
   theme?: "primary" | "secondary" | "border";
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  // onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: any;
   className?: string;
   full?: boolean;
   type?: "button" | "submit" | "reset";

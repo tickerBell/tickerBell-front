@@ -72,7 +72,7 @@ apiInstance.interceptors.response.use(
             "Content-Type": "application/json",
           },
         });
-        console.log("갱신", data.data.accessToken);
+        console.log("갱신", data);
         //  갱신
         removeCookie("ticket-atk");
         setCookie("ticket-atk", `${data.data.accessToken}`);

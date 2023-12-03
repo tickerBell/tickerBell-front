@@ -30,7 +30,7 @@ const Card = ({ data, type }: cardType) => {
               />
             }
           </div>
-          <div className="mt-10">{data.name}</div>
+          <div className="mt-10 truncate">{data.name}</div>
           {data.castings && (
             <div>
               {data.castings.map((item: any, i: any) => (
@@ -38,12 +38,14 @@ const Card = ({ data, type }: cardType) => {
               ))}
             </div>
           )}
-          <div>{data.place}</div>
-          <div className="mt-6 mb-6">{day(data.startEvent)}</div>
-          {data.discountNormalPrice && (
-            <del className="size-[14px]">{price(data.discountNormalPrice)}원</del>
+          <div className="line-clamp-2">{data.place}</div>
+          <div className="mt-6 mb-6">
+            {day(data.startEvent)}
+          </div>
+          {data.saleDegree !== 0 && (
+            <del className="size-[14px]">{price(data.normalPrice)}원</del>
           )}
-          <div>{price(data.normalPrice)}원</div>
+          <div>{price(data.discountNormalPrice)}원</div>
         </Link>
       </div>
     </>

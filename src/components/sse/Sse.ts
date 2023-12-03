@@ -28,23 +28,27 @@ const Sse = () => {
           console.log("sse 연결됨");
         }
       };
+      sse.onerror = (value: any) => {
+        console.log('sse 에러', value);
+      }
 
       sse.onmessage = (event:any) => {
-        const isJson = (str:any) => {
-          try {
-            const json = JSON.parse(str);
-            return json && typeof json === "object";
-          } catch (e) {
-            return false;
-          }
-        };
-        if (isJson(event.data)) {
+        console.log('sse 데이터 수신', event);
+        // const isJson = (str:any) => {
+        //   try {
+        //     const json = JSON.parse(str);
+        //     return json && typeof json === "object";
+        //   } catch (e) {
+        //     return false;
+        //   }
+        // };
+        // if (isJson(event.data)) {
           console.log("sse 메시지 수신됨");
           // queryClient.invalidateQueries(["alaram"]);
           // queryClient.invalidateQueries(["alaramUnRead"]);
           // dispatch(ON_NOTI());
           // setGetMessage(true);
-        }
+        // }
       };
       if (getCookie('ticket-atk') === null) {
         sse.close();
@@ -55,9 +59,7 @@ const Sse = () => {
     //     sse.close();
     //   }
     // }
-  }, [getCookie('ticket-atk')])
-
-  return null;
+  }, [getCookie('ticket-atk'), EventSource])
 };
 
 export default Sse;

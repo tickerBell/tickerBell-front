@@ -6,15 +6,15 @@ export const openDay = (date: any) => {
 };
 
 export const day = (date: any) => {
-  return dayjs(date).format("YY-MM-DD HH:mm");
+  return dayjs(date).format("YY-MM-DD");
 };
 
 export const date = (date: any) => {
   return dayjs(date).format("YY-MM-DD");
 };
 
-export const calenderDateType = (date: any) => {
-  return dayjs(date).format("YYYY/MM/DD");
+export const postEventDateType = (date: any) => {
+  return dayjs(date).format("YYYY-MM-DD");
 }
 
 export const weekDay = (week: number) => {

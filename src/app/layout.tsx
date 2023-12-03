@@ -11,7 +11,7 @@ import Location from "@/components/location/Location";
 import LoginCheck from "@/components/loginCheck/LoginCheck";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Sse from "@/components/sse/Sse";
+// import Sse from "@/components/sse/Sse";
 // const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -36,6 +36,8 @@ export default function RootLayout({
         {/* 네이버 지도 */}
         <Script type="text/javascript" src="http://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ugm16gkcw2" />
         <Script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ugm16gkcw2&submodules=geocoder" />
+        {/* 정책 임시 */}
+        {/* <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests"></meta> */}
       </head>
       <body>
         <QueryProviders>
@@ -45,7 +47,7 @@ export default function RootLayout({
                 {children}
                 <LoginCheck />
                 <Location />
-                <Sse />
+                {/* <Sse /> */}
                 <ToastContainer
                   position="top-center"
                   autoClose={5000}

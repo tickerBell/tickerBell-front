@@ -8,11 +8,13 @@ import { epochConvert } from '@/util/epochConverter';
 import React, { useEffect, useState } from 'react'
 import { useSetRecoilState } from 'recoil';
 import { useRouter } from "next/navigation";
+import Sse from '../sse/Sse';
 
 // 로그인 체크용 컴포넌트
 const LoginCheck = () => {
   const setIsLogin = useSetRecoilState(userSelector("isLogin"));
   const setRole = useSetRecoilState(userSelector("role"));
+  const setName = useSetRecoilState(userSelector('name'));
   const router = useRouter();
 
   // console.log('type', typeof getCookie("ticket-atk"), getCookie("ticket-atk")?.name)
@@ -31,6 +33,8 @@ const LoginCheck = () => {
     // }
   }, []);
 
+  Sse();
+
   useEffect(() => {
     function chk() {
       userInfoApi(getCookie("ticket-atk")).then((res) =>
@@ -39,6 +43,11 @@ const LoginCheck = () => {
       if (getCookie("ticket-atk")) {
         setIsLogin(getCookie("ticket-atk") === undefined ? false : true);
         // if (getCookie("ticket-atk") === undefined) 
+        if (typeof getCookie("ticket-atk") === 'string') {
+          setName(parseJwt(getCookie('ticket-atk')).username);
+        } else {
+          setName(getCookie('ticket-atk').username);
+        }
       }
       if (getCookie('ticket-rtk')) {
         // console.log('현재 날짜가 만료시간보다 이전임 : ',

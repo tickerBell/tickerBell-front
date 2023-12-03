@@ -13,6 +13,8 @@ type BasicModalType = {
   selectedSeats: string[];
   setSelectedSeats: React.Dispatch<React.SetStateAction<string[]>>;
   price?: number[];
+  selectData: any;
+  eventId: string | string[];
 };
 
 const EventDetailModal = ({
@@ -22,7 +24,9 @@ const EventDetailModal = ({
   className,
   selectedSeats,
   setSelectedSeats,
-  price
+  price,
+  selectData,
+  eventId
 }: BasicModalType & modalType) => {
 
   const selectSeat = (seat: string) => {
@@ -38,6 +42,7 @@ const EventDetailModal = ({
   const itemsC = ArrayGenerator(1, 20, "c-");
 
   console.log('받은 배열', price);
+  console.log('cc', selectData, eventId)
 
   // 쿠키가 string 이면 디코딩, 없다면 객체선택. 
 
