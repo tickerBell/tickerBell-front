@@ -11,8 +11,10 @@ module.exports = {
   ],
   theme: {
     extend: {
-      top: px0_10,
-      right: px0_100,
+      top: px0_1000,
+      right: px0_1000,
+      left: px0_1000,
+      bottom: px0_1000,
       width: px0_1000,
       maxWidth: px0_10000,
       minWidth: px0_10000,

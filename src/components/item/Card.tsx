@@ -38,7 +38,7 @@ const Card = ({ data, type }: cardType) => {
               ))}
             </div>
           )}
-          <div className="line-clamp-2">{data.place}</div>
+          <div className="line-clamp-2" title={data.place}>{data.place}</div>
           <div className="mt-6 mb-6">
             {day(data.startEvent)}
           </div>

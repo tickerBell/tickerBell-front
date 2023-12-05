@@ -15,7 +15,7 @@ const SlideList = () => {
   });
 
   // console.log(`${errorUpdatedAt}, ${status}, ${isFetched}, isError: ${isError}  error : ${error} data: ${data}`);
-  console.log('slide: ', data);
+  // console.log('slide: ', data);
 
   return (
     <>
@@ -53,8 +53,8 @@ const SlideList = () => {
               })}>스포츠</div>
             }
           </div>
-          <Slide data={data?.data[tab]} title="랭킹" viewCount={5} />
-          <Slide data={data?.data['saleEventList']} title="세일" autoplay />
+          <Slide data={data?.data[tab]} title="랭킹" viewCount={5} arrow={false}/>
+          <Slide data={data?.data['saleEventList']} title="할인" autoplay />
           <Slide data={data?.data['deadLineEventList']} title="마감임박" />
           <Slide data={data?.data['recommendEventList']} title="추천!" />
         </div>
