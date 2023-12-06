@@ -2,18 +2,20 @@ import Button from "@/components/button/Button";
 import { ArrayGenerator } from "@/hooks/ArrayGenerator";
 import { onClickPayment } from "@/hooks/Payment";
 import classNames from "classnames";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "../Modal";
 import ModalFrame from "../ModalFrame";
 import { useRecoilState } from "recoil";
 import { useQuery } from "@tanstack/react-query";
 import { getCookie } from "@/util/authCookie";
+import { reserveEventSeatReturnApi } from "@/api/ticketing";
+import dayjs from "dayjs";
 
 type BasicModalType = {
   selectedSeats: string[];
   setSelectedSeats: React.Dispatch<React.SetStateAction<string[]>>;
   price?: number[];
-  selectData: any;
+  selectDate: any;
   eventId: string | string[];
 };
 
@@ -25,7 +27,7 @@ const EventDetailModal = ({
   selectedSeats,
   setSelectedSeats,
   price,
-  selectData,
+  selectDate,
   eventId
 }: BasicModalType & modalType) => {
 
@@ -42,7 +44,16 @@ const EventDetailModal = ({
   const itemsC = ArrayGenerator(1, 20, "c-");
 
   console.log('받은 배열', price);
-  console.log('cc', selectData, eventId)
+  console.log('cc', selectDate, eventId)
+
+  // const { data } = useQuery({
+  //   queryKey: ['event-seat', eventId],
+  //   queryFn: () => reserveEventSeatReturnApi(Number(eventId), selectDate)
+  // })
+  useEffect(() => {
+    const res = reserveEventSeatReturnApi(Number(eventId), `${dayjs(selectDate).format('YYYY-MM-DDTHH:mm:ss')}Z`)
+    console.log('선택된 자리', res);
+  }, []);
 
   // 쿠키가 string 이면 디코딩, 없다면 객체선택. 
 

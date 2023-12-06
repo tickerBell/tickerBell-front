@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
-import "./index.scss";
+import "../assets/style/index.scss";
 // import { Inter } from 'next/font/google'
 import QueryProviders from "@/util/queryProvider";
 import RecoilRootProvider from "@/util/recoilRootProvider";
@@ -52,8 +52,8 @@ export default function RootLayout({
                 {/* <Sse /> */}
                 <ToastContainer
                   position="top-center"
-                  autoClose={5000}
-                  hideProgressBar={false}
+                  autoClose={3500}
+                  hideProgressBar={true}
                   newestOnTop={false}
                   closeOnClick
                   rtl={false}

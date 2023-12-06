@@ -72,7 +72,11 @@ export async function userDeleteResigsterIdApi(id: number) {
 
 // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 // 예약된 좌석 데이터 반환
-export async function reserveEventSeatReturnApi(id: number) {
-  const res = await apiInstance.post(`/selectted-seat/${id}`, {});
+export async function reserveEventSeatReturnApi(id: number, date:any) {
+  console.log('re', id, date);
+  const res = await apiInstance.post(`/selectted-seat/${id}`, {
+    eventId: id,
+    selectedDate: date,
+  });
   return res;
 }

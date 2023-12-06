@@ -46,12 +46,12 @@ const Index = () => {
             setSelectedSeats={setSelectedSeats}
             setOnModal={() => setModal(false)}
             price={price}
-            selectData={startDate}
+            selectDate={startDate}
             eventId={params.id}
           />
         )}
-        <div className="flex lg:flex-row flex-col justify-center mt-40">
-          <div className="flex lg:flex-row flex-col md:w-8/12 w-full h-auto gap-40">
+        <div className="flex flex-col justify-center mt-40 lg:flex-row">
+          <div className="flex flex-col w-full h-auto gap-40 lg:flex-row md:w-8/12">
             <div className="relative min-w-300 h-400">
               <Image
                 src={data.thumbNailUrl}
@@ -62,23 +62,23 @@ const Index = () => {
             </div>
             <ul className="flex flex-col gap-10">
               <li className="">
-                <span className="font-bold">이벤트명</span>
+                <span className="inline-flex mr-8 font-bold min-w-55">이벤트명</span>
                 {data.name}
               </li>
               <li className="">
-                <span className="font-bold">장소</span>
+                <span className="inline-flex mr-8 font-bold min-w-55">장소</span>
                 {data.place}
               </li>
               <li className="">
-                <span className="font-bold">배우명</span>
+                <span className="inline-flex mr-8 font-bold min-w-55">배우명</span>
                 {data.castings}
               </li>
               <li className="">
-                <span className="font-bold">관람연령</span>
+                <span className="inline-flex mr-8 font-bold min-w-55">관람연령</span>
                 {data.isAdult ? '성인관람' : '전체관람'}
               </li>
               <li className="">
-                <span className="font-bold">가격</span>
+                <span className="inline-flex mr-8 font-bold min-w-55">가격</span>
                 <ul>
                   <li><span>일반</span> {data.discountNormalPrice}</li>
                   <li><span>프리미엄</span> {data.discountPremiumPrice}</li>
@@ -86,8 +86,8 @@ const Index = () => {
               </li>
             </ul>
           </div>
-          <div className="lg:w-1/4 md:w-8/12 w-full h-full flex flex-col lg:h-screen gap-20">
-            <p className="lg:text-4xl text-3xl leading-9 text-gray-800">
+          <div className="flex flex-col w-full h-full gap-20 lg:w-1/4 md:w-8/12 lg:h-screen">
+            <p className="text-3xl leading-9 text-gray-800 lg:text-4xl">
               {data.name}
             </p>
             <div className="mx-auto">

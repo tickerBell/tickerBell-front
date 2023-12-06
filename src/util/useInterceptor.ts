@@ -8,6 +8,7 @@ import { getCookie, removeCookie, setCookie } from "./authCookie";
 import { useRouter } from "next/navigation";
 import { parseJwt } from "@/hooks/useParseJwt";
 import { epochConvert } from "./epochConverter";
+import { toast } from "react-toastify";
 
 const apiInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -52,7 +53,7 @@ apiInstance.interceptors.response.use(
     if (err.response && err.response.status === 400) {
       // const router = useRouter();
       // router.push("/");
-      
+      toast.error(`${err.response.data.message}`)
       return err.response.data;
     }
 

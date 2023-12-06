@@ -1,6 +1,6 @@
 "use client";
 
-import { userInfoApi } from '@/api/users';
+import { refreshTokenApi, userInfoApi } from '@/api/users';
 import { parseJwt } from '@/hooks/useParseJwt';
 import { userSelector } from '@/recoil/user';
 import { getCookie, removeCookie } from '@/util/authCookie';
@@ -40,27 +40,42 @@ const LoginCheck = () => {
       userInfoApi(getCookie("ticket-atk")).then((res) =>
         setRole(res?.data.role)
       );
+      // 토큰이 있고, 
       if (getCookie("ticket-atk")) {
         setIsLogin(getCookie("ticket-atk") === undefined ? false : true);
-        // if (getCookie("ticket-atk") === undefined) 
-        if (typeof getCookie("ticket-atk") === 'string') {
-          setName(parseJwt(getCookie('ticket-atk')).username);
+        if (getCookie("ticket-atk") === undefined) {
+          removeCookie('ticket-atk');
+
         } else {
-          setName(getCookie('ticket-atk').username);
+          if (typeof getCookie("ticket-atk") === 'string') {
+            setName(parseJwt(getCookie('ticket-atk')).username);
+          } else {
+            setName(getCookie('ticket-atk').username);
+          }
         }
       }
       if (getCookie('ticket-rtk')) {
         // console.log('현재 날짜가 만료시간보다 이전임 : ',
         //   epochConvert(parseJwt(getCookie('ticket-rtk').exp))
         // )
-        if (getCookie("ticket-atk") === 'undefined') {
+        if (getCookie("ticket-atk") === undefined) {
           setIsLogin(false);
           removeCookie('ticket-atk');
         }
+        // trk만료
         if (epochConvert(parseJwt(getCookie('ticket-rtk').exp))) {
           removeCookie('ticket-rtk');
           removeCookie('ticket-atk');
           router.push('/');
+        } else {
+          // console.log('토큰 재갱신해야됨', res);
+          // const res = refreshTokenApi(getCookie('ticket-rtk'));
+          // res.then(() => {
+          //   // TODO: atk 재갱신
+          // })
+          // res.catch(() => {
+          //   removeCookie('ticket-rtk')
+          // })
         }
       }
     }

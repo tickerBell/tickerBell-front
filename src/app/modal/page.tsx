@@ -10,6 +10,7 @@ import { userState } from "@/recoil/user";
 import { useRecoilState } from "recoil";
 import { useQuery, gql } from "@apollo/client";
 import { onClickPayment } from "@/hooks/Payment";
+import { toast } from "react-toastify";
 
 const ModalPage = () => {
   const [modal, setModal] = useState(false);
@@ -100,6 +101,7 @@ const ModalPage = () => {
       <Button onClick={() => setModal(true)}>예약하기</Button>
       <Button onClick={() => setModal1(true)}>지도모달</Button>
       <Button onClick={() => setModal2(true)}>주소검색</Button>
+      <Button onClick={() => toast.success('성공')}>토스트 테스트</Button>
     </div>
   );
 };
