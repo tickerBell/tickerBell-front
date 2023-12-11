@@ -42,10 +42,12 @@ const Card = ({ data, type }: cardType) => {
           <div className="mt-6 mb-6 text-[14px] text-gray-500">
             {day(data.startEvent)} ~ {day(data.endEvent)}
           </div>
-          {data.saleDegree !== 0 && (
-            <del className="text-[14px]">{price(data.normalPrice)}원</del>
-          )}
-          <div className="font-semibold">{price(data.discountNormalPrice)}원</div>
+          <div className="flex min-h-48 flex-col justify-end">
+            {data.saleDegree !== 0 && (
+              <del className="text-[14px] text-gray-700">{price(data.normalPrice)}원</del>
+            )}
+            <div className="font-semibold">{price(data.discountNormalPrice)}원</div>
+          </div>
         </Link>
       </div>
     </>

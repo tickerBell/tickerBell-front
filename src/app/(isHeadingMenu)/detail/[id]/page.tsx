@@ -16,20 +16,22 @@ import "react-datepicker/dist/react-datepicker.css";
 const Index = () => {
   const params = useParams();
   const [modal, setModal] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
-  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+  
+  // const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
 
   const { data: eventIdData, isSuccess, isError, error } = useQuery({
     queryKey: ["event-id", params.id],
     queryFn: () => getEventIdApi(params.id),
   });
   const data = eventIdData?.data;
+  // const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(data?.startEvent);
 
   console.log("data", data);
 
   useEffect(() => {
-    console.log('selectedSeats', selectedSeats)
-  }, [selectedSeats])
+    console.log('startDate', startDate)
+  }, [startDate])
 
   if (error) {
     return <div>에러 발생: {error.message}</div>
@@ -42,8 +44,8 @@ const Index = () => {
         {modal && (
           <EventDetailModal
             className="w-1/2"
-            selectedSeats={selectedSeats}
-            setSelectedSeats={setSelectedSeats}
+            // selectedSeats={selectedSeats}
+            // setSelectedSeats={setSelectedSeats}
             setOnModal={() => setModal(false)}
             price={price}
             selectDate={startDate}
@@ -93,15 +95,16 @@ const Index = () => {
             <div className="mx-auto">
               <DatePicker
                 selected={startDate}
+                // selected={new Date(data.startEvent)}
                 onChange={(date: Date) => setStartDate(date)}
                 dateFormat="yyyy년 MM월 dd일"
-                minDate={new Date(data.availablePurchaseTime)}
+                minDate={new Date(data.startEvent)}
                 maxDate={new Date(data.endEvent)}
                 inline
               />
             </div>
             <div>상영일자 및 시간
-              <div>{`${day(startDate)}`}</div>
+              <div>{`${day(data.startEvent)}`}</div>
               <div>{`${data.dailyStartEvent}`}</div>
             </div>
             <Button className="w-full" onClick={() => setModal(true)}>

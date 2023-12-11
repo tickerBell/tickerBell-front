@@ -4,7 +4,9 @@ import axios from "axios";
 export const onClickPayment = (
   totalCost: number,
   name: string,
-  place: string
+  eventId: number,
+  eventName: string,
+  userPhone: string
 ) => {
   if (!window.IMP) return;
   /* 1. 가맹점 식별하기 */
@@ -15,14 +17,14 @@ export const onClickPayment = (
   const data: RequestPayParams = {
     pg: "html5_inicis", // PG사 : https://developers.portone.io/docs/ko/tip/pg-2 참고
     pay_method: "card", // 결제수단
-    merchant_uid: `mid_111`, // 주문번호
+    merchant_uid: eventId, // 주문번호
     amount: totalCost, // 결제금액
-    name: "아임포트 결제 데이터 분석", // 주문명
+    name: eventName, // 주문명
     buyer_name: name, // 구매자 이름
-    buyer_tel: "01012341234", // 구매자 전화번호
-    buyer_email: "example@example.com", // 구매자 이메일
-    buyer_addr: "신사동 661-16", // 구매자 주소
-    buyer_postcode: "06018", // 구매자 우편번호
+    buyer_tel: userPhone, // 구매자 전화번호
+    // buyer_email: "example@example.com", // 구매자 이메일
+    // buyer_addr: "신사동 661-16", // 구매자 주소
+    // buyer_postcode: "06018", // 구매자 우편번호
   };
 
   /* 4. 결제 창 호출하기 */
@@ -34,6 +36,7 @@ function callback(response: RequestPayResponse) {
 
   if (success) {
     alert("결제 성공");
+    // TODO: 여기에 예매 api붙이기
   } else {
     alert(`결제 실패: ${error_msg}`);
   }

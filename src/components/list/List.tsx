@@ -6,7 +6,6 @@ import { useInView } from "react-intersection-observer";
 import Card from "../item/Card";
 import Spinner from "../spinner/Spinner";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import Item from "../item/Item";
 
 type ListType = {
   category: string;

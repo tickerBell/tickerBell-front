@@ -82,7 +82,7 @@ const Slide = ({
             <Slider {...settings}>
               {data?.map((item: any, index: any) => (
                 <Link href={`/detail/${item.eventId}`} key={index}>
-                  <div className="relative m-auto w-full h-330 border border-1 border-[#eee]">
+                  <div className="relative m-auto w-full h-330 border border-1 border-[#eeeeee]">
                     {
                       title === '랭킹' && <div className="absolute left-10 bottom-10 text-white z-10 font-semibold text-[50px]">{index + 1}</div>
                     }

@@ -177,7 +177,7 @@ export interface RequestPayParams extends RequestPayAdditionalParams {
    * - 40Byte 이내로 작성해주세요
    * - 결제 승인완료 처리된 주문번호를 동일하게 재 설정시 사전거절 처리 됩니다.
    */
-  merchant_uid: string;
+  merchant_uid: number;
   /**
    * ### 결제대상 제품명
    * - 16byte 이내로 작성해주세요
