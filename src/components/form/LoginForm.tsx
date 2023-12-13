@@ -9,7 +9,6 @@ import { useForm } from "react-hook-form";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import Button from "../button/Button";
 import axios from "axios";
-import { parseJwt } from "@/hooks/useParseJwt";
 
 type formPropsType = {
   tab: number;

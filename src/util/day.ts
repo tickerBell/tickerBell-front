@@ -17,6 +17,10 @@ export const postEventDateType = (date: any) => {
   return dayjs(date).format("YYYY-MM-DD");
 }
 
+export const merchantUidDate = (date: any) => {
+  return dayjs(date).format("YYYYMMDD");
+}
+
 export const weekDay = (week: number) => {
   const today = dayjs();
   return today.add(week * 7, "day");

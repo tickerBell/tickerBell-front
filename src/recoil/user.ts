@@ -21,6 +21,7 @@ type UserState = {
   isLogin: boolean;
   role: string;
   name: string;
+  // phone?: number; // 비회원일때 예매 정보용
 };
 
 export const userState = atom<UserState>({
@@ -29,6 +30,7 @@ export const userState = atom<UserState>({
     isLogin: false,
     role: "",
     name: "",
+    // phone: 0
   },
 });
 
@@ -46,6 +48,8 @@ export const userSelector = selectorFamily({
           return user && user.role;
         case "name":
           return user && user.name;
+        // case "phone":
+        //   return user && user.phone;
         default:
           return null;
       }
@@ -61,6 +65,8 @@ export const userSelector = selectorFamily({
             return { ...prevUserState, role: newValue };
           case "name":
             return { ...prevUserState, name: newValue };
+          // case "phone":
+          //   return { ...prevUserState, phone: newValue };
           // case "nonMember":
           //   return {
           //     ...prevUserState,

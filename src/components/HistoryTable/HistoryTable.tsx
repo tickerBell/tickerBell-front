@@ -35,6 +35,7 @@ export const HistoryTable = () => {
     enabled: typeof getCookie('ticket-atk') === 'object',
   });
 
+  console.log('memberData', memberData);
   const data = typeof getCookie('ticket-atk') === 'string' ? memberData : nonmemberData
   const userType = typeof getCookie('ticket-atk') === 'string' ? 'myPageResponse' : 'content'
 

@@ -13,25 +13,29 @@ import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const Index = () => {
-  const params = useParams();
+// NOTE: ssg 테스트 코드
+export async function generateStaticParams({ params }: any) {
+  const events = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/event/${params.id}`).then((res) => res.json())
+
+  return events.map((event: any) => ({
+    slug: event.slug,
+  }))
+}
+
+const Index = ({ params }: { params: { id: string } }) => {
+  const { id } = params;
+
   const [modal, setModal] = useState(false);
-  
   // const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+
 
   const { data: eventIdData, isSuccess, isError, error } = useQuery({
     queryKey: ["event-id", params.id],
     queryFn: () => getEventIdApi(params.id),
   });
   const data = eventIdData?.data;
-  // const [startDate, setStartDate] = useState(new Date());
-  const [startDate, setStartDate] = useState(data?.startEvent);
-
-  console.log("data", data);
-
-  useEffect(() => {
-    console.log('startDate', startDate)
-  }, [startDate])
+  const defaultDate = eventIdData ? new Date(data.startEvent) : new Date();
 
   if (error) {
     return <div>에러 발생: {error.message}</div>
@@ -44,12 +48,11 @@ const Index = () => {
         {modal && (
           <EventDetailModal
             className="w-1/2"
-            // selectedSeats={selectedSeats}
-            // setSelectedSeats={setSelectedSeats}
             setOnModal={() => setModal(false)}
             price={price}
-            selectDate={startDate}
+            selectDate={startDate ? startDate : defaultDate}
             eventId={params.id}
+            eventName={data.name}
           />
         )}
         <div className="flex flex-col justify-center mt-40 lg:flex-row">
@@ -94,7 +97,8 @@ const Index = () => {
             </p>
             <div className="mx-auto">
               <DatePicker
-                selected={startDate}
+                // selected={startDate}
+                selected={startDate ? startDate : defaultDate}
                 // selected={new Date(data.startEvent)}
                 onChange={(date: Date) => setStartDate(date)}
                 dateFormat="yyyy년 MM월 dd일"
@@ -104,7 +108,8 @@ const Index = () => {
               />
             </div>
             <div>상영일자 및 시간
-              <div>{`${day(data.startEvent)}`}</div>
+              {/* <div>{`${day(data.startEvent)}`}</div> */}
+              <div>{startDate ? `${day(startDate)}` : `${day(defaultDate)}`}</div>
               <div>{`${data.dailyStartEvent}`}</div>
             </div>
             <Button className="w-full" onClick={() => setModal(true)}>
@@ -119,6 +124,7 @@ const Index = () => {
 export default Index;
 
 // NOTE 추후에 api가 나온다면 params로 받기
+
 // export async function getStaticPaths() {
 // const { data: posts } = await axios.get(`${ROOT_API}/todos`);
 
