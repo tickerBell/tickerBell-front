@@ -10,12 +10,6 @@
   }
 }
 
-@layer base {
-  html {
-    @apply font-noto;
-  }
-}
-
 @layer components {
   .flex-vertical-center {
     @apply flex;

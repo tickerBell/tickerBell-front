@@ -14,36 +14,28 @@ import { userDeleteReserverIdApi, userDeleteResigsterIdApi } from "@/api/ticketi
 import './historytable.scss';
 import { paginateSelector } from "@/recoil/paginate";
 
-interface HistoryTableBodyProps {
-  row: IEventHistoryTableReserverType;
+type HistoryTableBodyProps = {
+  // row: IEventHistoryTableReserverType;
+  row: any;
 }
 
 export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
   row,
 }) => {
-  const { startEvent, eventName, casting, place, isCancelled, ticketHolderCounts, eventId, ticketingId } = row;
+  const { eventHistoryResponse, isPast, isTicketingCancelled, payment, paymentId, selectedDate, selectedSeatReponseList, ticketingId } = row;
+
   const queryClient = useQueryClient();
   const getRole = useRecoilValue(userSelector("role"));
   const getPaging = useRecoilValue(paginateSelector);
   const [onModal, setOnModal] = useState(false);
   const date = new Date;
-  const [role, setRole] = useState('');
-
-  useEffect(() => {
-    // switch (getRole) {
-    //   case 'ROLE_REGISTRANT':
-
-    //     break;
-
-    //   default:
-    //     break;
-    // }
-  }, [getRole])
+  // console.log('r : ', row);
 
   const deleteReserverMutation = useMutation({
     mutationFn: (id: number) => userDeleteReserverIdApi(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['event-reservelist', getPaging] })
+      console.log('여기');
+      queryClient.invalidateQueries({ queryKey: ['event-reservelist-member', getPaging] })
     }
   })
 
@@ -64,7 +56,7 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
         deleteResisterMutation.mutate(id);
       }
       else if (getRole === 'ROLE_USER') {
-        console.log('회원');
+        console.log('회원', ticketingId);
         deleteReserverMutation.mutate(ticketingId);
       }
       else {
@@ -72,8 +64,6 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
       }
     }
   }
-
-  console.log('r', row);
 
   return (
     <>
@@ -93,22 +83,31 @@ export const HistoryTableBody: React.FC<HistoryTableBodyProps> = ({
         }}
       >
         <td className="px-6 py-4 truncate max-w-200 min-w-200">
-          {eventName}
+          {eventHistoryResponse.eventName}
         </td>
-        <td className="px-6 py-4 whitespace-nowrap">{casting}</td>
-        <td className="px-6 py-4 whitespace-nowrap">{day(startEvent)}</td>
-        <td className="px-6 py-4 truncate whitespace-nowrap max-w-400 min-w-400">{place}</td>
+        <td className="px-6 py-4 whitespace-nowrap">{eventHistoryResponse.castingList.map((item: string) => item)}</td>
+        <td className="px-6 py-4 whitespace-nowrap">{day(selectedDate)}</td>
+        <td className="px-6 py-4 truncate whitespace-nowrap max-w-400 min-w-400">{eventHistoryResponse.place}</td>
+        <td className="px-6 py-4 whitespace-nowrap">
+          {payment}원
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap">
+          좌석번호
+          {/* {selectedSeatReponseList.map((item:string) => item.seatInfo)} */}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap">
+          {paymentId}
+        </td>
         <td className="px-6 py-4 whitespace-nowrap w-60">
-          {isCancelled ? dayCompare(date, startEvent) ? '취소됨' : '진행됨' : '진행예정'}
-          {/* {!isCancelled && dayCompare(date, startEvent) ? '진행됨' : '진행예정'} */}
+          {isTicketingCancelled ? '취소됨' ? isPast : '진행됨' : '진행예정'}
         </td>
-        {
+        {/* {
           ticketHolderCounts !== null && <td className="px-6 py-4 min-w-100">{ticketHolderCounts}명</td>
-        }
+        } */}
         <td className="px-6 py-4 whitespace-nowrap">
           <Button className="border" onClick={(e: any) => {
             e.stopPropagation();
-            cancleEvent(eventId, ticketingId)
+            cancleEvent(eventHistoryResponse.eventId, ticketingId)
           }} >{getRole === "ROLE_REGISTRANT" ? '등록' : '예매'} 취소</Button>
         </td>
       </tr>

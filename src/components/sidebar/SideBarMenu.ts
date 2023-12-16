@@ -24,7 +24,7 @@ export const sideData = {
       title: "예약",
       submenu: [
         {
-          title: "이벤트 예약내역",
+          title: "이벤트 예매내역",
           route: "/mypage/reserve",
         },
       ],

@@ -30,22 +30,24 @@ const Card = ({ data, type }: cardType) => {
               />
             }
           </div>
-          <div className="mt-10 truncate">{data.name}</div>
+          <div className="mt-10 font-semibold text-gray-900 truncate">{data.name}</div>
           {data.castings && (
-            <div>
+            <div className="mt-4 mb-4 text-[14px]">
               {data.castings.map((item: any, i: any) => (
                 <span key={i}>{item}</span>
               ))}
             </div>
           )}
-          <div className="line-clamp-2">{data.place}</div>
-          <div className="mt-6 mb-6">
-            {day(data.startEvent)}
+          <div className="line-clamp-2 min-h-42" title={data.place}>{data.place}</div>
+          <div className="mt-6 mb-6 text-[14px] text-gray-500">
+            {day(data.startEvent)} ~ {day(data.endEvent)}
           </div>
-          {data.saleDegree !== 0 && (
-            <del className="size-[14px]">{price(data.normalPrice)}원</del>
-          )}
-          <div>{price(data.discountNormalPrice)}원</div>
+          <div className="flex min-h-48 flex-col justify-end">
+            {data.saleDegree !== 0 && (
+              <del className="text-[14px] text-gray-700">{price(data.normalPrice)}원</del>
+            )}
+            <div className="font-semibold">{price(data.discountNormalPrice)}원</div>
+          </div>
         </Link>
       </div>
     </>

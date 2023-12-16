@@ -8,6 +8,7 @@ import { getCookie, removeCookie, setCookie } from "./authCookie";
 import { useRouter } from "next/navigation";
 import { parseJwt } from "@/hooks/useParseJwt";
 import { epochConvert } from "./epochConverter";
+import { toast } from "react-toastify";
 
 const apiInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -16,6 +17,7 @@ const apiInstance = axios.create({
 
 apiInstance.interceptors.request.use(
   async (config) => {
+    console.log("cc?", getCookie("ticket-atk"), typeof getCookie("ticket-atk"));
     if (typeof getCookie("ticket-atk") === "string") {
       if (epochConvert(parseJwt(getCookie("ticket-atk").exp))) {
         removeCookie("ticket-rtk");
@@ -26,11 +28,13 @@ apiInstance.interceptors.request.use(
         return config;
       }
     }
-    if (getCookie("ticket-atk") == undefined && getCookie("ticket-trk") != undefined) {
-      return config;
-    }
-    if (getCookie("ticket-atk") == undefined) {
-      // removeCookie("ticket-atk");
+    // 토큰
+    // if (getCookie("ticket-atk") === undefined && getCookie("ticket-trk") !== undefined) {
+    //   return config;
+    // }
+    if (getCookie("ticket-atk") === "undefined") {
+      console.log("언디파인드");
+      removeCookie("ticket-atk");
       return config;
     }
     return config;
@@ -52,7 +56,7 @@ apiInstance.interceptors.response.use(
     if (err.response && err.response.status === 400) {
       // const router = useRouter();
       // router.push("/");
-      
+      toast.error(`${err.response.data.message}`);
       return err.response.data;
     }
 
@@ -60,7 +64,7 @@ apiInstance.interceptors.response.use(
     if (err.response && err.response.status === 401) {
       // removeCookie("ticket-atk");
       // 토큰 재발급 요청, apiInstance가 아닌 axios로 요청하기
-      removeCookie('ticket-atk');
+      removeCookie("ticket-atk");
       if (getCookie("ticket-trk") !== "undefined") {
         console.log("cc", process.env.NEXT_PUBLIC_API_URL);
         console.log("atk: ", getCookie("ticket-atk"));

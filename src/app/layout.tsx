@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
-import "./index.scss";
+import "../assets/style/index.scss";
 // import { Inter } from 'next/font/google'
 import QueryProviders from "@/util/queryProvider";
 import RecoilRootProvider from "@/util/recoilRootProvider";
@@ -11,6 +11,8 @@ import Location from "@/components/location/Location";
 import LoginCheck from "@/components/loginCheck/LoginCheck";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 // import Sse from "@/components/sse/Sse";
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -50,8 +52,8 @@ export default function RootLayout({
                 {/* <Sse /> */}
                 <ToastContainer
                   position="top-center"
-                  autoClose={5000}
-                  hideProgressBar={false}
+                  autoClose={3500}
+                  hideProgressBar={true}
                   newestOnTop={false}
                   closeOnClick
                   rtl={false}

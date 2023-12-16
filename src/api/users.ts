@@ -2,6 +2,14 @@ import { userSelector } from "@/recoil/user";
 import apiInstance from "@/util/useInterceptor";
 import { useRecoilValue } from "recoil";
 
+// 토큰 재갱신
+export async function refreshTokenApi(token: string) {
+  const res = await apiInstance.post("/reissue", {
+    refreshToken: token,
+  });
+  return res.data;
+}
+
 // 회원가입시 문자 인증
 export async function vertifySMSApi(number: string) {
   const res = await apiInstance.post("/api/join/sms-validation", {

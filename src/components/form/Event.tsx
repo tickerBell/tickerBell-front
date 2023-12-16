@@ -15,8 +15,11 @@ import { OnDatePicker } from "./OnDatePicker";
 import dayjs from "dayjs";
 import DatePicker from "react-datepicker";
 import { IoCloseSharp } from "react-icons/io5";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const Event = () => {
+  const router = useRouter();
   const {
     register,
     control,
@@ -100,24 +103,30 @@ const Event = () => {
 
   const createEventMutation = useMutation({
     mutationFn: (payload: any) => postEventApi(payload),
-    onSuccess: (payload: any) => {
-      
+    onError: (error: any) => {
+      console.log('error', error)
+    },
+    onSuccess: () => {
+      toast.success('등록성공');
+      router.push('/');
       // console.log('dd', payload);
       // queryClient.invalidateQueries({ queryKey: ['event-reservelist', getPaging] })
     }
   })
 
   const onSubmit: SubmitHandler<FormData> = async (onData: any) => {
-    const tagNames = onData?.tags?.map((tag:any) => tag.name);
-    const castingNames = onData?.castings?.map((casting:any) => casting.name);
-    const hostNames = onData?.hosts?.map((host:any) => host.name);
+    // const onSubmit = (onData: any) => {
+    const tagNames = onData?.tags?.map((tag: any) => tag.name);
+    const castingNames = onData?.castings?.map((casting: any) => casting.name);
+    const hostNames = onData?.hosts?.map((host: any) => host.name);
 
     const payload = {
       name: onData.name,
       startEvent: `${dayjs(onData.startEvent).format('YYYY-MM-DD')}T00:00:00Z`,
       endEvent: `${dayjs(onData.endEvent).format('YYYY-MM-DD')}T23:59:59Z`,
-      dailyStartEvent: `${dayjs(onData.dailyStartEvent).format('HH:mm')}`,
-      eventTime: Number(onData.eventTime),
+      dailyStartEvent: `${dayjs(onData.dailyStartEsvent).format('HH:mm')}`,
+      // eventTime: Number(onData.eventTime),
+      eventTime: onData.eventTime,
       availablePurchaseTime: `${dayjs(onData.availablePurchaseTime).format('YYYY-MM-DDTHH:mm:ss')}Z`,
       normalPrice: Number(onData.normalPrice),
       premiumPrice: Number(onData.premiumPrice),
@@ -136,7 +145,7 @@ const Event = () => {
       imageUrls: imageUrls,
     };
     // console.log('폼데이터', onData.name);
-    console.log("전송데이터", payload);
+    console.log("전송데이터", onData, 'payload', payload);
 
     // TODO: 정보확인 창 추가
     createEventMutation.mutate(payload);
@@ -499,22 +508,22 @@ const Event = () => {
                 {watch().premiumPrice > 0 &&
                   <>
                     <small className="text-blue-400"> 선택한 좌석이 프리미엄 가격으로 지정됩니다. </small>
-                    <div className="flex flex-row item-center">
+                    <div className="flex flex-row gap-8 item-center">
                       <CheckBox
                         {...register("isSpecialA")}
-                        label="특별 옵션 A"
+                        label="A 좌석"
                         id="isSpecialA"
                         type="checkbox"
                       />
                       <CheckBox
                         {...register("isSpecialB")}
-                        label="특별 옵션 B"
+                        label="B 좌석"
                         id="isSpecialB"
                         type="checkbox"
                       />
                       <CheckBox
                         {...register("isSpecialC")}
-                        label="특별 옵션 C"
+                        label="C 좌석"
                         id="isSpecialC"
                         type="checkbox"
                       />

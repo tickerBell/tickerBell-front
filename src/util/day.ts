@@ -6,7 +6,7 @@ export const openDay = (date: any) => {
 };
 
 export const day = (date: any) => {
-  return dayjs(date).format("YY-MM-DD");
+  return dayjs(date).format("YYYY.MM.DD");
 };
 
 export const date = (date: any) => {
@@ -15,6 +15,10 @@ export const date = (date: any) => {
 
 export const postEventDateType = (date: any) => {
   return dayjs(date).format("YYYY-MM-DD");
+}
+
+export const merchantUidDate = (date: any) => {
+  return dayjs(date).format("YYYYMMDD");
 }
 
 export const weekDay = (week: number) => {
