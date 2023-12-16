@@ -23,8 +23,8 @@ export const HistoryTable = () => {
 
   // 회원 - 등록자, 예약자
   const { data: memberData, isSuccess: memberDataSuccess } = useQuery({
-    queryKey: ["event-reservelist", getPaging],
-    queryFn: () => userReserveListApi(getCookie('ticket-atk'), getPaging),
+    queryKey: ["event-reservelist-member", getPaging],
+    queryFn: () => userReserveListApi(getPaging),
     enabled: typeof getCookie('ticket-atk') === 'string'
   });
 
@@ -34,30 +34,27 @@ export const HistoryTable = () => {
     queryFn: () => noneUserReserveListApi(getCookie('ticket-atk')?.name, getCookie('ticket-atk')?.phone, getPaging),
     enabled: typeof getCookie('ticket-atk') === 'object',
   });
-
-  console.log('memberData', memberData);
   const data = typeof getCookie('ticket-atk') === 'string' ? memberData : nonmemberData
-  const userType = typeof getCookie('ticket-atk') === 'string' ? 'myPageResponse' : 'content'
 
   // console.log('예약 내역', getnonMemberatom, nonmemberData);
-  console.log('rq error : ', data, isFetched);
+  console.log('rq error : ', data?.data, isFetched, columns);
 
   return (
     <>
       {
-        data && data?.data.totalCount > 0 ?
+        data && data?.data.ticketingResponseList.totalElements > 0 ?
           <>
             <Tab tabName={"historyTable"} className="mb-20" tabNumber={setTabnumber} />
             <div className="historytable">
               <div className="min-h-460">
-                <table>
+                <table className="table-fixed w-full">
                   <thead className="bg-gray-200 border-b">
                     {columns.map((column, key) => (
                       <HistoryTableHeader key={key} column={column} />
                     ))}
                   </thead>
                   <tbody>
-                    {data && data?.data.myPageResponse.map((row: any, key: any) => (
+                    {data && data?.data.ticketingResponseList.content.map((row: any, key: any) => (
                       <HistoryTableBody
                         key={key}
                         row={row}
@@ -67,7 +64,7 @@ export const HistoryTable = () => {
                 </table>
               </div>
               <Pagination
-                pageCount={Math.ceil(data && data?.data.totalCount / 10)}
+                pageCount={Math.ceil(data && data?.data.ticketingResponseList.totalElements / 10)}
               // handlePageChange={handlePageChange}
               // paginatekey="historyTable"
               />

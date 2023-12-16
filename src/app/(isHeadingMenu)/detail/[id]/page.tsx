@@ -113,7 +113,7 @@ const Index = ({ params }: { params: { id: string } }) => {
               <div>{`${data.dailyStartEvent}`}</div>
             </div>
             <Button className="w-full" onClick={() => setModal(true)}>
-              예약하기
+              예매하기
             </Button>
           </div>
         </div>

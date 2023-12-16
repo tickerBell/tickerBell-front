@@ -71,34 +71,43 @@ const EventDetailModal = ({
   // console.log('선택된 자리', eventId, data);
   // 쿠키가 string 이면 디코딩, 없다면 객체선택. 
 
-  const handlePayment = () => {
-    let merchant_uid = ''
-    // 회원일때
+  useEffect(() => {
     if (typeof getCookie('ticket-atk') === 'string' && getCookie('ticket-atk') !== undefined) {
       userInfoApi(getCookie('ticket-atk'))
         .then((res) => {
           setMerchant(
             Number(`${merchantUidDate(selectDate)}${res?.data.phone.slice(-4)}${Math.floor(1000 + Math.random() * 9000)}`))
-          merchant_uid = `${merchantUidDate(selectDate)}${res?.data.phone.slice(-4)}${Math.floor(1000 + Math.random() * 9000)}`
-          console.log('여기', Number(`${merchantUidDate(selectDate)}${res?.data.phone.slice(-4)}${Math.floor(1000 + Math.random() * 9000)}`))
+          // console.log('여기', Number(`${merchantUidDate(selectDate)}${res?.data.phone.slice(-4)}${Math.floor(1000 + Math.random() * 9000)}`))
         })
       // merchant_uid = `${merchantUidDate(selectDate)}${res}${Math.floor(1000 + Math.random() * 9000)}`
     }
     // 비회원일때
     if (typeof getCookie('ticket-atk') === 'object' && getCookie('ticket-atk') !== undefined) {
-      merchant_uid = `${merchantUidDate(selectDate)}${getCookie('ticket-atk').phone}${Math.floor(1000 + Math.random() * 9000)}`
+      // merchant_uid = `${merchantUidDate(selectDate)}${getCookie('ticket-atk').phone}${Math.floor(1000 + Math.random() * 9000)}`
     }
-    // onClickPayment(
-    //   selectedPrice,
-    //   getName,
-    //   eventName,
-    //   selectedSeats,
-    // merchant_uid,
-    //   merchant_uid,
-    //   Number(eventId)
-    // );
+  }, [])
+
+  const handlePayment = () => {
+    // 회원일때
+
+    console.log('merchant_uid', selectedPrice,
+      getName,
+      eventName,
+      selectedSeats,
+      `${postEventDateType(selectDate)}T00:00:00Z`,
+      String(merchant),
+      Number(eventId))
+
+    onClickPayment(
+      selectedPrice,
+      getName,
+      eventName,
+      selectedSeats,
+      `${postEventDateType(selectDate)}T00:00:00Z`,
+      String(merchant),
+      Number(eventId)
+    );
   };
-  console.log('merchant_uid', merchant)
 
   // NOTE: 이 부분 코드 개선 필요
   useEffect(() => {

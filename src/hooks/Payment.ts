@@ -10,7 +10,7 @@ export const onClickPayment = (
   name: string,
   eventName: string,
   // userPhone: string
-  
+
   // 결제 정보 DB 저장
   selectedSeat: string[],
   selectedDate: string,
@@ -47,6 +47,7 @@ export const onClickPayment = (
       });
       if (response.success) {
         alert("결제 성공");
+        console.log("결제 성공", selectedSeat, selectedDate, merchant_uid, eventId);
       } else {
         alert("결제 실패");
       }

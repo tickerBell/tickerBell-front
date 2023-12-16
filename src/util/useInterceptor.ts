@@ -17,6 +17,7 @@ const apiInstance = axios.create({
 
 apiInstance.interceptors.request.use(
   async (config) => {
+    console.log("cc?", getCookie("ticket-atk"), typeof getCookie("ticket-atk"));
     if (typeof getCookie("ticket-atk") === "string") {
       if (epochConvert(parseJwt(getCookie("ticket-atk").exp))) {
         removeCookie("ticket-rtk");
@@ -27,11 +28,12 @@ apiInstance.interceptors.request.use(
         return config;
       }
     }
-    if (getCookie("ticket-atk") == undefined && getCookie("ticket-trk") != undefined) {
-      return config;
-    }
-    if (getCookie("ticket-atk") == undefined) {
-      console.log('언디파인드');
+    // 토큰
+    // if (getCookie("ticket-atk") === undefined && getCookie("ticket-trk") !== undefined) {
+    //   return config;
+    // }
+    if (getCookie("ticket-atk") === "undefined") {
+      console.log("언디파인드");
       removeCookie("ticket-atk");
       return config;
     }

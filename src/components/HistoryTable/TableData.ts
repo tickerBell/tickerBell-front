@@ -5,6 +5,9 @@ export const UserColumns = [
     casting: "캐스팅",
     startEvent: "일시",
     place: "장소",
+    payment: "가격",
+    seatInfo: "좌석번호",
+    paymentId: "예매 번호",
     isCancelled: "상태",
   },
 ];

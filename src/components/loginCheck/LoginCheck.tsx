@@ -49,6 +49,7 @@ const LoginCheck = () => {
         } else {
           if (typeof getCookie("ticket-atk") === 'string') {
             setName(parseJwt(getCookie('ticket-atk')).username);
+            console.log('유저네임 체크 : ', parseJwt(getCookie('ticket-atk')).username)
           } else {
             setName(getCookie('ticket-atk').username);
           }
