@@ -20,6 +20,7 @@ export const HistoryTable = () => {
   const getPaging = useRecoilValue(paginateSelector);
 
   const columns = getRole === "ROLE_REGISTRANT" ? EventColumns : UserColumns;
+  const dataType = getRole === "ROLE_REGISTRANT" ? 'eventHistoryRegisterResponseList' : 'ticketingResponseList'
 
   // 회원 - 등록자, 예약자
   const { data: memberData, isSuccess: memberDataSuccess } = useQuery({
@@ -37,12 +38,13 @@ export const HistoryTable = () => {
   const data = typeof getCookie('ticket-atk') === 'string' ? memberData : nonmemberData
 
   // console.log('예약 내역', getnonMemberatom, nonmemberData);
-  console.log('rq error : ', data?.data, isFetched, columns);
+  // console.log('rq error : ', data?.data, isFetched, columns);
+  console.log('getPaging', getPaging, data?.data[dataType]);
 
   return (
     <>
       {
-        data && data?.data.ticketingResponseList.totalElements > 0 ?
+        data && data?.data[dataType]?.totalElements > 0 ?
           <>
             <Tab tabName={"historyTable"} className="mb-20" tabNumber={setTabnumber} />
             <div className="historytable">
@@ -54,7 +56,7 @@ export const HistoryTable = () => {
                     ))}
                   </thead>
                   <tbody>
-                    {data && data?.data.ticketingResponseList.content.map((row: any, key: any) => (
+                    {data && data?.data[dataType]?.content.map((row: any, key: any) => (
                       <HistoryTableBody
                         key={key}
                         row={row}
@@ -64,7 +66,7 @@ export const HistoryTable = () => {
                 </table>
               </div>
               <Pagination
-                pageCount={Math.ceil(data && data?.data.ticketingResponseList.totalElements / 10)}
+                pageCount={Math.ceil(data && data?.data[dataType]?.totalElements / 10)}
               // handlePageChange={handlePageChange}
               // paginatekey="historyTable"
               />

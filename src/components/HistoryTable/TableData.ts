@@ -19,7 +19,7 @@ export const EventColumns = [
     casting: "캐스팅",
     startEvent: "일시",
     place: "장소",
-    ticketHolderCounts: "예매자수",
     isCancelled: "상태",
+    ticketHolderCounts: "예매자수",
   },
 ];
