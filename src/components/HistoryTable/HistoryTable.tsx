@@ -3,7 +3,7 @@
 import { userSelector } from "@/recoil/user";
 import { getCookie } from "@/util/authCookie";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import Pagination from "../pagination/Pagination";
 import Tab from "../tab/Tab";
@@ -16,8 +16,9 @@ import './historytable.scss';
 
 export const HistoryTable = () => {
   const getRole = useRecoilValue(userSelector("role"));
-  const [tabnumber, setTabnumber] = useState(0);
   const getPaging = useRecoilValue(paginateSelector);
+  const [tabnumber, setTabnumber] = useState(0);
+  const [filtered, setFiltered] = useState([]);
 
   const columns = getRole === "ROLE_REGISTRANT" ? EventColumns : UserColumns;
   const dataType = getRole === "ROLE_REGISTRANT" ? 'eventHistoryRegisterResponseList' : 'ticketingResponseList'
@@ -37,9 +38,23 @@ export const HistoryTable = () => {
   });
   const data = typeof getCookie('ticket-atk') === 'string' ? memberData : nonmemberData
 
+  useEffect(() => {
+    if(tabnumber === 0) {
+      setFiltered(data?.data[dataType]?.content)
+    }
+    if(tabnumber === 1) {
+      setFiltered(data?.data[dataType]?.content.filter((item: any) => item.isEventCancelled === true))
+    } 
+    if(tabnumber === 2) {
+      setFiltered(data?.data[dataType]?.content.filter((item: any) => item.isEventCancelled === false))
+    }
+  }, [tabnumber])
   // console.log('예약 내역', getnonMemberatom, nonmemberData);
-  // console.log('rq error : ', data?.data, isFetched, columns);
-  console.log('getPaging', getPaging, data?.data[dataType]);
+  console.log('rq error : ', data?.data, isFetched, columns);
+  // console.log('getPaging', getPaging, data?.data[dataType]);
+  const handlePageChange = (value:any) => {
+    console.log('선택', value)
+  }
 
   return (
     <>
@@ -67,7 +82,7 @@ export const HistoryTable = () => {
               </div>
               <Pagination
                 pageCount={Math.ceil(data && data?.data[dataType]?.totalElements / 10)}
-              // handlePageChange={handlePageChange}
+              handlePageChange={handlePageChange}
               // paginatekey="historyTable"
               />
             </div>

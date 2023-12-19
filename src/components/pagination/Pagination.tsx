@@ -7,7 +7,7 @@ import './pagination.scss';
 
 type PaginationProps = {
   pageCount: number;
-  handlePageChange?: (selectedPage: number) => void;
+  handlePageChange: (selectedPage: number) => void;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -23,7 +23,7 @@ const Pagination: React.FC<PaginationProps> = ({
       pageRangeDisplayed={10}
       marginPagesDisplayed={2}
       onPageChange={({ selected }) => {
-        // handlePageChange(selected)
+        handlePageChange(selected)
         setPaging(selected)
       }}
       containerClassName={

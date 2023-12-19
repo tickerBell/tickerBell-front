@@ -11,6 +11,7 @@ import { useRecoilState } from "recoil";
 import { useQuery, gql } from "@apollo/client";
 import { onClickPayment } from "@/hooks/Payment";
 import { toast } from "react-toastify";
+import { SkeletonList } from "@/components/skeleton/Skeleton";
 
 const ModalPage = () => {
   const [modal, setModal] = useState(false);
@@ -19,57 +20,6 @@ const ModalPage = () => {
   const [enroll_company, setEnroll_company] = useState({
     address: "",
   });
-
-  // const [user] = useRecoilState(userState);
-  // console.log('user 스토어', user);
-  // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ graphql 테스트
-  // interface Country {
-  //   code: string;
-  //   emoji: string;
-  //   name: string;
-  // }
-
-  // interface CountryData {
-  //   countries: Country[];
-  // }
-
-  // const GET_COUNTRIES = gql`
-  //   query Countries($filter: CountryFilterInput) {
-  //     countries(filter: $filter) {
-  //       code
-  //       name
-  //       emoji
-  //     }
-  //   }
-  // `;
-  //   query Countries($filter: CountryFilterInput) {
-  //     countries(filter: $filter) {
-  //       code
-  //       name
-  //       emoji
-  //     }
-  //   }
-  // `;
-
-  // const { data, loading, error } = useQuery<CountryData>(GET_COUNTRIES, {
-  //   variables: {
-  //     filter: {
-  //       code: {
-  //         eq: "AD",
-  //       },
-  //     },
-  //   },
-  // });
-
-  // if (loading) {
-  //   return <h2>로딩중</h2>;
-  // }
-
-  // if (error) {
-  //   return <h1>에러 발생</h1>;
-  // }
-
-  // const countries = data?.countries.slice(0, 4);
 
   return (
     <div>
@@ -102,6 +52,7 @@ const ModalPage = () => {
       <Button onClick={() => setModal1(true)}>지도모달</Button>
       <Button onClick={() => setModal2(true)}>주소검색</Button>
       <Button onClick={() => toast.success('성공')}>토스트 테스트</Button>
+      <SkeletonList/>
     </div>
   );
 };

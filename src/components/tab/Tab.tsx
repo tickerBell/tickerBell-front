@@ -13,7 +13,7 @@ const TabTheme: tabThemeType = {
 }
 
 const TabItemTheme: tabThemeType = {
-  mainTabItem: "bg-primary text-white cursor-pointer",
+  mainTabItem: "inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm",
   historyTableTabItem: "hover:bg-opacity-50 hover:bg-primary hover:text-white cursor-pointer text-[14px] border round-6 px-10 py-4",
 };
 
@@ -24,7 +24,7 @@ type tabType = {
 };
 
 const Tab = ({ tabName, className, tabNumber }: tabType) => {
-  const [select, setSelect] = useState(-1);
+  const [select, setSelect] = useState(0);
   const mainThemeObject: any = TabData?.find(item => item.theme === tabName);
   const menuNameOfMainTheme = mainThemeObject ? mainThemeObject.menuName : [];
 

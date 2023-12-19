@@ -5,9 +5,11 @@ import Slide from "../slide/Slide";
 import { eventSlideApi } from "@/api/events";
 import { useQuery } from "@tanstack/react-query";
 import cls from 'classnames';
+import Tab from "../tab/Tab";
 
 const SlideList = () => {
   const [tab, setTab] = useState('rankingMusicalEventList');
+  const [tabnumber, setTabnumber] = useState(0);
 
   const { data, isSuccess, isError, error, isFetched, status, errorUpdatedAt } = useQuery({
     queryKey: ["main-slide"],
@@ -16,12 +18,14 @@ const SlideList = () => {
 
   // console.log(`${errorUpdatedAt}, ${status}, ${isFetched}, isError: ${isError}  error : ${error} data: ${data}`);
   // console.log('slide: ', data);
+//  console.log('탭선택', tabnumber);
 
   return (
     <>
       {!isError && isSuccess &&
         <div className="mt-60">
           <div className="flex justify-center gap-8">
+            {/* <Tab tabName="main" tabNumber={setTabnumber}/> */}
             {
               data?.data['rankingMusicalEventList'] !== null &&
               <div onClick={() => setTab('rankingMusicalEventList')} className={cls("inline-flex px-12 py-4 border-1 rounded-full cursor-pointer text-sm", {

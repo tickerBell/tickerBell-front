@@ -13,6 +13,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { userDeleteReserverIdApi, userDeleteResigsterIdApi } from "@/api/ticketing";
 import './historytable.scss';
 import { paginateSelector } from "@/recoil/paginate";
+import { cancelPay } from "@/hooks/Payment";
 
 type HistoryTableBodyProps = {
   // row: IEventHistoryTableReserverType;
@@ -28,15 +29,13 @@ export const HistoryTableBody = ({
   const getRole = useRecoilValue(userSelector("role"));
   const getPaging = useRecoilValue(paginateSelector);
   const [onModal, setOnModal] = useState(false);
-  const date = new Date;
   // console.log('row getPaging', getPaging, row);
-  console.log('row getPaging', getPaging);
+  // console.log('row getPaging', getPaging);
 
   // 회원 - 예약자 취소
   const deleteReserverMutation = useMutation({
     mutationFn: (id: number) => userDeleteReserverIdApi(id),
     onSuccess: () => {
-      console.log('예약자 취소');
       queryClient.invalidateQueries({ queryKey: ['event-reservelist-member', getPaging] })
     }
   })
@@ -45,23 +44,23 @@ export const HistoryTableBody = ({
   const deleteResisterMutation = useMutation({
     mutationFn: (id: number) => userDeleteResigsterIdApi(id),
     onSuccess: () => {
-      console.log('등록자 취소');
       queryClient.invalidateQueries({ queryKey: ['event-reservelist-member', getPaging] })
     }
   })
 
-  const cancleEvent = (id: any, ticketingId: any) => {
+  const cancleEvent = (id: any, ticketingId: any, paymentId:string, price:number) => {
     if (!confirm(`이벤트 ${getRole === "ROLE_REGISTRANT" ? '등록을' : '예매를'} 취소할까요?`)) {
       // 아니오
     } else {
       // 예
       if (getRole === "ROLE_REGISTRANT") {
-        console.log('예약자 일때')
+        // console.log('예약자 일때')
         deleteResisterMutation.mutate(id);
       }
       else if (getRole === 'ROLE_USER') {
-        console.log('회원', ticketingId);
+        // console.log('회원', ticketingId);
         deleteReserverMutation.mutate(ticketingId);
+        cancelPay(paymentId, price)
       }
       else {
         // 비회원 예매 취소
@@ -110,7 +109,7 @@ export const HistoryTableBody = ({
           <td className="px-6 py-4 whitespace-nowrap">
             <Button className="border" onClick={(e: any) => {
               e.stopPropagation();
-              cancleEvent(row.eventHistoryResponse.eventId, row.ticketingId)
+                cancleEvent(row.eventHistoryResponse.eventId, row.ticketingId, row.paymentId, row.paymnent)
             }} >{getRole === "ROLE_REGISTRANT" ? '등록' : '예매'} 취소</Button>
           </td>
         </tr>
@@ -141,7 +140,7 @@ export const HistoryTableBody = ({
           <td className="px-6 py-4 whitespace-nowrap">
             <Button className="border" onClick={(e: any) => {
               e.stopPropagation();
-              cancleEvent(row.eventId, 0)
+              cancleEvent(row.eventId, 0, row.paymentId, row.payment)
             }} >{getRole === "ROLE_REGISTRANT" ? '등록' : '예매'} 취소</Button>
           </td>
         </tr>
