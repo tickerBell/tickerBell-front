@@ -17,7 +17,7 @@ const apiInstance = axios.create({
 
 apiInstance.interceptors.request.use(
   async (config) => {
-    console.log("cc?", getCookie("ticket-atk"), typeof getCookie("ticket-atk"));
+    // console.log("cc?", getCookie("ticket-atk"), typeof getCookie("ticket-atk"));
     if (getCookie("ticket-atk") == "undefined") {
       console.log("언디파인드");
       removeCookie("ticket-atk");

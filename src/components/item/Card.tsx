@@ -26,7 +26,7 @@ const Card = ({ data, type }: cardType) => {
                 src={data.thumbNailUrl}
                 alt={data.name}
                 layout="fill"
-                objectFit="cover"
+                style={{ objectFit: "cover" }}
               />
             }
           </div>
