@@ -70,7 +70,7 @@ function callback(response: RequestPayResponse) {
   }
 }
 
-export const cancelPay = () => {
+export const cancelPay = (merchant_uid: string, price: number) => {
   console.log("cc");
   axios({
     // url: "{환불요청을 받을 서비스 URL}", // 예: http://www.myservice.com/payments/cancel
@@ -80,8 +80,8 @@ export const cancelPay = () => {
       "Content-Type": "application/json",
     },
     data: {
-      merchant_uid: "mid_1694711280", // 주문번호
-      cancel_request_amount: 2000, // 환불금액
+      merchant_uid: merchant_uid, // 주문번호
+      cancel_request_amount: price, // 환불금액
       reason: "테스트 결제 환불", // 환불사유
       // refund_holder: "홍길동", // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
       // refund_bank: "88", // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)

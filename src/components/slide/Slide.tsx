@@ -87,7 +87,7 @@ const Slide = ({
                       title === '랭킹' && <div className="absolute left-10 bottom-10 text-white z-10 font-semibold text-[50px]">{index + 1}</div>
                     }
                     <Image src={item.thumbNailUrl} alt={item.name} fill
-                      objectFit='cover'
+                      style={{objectFit:"cover"}}
                        />
                   </div>
                   <div className="mt-10 font-semibold text-gray-900 truncate">
